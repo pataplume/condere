@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Condere — Fonder des outils numériques durables</title>
+<meta name="description" content="Condere — micro-SaaS, audits IA et sites web pensés en Suisse pour les PME francophones." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:        '#0E0B08',
+          ink2:       '#1A1410',
+          travertin:  '#F5EFE4',
+          gold:       '#C9A961',
+          terra:      '#B85C3C',
+          stone:      '#8A8175',
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          sans:  ['Inter', 'system-ui', 'sans-serif'],
+          mono:  ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#0E0B08; --ink2:#1A1410;
+    --travertin:#F5EFE4; --gold:#C9A961; --terra:#B85C3C; --stone:#8A8175;
+  }
+  html,body{ background:var(--ink); color:var(--travertin); }
+  body{
+    font-family: Inter, system-ui, sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .font-serif{ font-family:"Cormorant Garamond", Georgia, serif; }
+  .font-mono { font-family:"JetBrains Mono", ui-monospace, monospace; }
+
+  /* Underline that traces L→R on hover */
+  .link-trace{ position:relative; display:inline-block; }
+  .link-trace::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:1px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform .3s ease-out;
+  }
+  .link-trace:hover::after{ transform: scaleX(1); }
+
+  /* Scroll reveal */
+  .reveal{ opacity:0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* Selection */
+  ::selection{ background: rgba(201,169,97,.35); color:var(--travertin); }
+
+  /* Subtle stone-grain backdrop */
+  .stone-bg{
+    background-color: var(--ink);
+    background-image:
+      radial-gradient(1200px 600px at 20% -10%, rgba(201,169,97,0.05), transparent 60%),
+      radial-gradient(900px 500px at 90% 110%, rgba(184,92,60,0.04), transparent 60%);
+  }
+
+  /* Roman geometric pattern (very subtle) for final CTA */
+  .pattern-roman{
+    background-image:
+      linear-gradient(45deg, rgba(245,239,228,.05) 25%, transparent 25%, transparent 75%, rgba(245,239,228,.05) 75%),
+      linear-gradient(45deg, rgba(245,239,228,.05) 25%, transparent 25%, transparent 75%, rgba(245,239,228,.05) 75%);
+    background-size: 28px 28px;
+    background-position: 0 0, 14px 14px;
+  }
+
+  /* Engraving SVG presets */
+  .engraved-letter{
+    fill: none;
+    stroke: var(--travertin);
+    stroke-width: 1.1;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  /* Letter chiseled fill (after engraving completes) */
+  .chisel-fill{
+    fill: url(#chiselGrad);
+  }
+
+  /* Tablet card */
+  .tablet{
+    position:relative;
+    background: linear-gradient(180deg, #1c1612 0%, #161108 100%);
+    border:1px solid rgba(201,169,97,0.18);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1), border-color .5s ease, box-shadow .5s ease;
+    overflow:hidden;
+  }
+  .tablet::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(201,169,97,0.08), transparent 50%),
+      radial-gradient(120% 80% at 50% 100%, rgba(0,0,0,0.5), transparent 50%);
+    pointer-events:none;
+  }
+  .tablet::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.79  0 0 0 0 0.69  0 0 0 0 0.45  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:.5;
+    mix-blend-mode: screen;
+    pointer-events:none;
+  }
+  .tablet.active:hover{
+    transform: translateY(-4px);
+    border-color: rgba(201,169,97,0.55);
+    box-shadow: 0 30px 60px -30px rgba(201,169,97,0.25), inset 0 1px 0 rgba(245,239,228,0.05);
+  }
+  .tablet.active:hover .tablet-arrow{ transform: translateX(6px); color:var(--gold); }
+  .tablet.inactive{ opacity:.55; cursor:not-allowed; }
+  .tablet.inactive .tablet-soon{ opacity:0; transition:opacity .3s ease; }
+  .tablet.inactive:hover .tablet-soon{ opacity:1; }
+
+  /* Hero size knobs */
+  .hero-title{
+    font-family:"Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  /* Latin tagline trace */
+  .latin-line{
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 0.8;
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: trace 2.6s ease-out 1.6s forwards;
+  }
+  @keyframes trace{ to{ stroke-dashoffset: 0; } }
+
+  /* Letter draw + fill cascade */
+  .draw{
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: drawLetter 1.1s ease-out forwards, fillLetter .9s ease-out forwards;
+    animation-delay: var(--d, 0s), calc(var(--d, 0s) + 0.9s);
+  }
+  @keyframes drawLetter{ to{ stroke-dashoffset: 0; } }
+  @keyframes fillLetter{
+    from{ fill: rgba(245,239,228,0); }
+    to{ fill: rgba(245,239,228,1); }
+  }
+
+  /* Hover vibration on engraved letters */
+  .letter-group:hover .draw{
+    animation: jitter .25s ease-in-out infinite;
+  }
+  @keyframes jitter{
+    0%,100%{ transform: translate(0,0); }
+    25%{ transform: translate(0.4px, -0.3px); }
+    50%{ transform: translate(-0.3px, 0.4px); }
+    75%{ transform: translate(0.2px, 0.2px); }
+  }
+
+  /* Roman numeral on tablet */
+  .roman-num{
+    font-family:"JetBrains Mono", ui-monospace, monospace;
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: .15em;
+  }
+
+  /* Section divider */
+  .gold-rule{
+    height:1px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,97,0.6), transparent);
+  }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    padding: 0.85rem 1.4rem;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    transition: all .25s ease;
+  }
+  .btn-gold{
+    background: var(--gold);
+    color: #1a130a;
+    border:1px solid var(--gold);
+  }
+  .btn-gold:hover{ background:#d6b772; border-color:#d6b772; }
+  .btn-ghost{
+    background:transparent;
+    color: var(--travertin);
+    border:1px solid rgba(245,239,228,0.25);
+  }
+  .btn-ghost:hover{ border-color: var(--gold); color: var(--gold); }
+  .btn-terra{
+    background: transparent;
+    color: var(--travertin);
+    border:1px solid var(--terra);
+  }
+  .btn-terra:hover{ background: var(--terra); color: var(--travertin); }
+
+  /* Latin quote big */
+  .quote-latin{
+    font-family:"Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--travertin);
+  }
+
+  /* Tooltip for latin line translation */
+  .latin-wrap{ position:relative; }
+  .latin-wrap .tip{
+    position:absolute; left:50%; transform:translate(-50%, 6px);
+    color: var(--stone);
+    font-style: italic;
+    font-family:"Cormorant Garamond", serif;
+    font-size: 14px;
+    opacity:0; transition: opacity .3s ease, transform .3s ease;
+    white-space: nowrap;
+  }
+  .latin-wrap:hover .tip{ opacity:1; transform:translate(-50%, 10px); }
+
+  /* mono-label */
+  .mono-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .2em;
+    color: var(--stone);
+    text-transform: uppercase;
+  }
+
+  /* Nav */
+  .nav-link{
+    font-size: 13px;
+    letter-spacing: .04em;
+    color: rgba(245,239,228,0.75);
+  }
+  .nav-link:hover{ color: var(--travertin); }
+
+  /* Service row */
+  .service-row{ border-top:1px solid rgba(201,169,97,0.18); }
+  .service-row:last-child{ border-bottom:1px solid rgba(201,169,97,0.18); }
+  .service-num{
+    font-family:"JetBrains Mono", monospace;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing:.2em;
+  }
+  .service-title{
+    font-family:"Cormorant Garamond", serif;
+    font-weight:500;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    letter-spacing:-0.01em;
+  }
+
+  /* Footer */
+  .foot a{ color: var(--stone); }
+  .foot a:hover{ color: var(--travertin); }
+
+  /* Scroll indicator */
+  @keyframes scrollBob{
+    0%,100%{ transform: translateY(0); opacity:.5; }
+    50%{ transform: translateY(6px); opacity:.8; }
+  }
+  @keyframes scrollLine{
+    0%,100%{ transform: scaleY(1); transform-origin: top; }
+    50%{ transform: scaleY(0.5); transform-origin: top; }
+  }
+
+  /* Reduce-motion */
+  @media (prefers-reduced-motion: reduce){
+    .draw, .latin-line, .reveal{ animation:none !important; transition:none !important; opacity:1 !important; transform:none !important; stroke-dashoffset:0 !important; fill: var(--travertin) !important; }
+  }
+
+  /* Responsive: hero canvas hidden on mobile - simpler SVG only */
+  #goldDust{ pointer-events:none; }
+  @media (max-width: 768px){
+    #goldDust{ display:none; }
+  }
+</style>
+</head>
+
+<body class="stone-bg">
+
+<!-- ===================== NAV ===================== -->
+<header class="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-ink/70 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-baseline gap-2" data-cursor>
+      <span class="font-serif text-[22px] tracking-wide">CONDERE</span>
+      <span class="font-mono text-[10px] text-gold tracking-[0.2em]">·MMXXVI</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="#produits" class="nav-link link-trace" data-cursor>Produits</a>
+      <a href="#services" class="nav-link link-trace" data-cursor>Services</a>
+      <a href="#a-propos" class="nav-link link-trace" data-cursor>À propos</a>
+      <a href="#contact"  class="nav-link link-trace" data-cursor>Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-terra" data-cursor>
+      <span>Fonder un projet</span>
+      <span class="font-mono text-[10px] opacity-70">→</span>
+    </a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section id="top" class="relative pt-36 pb-28 flex items-center">
+  <!-- gold dust canvas -->
+  <canvas id="goldDust" class="absolute inset-0 w-full h-full" style="z-index:0"></canvas>
+
+  <div class="relative max-w-6xl mx-auto px-6 lg:px-10 w-full" style="z-index:1">
+
+    <div class="mono-label mb-8 reveal">
+      <span class="text-gold">·</span> CONDERE · GENEVA · HELVETIA · MMXXVI
+    </div>
+
+    <!-- Engraved CONDERE -->
+    <div class="letter-group select-none" aria-label="CONDERE">
+      <svg viewBox="0 0 1200 240" class="w-full h-auto" preserveAspectRatio="xMidYMid meet" aria-hidden="true" style="overflow:hidden">
+        <defs>
+          <!-- Inner bevel: subtle inset shadow -->
+          <filter id="bevel" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" result="blur"/>
+            <feOffset in="blur" dx="0.6" dy="0.8" result="off"/>
+            <feComponentTransfer in="off" result="shadow"><feFuncA type="linear" slope="0.55"/></feComponentTransfer>
+            <feMerge>
+              <feMergeNode in="shadow"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <linearGradient id="chiselGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F5EFE4"/>
+            <stop offset="100%" stop-color="#cdc4b3"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Letters drawn as text, animated by stroke + fill cascade -->
+        <g filter="url(#bevel)" font-family="Cormorant Garamond, Georgia, serif" font-weight="500" font-size="220" text-anchor="middle" letter-spacing="6" fill="rgba(245,239,228,0)" stroke="#F5EFE4" stroke-width="1.1">
+          <text x="100"  y="190" class="draw" style="--d:0.10s">C</text>
+          <text x="260"  y="190" class="draw" style="--d:0.30s">O</text>
+          <text x="430"  y="190" class="draw" style="--d:0.50s">N</text>
+          <text x="600"  y="190" class="draw" style="--d:0.70s">D</text>
+          <text x="770"  y="190" class="draw" style="--d:0.90s">E</text>
+          <text x="930"  y="190" class="draw" style="--d:1.10s">R</text>
+          <text x="1100" y="190" class="draw" style="--d:1.30s">E</text>
+        </g>
+
+        <!-- Faint chisel guide marks -->
+        <g stroke="rgba(201,169,97,0.18)" stroke-width="0.5">
+          <line x1="40" y1="22" x2="1160" y2="22"/>
+          <line x1="40" y1="218" x2="1160" y2="218"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Tagline + Subtitle -->
+    <div class="max-w-3xl mx-auto text-center mt-6 mb-12 reveal" style="transition-delay:1.6s">
+      <p class="mono-label tracking-[0.25em] text-gold mb-6">Modular AI Foundation</p>
+      <p class="font-serif text-[clamp(1.4rem,2.2vw,1.9rem)] leading-[1.25] text-travertin">
+        Des outils logiciels pensés avec l'IA,<br/>pour les entreprises qui avancent.
+      </p>
+      <p class="mt-3 text-stone text-[15px] leading-relaxed tracking-wide">
+        Silencieux. Précis. Essentiels.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="#produits" class="btn btn-gold" data-cursor>
+          <span>Voir nos produits</span>
+          <span class="font-mono text-[11px]">→</span>
+        </a>
+        <a href="#contact" class="btn btn-ghost" data-cursor>
+          <span>Demander un audit</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 right-8 mono-label flex flex-col items-center gap-2 opacity-50" style="animation: scrollBob 2.2s ease-in-out infinite;">
+      <span>scroll</span>
+      <span class="w-px h-8 bg-gold/50" style="animation: scrollLine 2.2s ease-in-out infinite;"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ETYMOLOGY ===================== -->
+<section id="a-propos" class="relative py-28 lg:py-36">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-start">
+
+    <div class="lg:col-span-3 reveal">
+      <div class="mono-label mb-6"><span class="text-gold">I.</span> &nbsp; Étymologie</div>
+      <h2 class="font-serif text-[clamp(2rem,4.5vw,3.6rem)] leading-[1.05] tracking-[-0.01em] mb-8">
+        <span class="italic text-gold/90">condere</span><span class="text-stone">,</span>
+        <span class="text-travertin"> verbe latin</span><span class="text-stone"> :</span><br/>
+        <span class="text-travertin">fonder, bâtir, établir.</span>
+      </h2>
+      <div class="text-[16px] leading-[1.8] text-travertin/85 max-w-xl space-y-5">
+        <p>
+          Virgile l'emploie dans le premier vers de l'Énéide pour désigner celui qui vint
+          <em class="text-gold/90">fonder</em> Rome. C'est la racine de notre mot <em>fondateur</em> —
+          et c'est exactement ce que nous faisons.
+        </p>
+        <p>
+          Nos outils intègrent l'IA là où elle change quelque chose de concret :
+          éliminer les tâches répétitives, accélérer les décisions, libérer du temps
+          pour ce qui mérite vraiment de l'<em class="text-travertin">attention humaine</em>.
+          Pas de l'IA pour faire moderne — de l'IA pour travailler mieux,
+          et avec plus de plaisir.
+        </p>
+        <p class="text-stone">
+          Une PME qui adopte l'IA aujourd'hui ne suit pas une mode.
+          Elle remet ses collaborateurs au centre de leur métier, débarrassés
+          de ce qui les épuise. Notre rôle : faire en sorte que la technologie s'efface.
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 reveal lg:pt-12">
+      <div class="border-l border-gold/30 pl-8 lg:pl-10">
+        <div class="mono-label mb-4 text-gold/80">— P. Vergilius Maro, Aeneis I,1</div>
+        <p class="quote-latin">
+          "Troiae qui&nbsp;primus<br/>
+          ab&nbsp;oris… Italiam<br/>
+          venit."
+        </p>
+        <p class="mt-6 text-stone italic font-serif text-[18px] leading-[1.5]">
+          Celui qui, le premier, vint des rivages de Troie… jusqu'en Italie.
+        </p>
+        <div class="gold-rule my-10"></div>
+        <div class="grid grid-cols-1 gap-5 text-left">
+          <div class="flex items-start gap-3">
+            <span class="text-gold mt-0.5">·</span>
+            <div>
+              <div class="font-mono text-[11px] text-travertin tracking-wide">EU <span class="text-stone">/</span> CH</div>
+              <div class="mono-label mt-0.5">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-gold mt-0.5">·</span>
+            <div>
+              <div class="font-mono text-[11px] text-travertin tracking-wide">FR <span class="text-stone">·</span> EN <span class="text-stone">·</span> DE <span class="text-stone">·</span> IT</div>
+              <div class="mono-label mt-0.5">Livraison multilingue</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-gold mt-0.5">·</span>
+            <div>
+              <div class="font-mono text-[11px] text-travertin tracking-wide">Swiss Made</div>
+              <div class="mono-label mt-0.5">Conçu et maintenu en Suisse</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRODUITS ===================== -->
+<section id="produits" class="relative py-28 lg:py-36 bg-ink2/60">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="flex items-end justify-between mb-14 reveal">
+      <div>
+        <div class="mono-label mb-4"><span class="text-gold">II.</span> &nbsp; Produits</div>
+        <h2 class="font-serif text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] tracking-[-0.015em] max-w-3xl">
+          Six modules.<br/>
+          <span class="text-stone italic">Deux en production.</span>
+        </h2>
+      </div>
+      <div class="hidden md:block max-w-sm text-[14px] text-stone leading-relaxed">
+        Les noms d'empereurs sont des noms de code — assumés, provisoires.
+        Chaque module naît comme MVP et trouve son nom définitif
+        <em class="text-travertin/70">en prouvant son utilité</em>.
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/10">
+      <!-- AUGUSTUS -->
+      <a href="https://augustus.condere.ch" target="_blank" rel="noopener" class="tablet active block p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label text-gold">PRODUCTUM · I</div>
+            <div class="font-mono text-[11px] text-gold/80 tracking-[0.2em]">I</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <!-- doc/scan icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-gold">
+                <path d="M6 3h9l4 4v14H6z"/>
+                <path d="M15 3v4h4"/>
+                <path d="M9 12h7M9 16h7M9 8h3"/>
+              </svg>
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em]">Augustus</h3>
+            </div>
+            <p class="text-stone text-[14.5px] leading-relaxed max-w-sm">
+              Lecture et validation intelligente de factures reçues.
+              Extraction, contrôle, archivage — sans intervention manuelle.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-gold/15 flex items-center justify-between">
+            <span class="font-mono text-[11px] text-gold tracking-[0.15em]">augustus.condere.ch</span>
+            <span class="tablet-arrow font-mono text-[12px] text-stone transition-all duration-300">→ accéder</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- TIBERIUS -->
+      <a href="https://tiberius.condere.ch" target="_blank" rel="noopener" class="tablet active block p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label text-gold">PRODUCTUM · II</div>
+            <div class="font-mono text-[11px] text-gold/80 tracking-[0.2em]">II</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <!-- scroll/book icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-gold">
+                <path d="M4 5a2 2 0 0 1 2-2h11v15H7a2 2 0 0 0-2 2"/>
+                <path d="M17 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7"/>
+                <path d="M9 8h5M9 11h5"/>
+              </svg>
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em]">Tiberius</h3>
+            </div>
+            <p class="text-stone text-[14.5px] leading-relaxed max-w-sm">
+              Bibliothèque de prompts curés pour PME. Modèles éprouvés,
+              classés par métier — la qualité, pas le bruit.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-gold/15 flex items-center justify-between">
+            <span class="font-mono text-[11px] text-gold tracking-[0.15em]">tiberius.condere.ch</span>
+            <span class="tablet-arrow font-mono text-[12px] text-stone transition-all duration-300">→ accéder</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- CALIGULA (inactive) -->
+      <div class="tablet inactive p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label">PRODUCTUM · III</div>
+            <div class="font-mono text-[11px] text-stone/70 tracking-[0.2em]">III</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em] text-stone">Caligula</h3>
+            </div>
+            <p class="text-stone/80 text-[14.5px] leading-relaxed max-w-sm">
+              En préparation.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-stone/15">
+            <span class="tablet-soon font-mono text-[11px] italic text-gold/80">Disponible prochainement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLAUDIUS (inactive) -->
+      <div class="tablet inactive p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label">PRODUCTUM · IV</div>
+            <div class="font-mono text-[11px] text-stone/70 tracking-[0.2em]">IV</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em] text-stone">Claudius</h3>
+            </div>
+            <p class="text-stone/80 text-[14.5px] leading-relaxed max-w-sm">
+              En préparation.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-stone/15">
+            <span class="tablet-soon font-mono text-[11px] italic text-gold/80">Disponible prochainement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NERO (inactive) -->
+      <div class="tablet inactive p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label">PRODUCTUM · V</div>
+            <div class="font-mono text-[11px] text-stone/70 tracking-[0.2em]">V</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em] text-stone">Nero</h3>
+            </div>
+            <p class="text-stone/80 text-[14.5px] leading-relaxed max-w-sm">
+              En préparation.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-stone/15">
+            <span class="tablet-soon font-mono text-[11px] italic text-gold/80">Disponible prochainement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALBA (inactive) -->
+      <div class="tablet inactive p-8 lg:p-10 reveal" data-cursor>
+        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
+          <div class="flex items-start justify-between mb-8">
+            <div class="mono-label">PRODUCTUM · VI</div>
+            <div class="font-mono text-[11px] text-stone/70 tracking-[0.2em]">VI</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-3">
+              <h3 class="font-serif text-[36px] leading-none tracking-[-0.01em] text-stone">Galba</h3>
+            </div>
+            <p class="text-stone/80 text-[14.5px] leading-relaxed max-w-sm">
+              En préparation.
+            </p>
+          </div>
+          <div class="mt-8 pt-6 border-t border-stone/15">
+            <span class="tablet-soon font-mono text-[11px] italic text-gold/80">Disponible prochainement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section id="services" class="relative py-28 lg:py-36">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="mb-16 reveal">
+      <div class="mono-label mb-4"><span class="text-gold">III.</span> &nbsp; Services</div>
+      <h2 class="font-serif text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] tracking-[-0.015em] max-w-3xl">
+        Trois manières de bâtir<br/>
+        <span class="text-stone italic">avec nous.</span>
+      </h2>
+    </div>
+
+    <div class="space-y-0">
+
+      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
+        <div class="col-span-12 md:col-span-1 service-num">I.</div>
+        <div class="col-span-12 md:col-span-5">
+          <h3 class="service-title">Micro-SaaS sur mesure</h3>
+        </div>
+        <div class="col-span-12 md:col-span-6 text-stone text-[15px] leading-[1.7] max-w-md">
+          Outils ciblés, pensés pour un workflow précis. Une fonction faite proprement
+          plutôt que dix faites à moitié.
+        </div>
+      </div>
+
+      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
+        <div class="col-span-12 md:col-span-1 service-num">II.</div>
+        <div class="col-span-12 md:col-span-5">
+          <h3 class="service-title">Audits SOP &amp; coaching IA</h3>
+        </div>
+        <div class="col-span-12 md:col-span-6 text-stone text-[15px] leading-[1.7] max-w-md">
+          Cartographier vos processus, intégrer l'IA là où elle compte.
+          Pas de magie — des décisions documentées.
+        </div>
+      </div>
+
+      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
+        <div class="col-span-12 md:col-span-1 service-num">III.</div>
+        <div class="col-span-12 md:col-span-5">
+          <h3 class="service-title">Sites web essentiels</h3>
+        </div>
+        <div class="col-span-12 md:col-span-6 text-stone text-[15px] leading-[1.7] max-w-md">
+          Présence en ligne sobre, rapide, durable. Sans dépendances exotiques,
+          maintenable dans cinq ans comme aujourd'hui.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MANIFESTO ===================== -->
+<section class="relative py-28 lg:py-36 bg-ink2/60">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
+    <div class="mono-label mb-8"><span class="text-gold">IV.</span> &nbsp; Pourquoi Condere</div>
+    <p class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.45] text-travertin">
+      "Plus de la moitié des PME suisses utilisent l'IA au quotidien.
+      Beaucoup la subissent — dispersées entre des outils génériques,
+      sans fil conducteur. Nous faisons le contraire&nbsp;:
+      des modules ciblés qui absorbent ce qui est répétitif,
+      redonnent du temps, et remettent les personnes
+      <span class="text-gold not-italic">au centre de leur métier.</span>"
+    </p>
+    <div class="mt-10 flex items-center justify-center gap-3 mono-label">
+      <span class="w-12 h-px bg-gold/40"></span>
+      <span>Le manifeste Condere</span>
+      <span class="w-12 h-px bg-gold/40"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DIAGNOSTIC ===================== -->
+<section class="relative py-20 lg:py-28 border-t border-white/5">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 reveal">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="mono-label mb-4"><span class="text-gold">·</span> &nbsp; Diagnostic</div>
+        <h2 class="font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.015em]">
+          En 3 minutes,<br/>
+          <span class="italic text-gold/95">trouvez votre module.</span>
+        </h2>
+      </div>
+      <div>
+        <p class="text-stone text-[15px] leading-[1.8] mb-8">
+          Décrivez vos tâches, vos frictions, vos routines.
+          Nous analysons vos réponses et vous proposons les modules Condere
+          adaptés à votre contexte — sans rendez-vous, sans engagement.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn btn-gold">
+            <span>Répondre au questionnaire</span>
+            <span class="font-mono text-[10px]">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section id="contact" class="relative py-28 lg:py-40 overflow-hidden">
+  <div class="absolute inset-0 pattern-roman opacity-[0.04]"></div>
+  <div class="relative max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
+    <div class="mono-label mb-8"><span class="text-gold">V.</span> &nbsp; Fonder un projet</div>
+    <h2 class="font-serif text-[clamp(2.4rem,6vw,5rem)] leading-[1.0] tracking-[-0.02em]">
+      Bâtissons quelque chose<br/>
+      <span class="italic text-gold/95">qui vous survivra.</span>
+    </h2>
+    <p class="mt-8 text-stone max-w-xl mx-auto text-[15px] leading-relaxed">
+      Une question, un audit, un projet qui mûrit depuis trop longtemps —
+      écrivez-nous. Réponse sous 48 heures, en français ou en anglais.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="mailto:contact@condere.ch" class="btn btn-gold" data-cursor>
+        <span>contact@condere.ch</span>
+        <span class="font-mono text-[11px]">→</span>
+      </a>
+      <a href="#produits" class="btn btn-ghost" data-cursor>
+        <span>Explorer les produits</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-baseline gap-3">
+      <span class="font-serif text-[18px]">Condere</span>
+      <span class="font-mono text-[11px] text-stone tracking-[0.2em]">·  SUISSE  ·  MMXXVI</span>
+    </div>
+    <nav class="flex flex-wrap items-center gap-6 text-[13px]">
+      <a href="mailto:contact@condere.ch" class="link-trace" data-cursor>contact@condere.ch</a>
+      <a href="#" class="link-trace" data-cursor>LinkedIn</a>
+      <a href="#" class="link-trace" data-cursor>GitHub</a>
+    </nav>
+    <div class="mono-label">v · I.0 · stable</div>
+  </div>
+</footer>
+
+<!-- ===================== JS ===================== -->
+<script>
+/* ---------- Scroll reveal ---------- */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+  els.forEach(el=>io.observe(el));
+})();
+
+/* ---------- Smooth scroll ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const href = a.getAttribute('href');
+    if (href.length>1){
+      const t = document.querySelector(href);
+      if (t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    }
+  });
+});
+
+/* ---------- Gold dust particles around hero ---------- */
+(function(){
+  const cv = document.getElementById('goldDust');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  let W=0,H=0,DPR=Math.min(window.devicePixelRatio||1, 2);
+  const parts = [];
+  const MAX = 60;
+
+  function resize(){
+    const rect = cv.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    cv.width = W*DPR; cv.height = H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  function spawn(x,y){
+    parts.push({
+      x: x + (Math.random()-0.5)*40,
+      y: y + (Math.random()-0.5)*10,
+      vx: (Math.random()-0.5)*0.5,
+      vy: -0.2 - Math.random()*0.4,
+      life: 0,
+      ttl: 120 + Math.random()*120,
+      r: 0.6 + Math.random()*1.2,
+      a: 0.5 + Math.random()*0.5
+    });
+    if (parts.length>MAX) parts.splice(0, parts.length-MAX);
+  }
+
+  // emit dust at letter timings
+  const letterDelays = [100, 300, 500, 700, 900, 1100, 1300];
+  letterDelays.forEach((d,i)=>{
+    setTimeout(()=>{
+      const xRatio = (100 + i*166)/1200;
+      const x = xRatio * W;
+      const y = H * 0.42;
+      for (let k=0; k<14; k++) spawn(x, y);
+    }, d + 200);
+  });
+
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    for (let i=parts.length-1; i>=0; i--){
+      const p = parts[i];
+      p.life++;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.003;
+      const t = p.life / p.ttl;
+      if (t>=1){ parts.splice(i,1); continue; }
+      const alpha = p.a * (1 - t);
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(201, 169, 97, ${alpha.toFixed(3)})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // continuous gentle drift
+  setInterval(()=>{
+    if (parts.length < 30){
+      const i = Math.floor(Math.random()*7);
+      const xRatio = (100 + i*166)/1200;
+      spawn(xRatio*W, H*0.42);
+    }
+  }, 600);
+})();
+
+/* ---------- Hero letter hover -> emit dust ---------- */
+(function(){
+  const group = document.querySelector('.letter-group');
+  if (!group) return;
+  group.addEventListener('mousemove', (e)=>{
+    // Hook to dust spawn would require the spawner to be in scope; the global
+    // emitter already provides ambient dust. Intentional no-op for perf.
+  });
+})();
+</script>
+
+</body>
+</html>
