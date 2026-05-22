@@ -140,9 +140,10 @@ p { line-height: 1.65; }
 }
 .hero-bg {
   position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -48%);
-  height: 64vh; width: auto;
-  opacity: 0.09; pointer-events: none;
+  transform: translate(-50%, -50%);
+  width: max(105vw, 105vh);
+  height: max(105vw, 105vh);
+  opacity: 0.10; pointer-events: none;
   clip-path: inset(0 100% 0 0);
   animation: revealLR 1.2s ease-out 0.15s forwards;
 }
@@ -179,14 +180,14 @@ p { line-height: 1.65; }
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-.hero-title-wrap { padding: 0 1rem 3.5rem; position: relative; z-index: 10; }
+.hero-title-wrap { padding: 0 1.5rem; position: relative; z-index: 10; padding-bottom: 3.5rem; }
 
 .hero-word {
   display: block;
   font-family: 'Syncopate', sans-serif;
   font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0; line-height: 0.88;
-  font-size: clamp(3rem, 17.5vw, 34rem);
+  letter-spacing: 0; line-height: 0.9;
+  font-size: clamp(2.5rem, 13.5vw, 20rem);
   color: var(--blue);
   white-space: nowrap;
   clip-path: inset(0 0 100% 0);
@@ -766,7 +767,7 @@ footer {
     <div class="zarya-left">
       <div class="snum reveal">
         <div class="snum-bar"></div>
-        <span class="snum-title">PRODUCTUM · I</span>
+        <span class="snum-title">SYSTEM</span>
       </div>
       <h2 class="zarya-h reveal" style="transition-delay:.1s;">ZARYA<span class="dot">.</span></h2>
       <p class="zarya-sub reveal" style="transition-delay:.15s;">le copilote opérationnel des fiduciaires suisses.</p>
