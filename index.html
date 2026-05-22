@@ -136,7 +136,7 @@ p { line-height: 1.65; }
 .hero {
   position: relative; height: 100vh; min-height: 620px;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding-top: 60px; overflow: hidden;
+  padding-top: 60px;
 }
 .hero-bg {
   position: absolute; top: 50%; left: 50%;
@@ -181,7 +181,7 @@ p { line-height: 1.65; }
   font-family: 'Syncopate', sans-serif;
   font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.05em; line-height: 0.95;
-  font-size: clamp(4rem, 18vw, 22rem);
+  font-size: clamp(2.5rem, 12vw, 14rem);
   color: var(--blue);
   clip-path: inset(0 0 100% 0);
   animation: revealUp 0.65s ease-out 0.5s forwards;
@@ -549,7 +549,7 @@ footer {
   .nav { padding:0 1.5rem; }
   .nav-links, .nav-cta { display:none; }
   .nav-burger { display:block; }
-  .hero-word { font-size: clamp(4rem,22vw,8rem); }
+  .hero-word { font-size: clamp(2rem,18vw,6rem); }
   .hero-tr { display:none; }
   .hero-tl, .hero-bl, .hero-br { left:1.5rem; right:1.5rem; }
   .hero-title-wrap { padding:0 1.5rem; padding-bottom:2.5rem; }
@@ -939,7 +939,7 @@ STATUT       <span class="co">● ACTIF</span></pre>
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+  }, { threshold: 0 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
 
@@ -961,7 +961,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   const VOID   = '#050A30';
   const TOTAL_DURATION = 15000;
 
-  let paused = false;
+  let paused = true;
   let globalStartTime = null;
   let animationId = null;
   let counterValue = 0;
@@ -1263,7 +1263,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
   let ctx = null;
 
-  async function runAnimation() {
+  function runAnimation() {
     if (isReduced) {
       // Show static final state
       ctx = init();
@@ -1278,12 +1278,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     let t = 0; // ms timeline
 
     // Phase 1 — EMAIL REÇU
-    await showNode('email', t);
+    showNode('email', t);
     t += 600;
 
     // Phase 2 — CLASSIFICATION IA
     showLink('email-classif', t);
-    await showNode('classif', t + 400);
+    showNode('classif', t + 400);
     t += 900;
 
     // 3 branches
@@ -1366,7 +1366,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (!paused) { activeNodeId = null; runAnimation(); }
   });
 
-  // Pause when out of viewport
+  // Pause when out of viewport, start when first visible
   const wfObserver = new IntersectionObserver(entries => {
     const visible = entries[0].isIntersecting;
     if (!visible && !paused) {
@@ -1378,14 +1378,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       document.getElementById('wfPlayPause').textContent = '❚❚ PAUSE';
       runAnimation();
     }
-  }, { threshold: 0.2 });
+  }, { threshold: 0.15 });
   wfObserver.observe(container);
 
   // Resize
   window.addEventListener('resize', () => { if (ctx) { resetAll(ctx); runAnimation(); } });
-
-  // Start
-  runAnimation();
 })();
 </script>
 
