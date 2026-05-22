@@ -9,25 +9,22 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          cream:  '#FDF8EE',
-          cream2: '#F5EDD8',
-          ink:    '#231806',
-          ink2:   '#3D2A16',
-          lemon:  '#FFFAA8',
-          drab:   '#A08C74',
-          salmon: '#C96B47',
+          ice:    '#F4F6FC',
+          blue:   '#1A2BD4',
+          void:   '#050A30',
+          orange: '#FF5B00',
         },
         fontFamily: {
-          serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-          sans:  ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-          mono:  ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          display: ['Syncopate', 'sans-serif'],
+          sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
         },
       }
     }
@@ -36,18 +33,13 @@
 
 <style>
   :root {
-    --cream:  #FDF8EE;
-    --cream2: #F5EDD8;
-    --ink:    #231806;
-    --ink2:   #3D2A16;
-    --lemon:  #FFFAA8;
-    --drab:   #A08C74;
-    --salmon: #C96B47;
-    --glass:  rgba(255,255,255,.58);
-    --glass-border: rgba(255,255,255,.88);
+    --ice:    #F4F6FC;
+    --blue:   #1A2BD4;
+    --void:   #050A30;
+    --orange: #FF5B00;
   }
 
-  html, body { background: var(--cream); color: var(--ink); }
+  html, body { background: var(--ice); color: var(--void); }
   body {
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     font-weight: 400;
@@ -56,37 +48,37 @@
     overflow-x: hidden;
   }
 
-  /* ── AURORA (light) ── */
+  /* ── AURORA (cool blue / orange spatial) ── */
   #aurora {
     position: fixed; inset: 0; z-index: 0;
     pointer-events: none; overflow: hidden;
   }
   .orb {
     position: absolute; border-radius: 50%;
-    filter: blur(88px);
+    filter: blur(90px);
     will-change: transform;
   }
   .orb-1 {
-    width: 680px; height: 520px;
-    background: radial-gradient(circle, rgba(255,250,168,.65) 0%, transparent 70%);
+    width: 700px; height: 520px;
+    background: radial-gradient(circle, rgba(26,43,212,.13) 0%, transparent 70%);
     top: -160px; left: -180px;
-    animation: od1 20s ease-in-out infinite alternate;
+    animation: od1 22s ease-in-out infinite alternate;
   }
   .orb-2 {
     width: 560px; height: 660px;
-    background: radial-gradient(circle, rgba(201,107,71,.14) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,91,0,.08) 0%, transparent 70%);
     top: 35%; right: -200px;
-    animation: od2 26s ease-in-out infinite alternate;
+    animation: od2 28s ease-in-out infinite alternate;
   }
   .orb-3 {
     width: 820px; height: 480px;
-    background: radial-gradient(circle, rgba(160,140,116,.13) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(26,43,212,.07) 0%, transparent 70%);
     bottom: -120px; left: 20%;
-    animation: od3 32s ease-in-out infinite alternate;
+    animation: od3 34s ease-in-out infinite alternate;
   }
   .orb-4 {
     width: 460px; height: 460px;
-    background: radial-gradient(circle, rgba(255,250,168,.35) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,91,0,.05) 0%, transparent 70%);
     top: 55%; left: 5%;
     animation: od1 24s ease-in-out infinite alternate-reverse;
   }
@@ -94,46 +86,44 @@
   @keyframes od2 { to { transform: translate(-55px, -70px) scale(.92); } }
   @keyframes od3 { 50% { transform: translate(35px,-45px) scale(1.04); } to { transform: translate(-25px,30px) scale(.97); } }
 
-  /* ── GLASS (light) ── */
+  /* ── GLASS (ice canvas) ── */
   .glass-nav {
-    background: rgba(255,255,255,.68);
+    background: rgba(255,255,255,.72);
     backdrop-filter: blur(32px) saturate(200%);
     -webkit-backdrop-filter: blur(32px) saturate(200%);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(255,255,255,.92);
     border-radius: 100px;
     box-shadow:
-      0 4px 24px rgba(163,140,116,.14),
+      0 4px 24px rgba(26,43,212,.08),
       0 1px 0 inset rgba(255,255,255,1);
   }
 
   .glass-card {
-    background: rgba(255,255,255,.55);
+    background: rgba(255,255,255,.58);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255,255,255,.85);
+    border: 1px solid rgba(255,255,255,.86);
     border-radius: 24px;
     box-shadow:
-      0 2px 0 inset rgba(255,255,255,.95),
-      0 -1px 0 inset rgba(163,140,116,.08),
-      0 8px 40px rgba(163,140,116,.13);
+      0 2px 0 inset rgba(255,255,255,.92),
+      0 -1px 0 inset rgba(26,43,212,.05),
+      0 8px 40px rgba(26,43,212,.07);
     position: relative; overflow: hidden;
     transition: transform .4s cubic-bezier(.2,.8,.2,1),
                 box-shadow .4s ease,
                 border-color .4s ease;
   }
-  /* top specular */
   .glass-card::before {
     content: "";
     position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,1), transparent);
     pointer-events: none;
   }
-  /* shimmer sweep */
   .glass-card::after {
     content: "";
     position: absolute; top: 0; left: -80%;
     width: 45%; height: 100%;
-    background: linear-gradient(105deg, transparent, rgba(255,255,255,.22), transparent);
+    background: linear-gradient(105deg, transparent, rgba(255,255,255,.18), transparent);
     transform: skewX(-18deg);
     transition: left .65s ease;
     pointer-events: none;
@@ -141,80 +131,127 @@
   .glass-card.active:hover::after { left: 150%; }
   .glass-card.active:hover {
     transform: translateY(-6px) scale(1.015);
-    border-color: rgba(201,107,71,.38);
+    border-color: rgba(26,43,212,.3);
     box-shadow:
-      0 2px 0 inset rgba(255,255,255,.95),
-      0 20px 60px rgba(163,140,116,.22),
-      0 0 0 1px rgba(201,107,71,.15);
+      0 2px 0 inset rgba(255,255,255,.92),
+      0 20px 60px rgba(26,43,212,.14),
+      0 0 0 1px rgba(26,43,212,.18);
   }
-  .glass-card.active:hover .card-arrow { transform: translateX(6px); color: var(--salmon); }
-  .glass-card.inactive { opacity: .46; cursor: not-allowed; }
+  .glass-card.active:hover .card-arrow { transform: translateX(6px); color: var(--blue); }
+  .glass-card.inactive { opacity: .42; cursor: not-allowed; }
   .glass-card .card-soon { opacity: 0; transition: opacity .3s ease; }
   .glass-card.inactive:hover .card-soon { opacity: 1; }
+
+  /* ── NAV GLASS PILL ── */
+  .nav-link {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: .01em;
+    color: rgba(5,10,48,.6);
+    transition: color .22s ease;
+    position: relative;
+    padding: .34rem .9rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .nav-link::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(160deg, rgba(255,255,255,.88) 0%, rgba(240,243,252,.72) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow:
+      0 1px 0 inset rgba(255,255,255,1),
+      0 -1px 0 inset rgba(26,43,212,.1),
+      0 4px 16px rgba(26,43,212,.12),
+      0 0 0 1px rgba(26,43,212,.12);
+    opacity: 0;
+    transform: scale(.84);
+    transition: opacity .24s ease, transform .24s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+  }
+  .nav-link:hover { color: var(--void); }
+  .nav-link:hover::before { opacity: 1; transform: scale(1); }
 
   /* ── BUTTONS ── */
   .btn {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .75rem 1.45rem; border-radius: 100px;
     font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 14px; font-weight: 500; letter-spacing: .01em;
+    font-size: 14px; font-weight: 600; letter-spacing: .01em;
     transition: all .28s cubic-bezier(.2,.8,.2,1);
     cursor: pointer; white-space: nowrap;
   }
-  .btn-salmon {
-    background: linear-gradient(135deg, #D4764F, #C06040);
+  .btn-blue {
+    background: linear-gradient(135deg, #2238E8, #1A2BD4);
     color: #fff;
     border: none;
-    box-shadow: 0 4px 20px rgba(201,107,71,.32), 0 1px 0 inset rgba(255,255,255,.22);
+    box-shadow: 0 4px 20px rgba(26,43,212,.3), 0 1px 0 inset rgba(255,255,255,.18);
   }
-  .btn-salmon:hover {
-    background: linear-gradient(135deg, #DC8460, #CB6A4A);
-    box-shadow: 0 8px 32px rgba(201,107,71,.45), 0 1px 0 inset rgba(255,255,255,.25);
+  .btn-blue:hover {
+    background: linear-gradient(135deg, #2D44F8, #2236E0);
+    box-shadow: 0 8px 32px rgba(26,43,212,.45), 0 1px 0 inset rgba(255,255,255,.2);
     transform: translateY(-2px);
   }
   .btn-glass {
-    background: rgba(255,255,255,.62);
+    background: rgba(255,255,255,.65);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    color: var(--ink);
-    border: 1px solid rgba(255,255,255,.88);
-    box-shadow: 0 2px 16px rgba(163,140,116,.12), 0 1px 0 inset rgba(255,255,255,.9);
+    color: var(--void);
+    border: 1px solid rgba(255,255,255,.9);
+    box-shadow: 0 2px 16px rgba(26,43,212,.08), 0 1px 0 inset rgba(255,255,255,.92);
   }
   .btn-glass:hover {
-    background: rgba(255,255,255,.8);
-    border-color: rgba(201,107,71,.4);
-    color: var(--salmon);
+    background: rgba(255,255,255,.82);
+    border-color: rgba(26,43,212,.35);
+    color: var(--blue);
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(163,140,116,.18);
   }
-  .btn-drab {
+  .btn-outline {
     background: transparent;
-    color: var(--ink2);
-    border: 1px solid rgba(160,140,116,.45);
+    color: var(--void);
+    border: 1px solid rgba(26,43,212,.3);
   }
-  .btn-drab:hover {
-    background: rgba(160,140,116,.08);
-    border-color: rgba(201,107,71,.5);
-    color: var(--salmon);
+  .btn-outline:hover {
+    background: rgba(26,43,212,.05);
+    border-color: rgba(26,43,212,.6);
+    color: var(--blue);
     transform: translateY(-2px);
   }
 
-  /* ── HERO TITLE ── */
+  /* ── HERO TITLE (Syncopate Bold) ── */
   .hero-title {
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(4.5rem, 15vw, 10rem);
-    line-height: .92;
-    letter-spacing: -.04em;
-    color: var(--ink);
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 8vw, 7.5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 0.95;
+    color: var(--blue);
   }
 
-  /* Clip reveal: slides up on load */
+  /* Clip reveal */
   .clip-reveal {
-    clip-path: inset(0 0 100% 0);
+    clip-path: inset(0 100% 0 0);
     animation: clipUp .95s cubic-bezier(.22,.68,0,1.15) forwards;
   }
-  @keyframes clipUp { to { clip-path: inset(0 0 0% 0); } }
+  @keyframes clipUp { to { clip-path: inset(0 0% 0 0); } }
+
+  /* ── SECTION HEADINGS (Plus Jakarta Sans Bold) ── */
+  .section-heading {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--void);
+  }
+  .subsection-heading {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--void);
+  }
 
   /* ── REVEAL ── */
   .reveal {
@@ -223,131 +260,96 @@
   }
   .reveal.in { opacity: 1; transform: none; }
 
-  /* ── LINK TRACE ── */
+  /* ── LINK TRACE (footer) ── */
   .link-trace { position: relative; display: inline-block; }
   .link-trace::after {
     content: ""; position: absolute;
     left: 0; right: 0; bottom: -3px; height: 1px;
-    background: var(--salmon);
+    background: var(--blue);
     transform: scaleX(0); transform-origin: left center;
     transition: transform .3s ease-out; border-radius: 1px;
   }
   .link-trace:hover::after { transform: scaleX(1); }
 
-  /* ── MISC ── */
+  /* ── MICRO-UI (charter spec) ── */
   .mono-label {
     font-family: "JetBrains Mono", monospace;
     font-size: 11px; letter-spacing: .2em;
-    color: var(--drab); text-transform: uppercase;
+    color: rgba(5,10,48,.45);
+    text-transform: uppercase;
   }
-  .nav-link {
-    font-size: 14px; font-weight: 500; letter-spacing: .01em;
-    color: rgba(35,24,6,.6);
-    transition: color .22s ease;
-    position: relative;
-    padding: .34rem .9rem;
-    border-radius: 100px;
-    white-space: nowrap;
-  }
-  /* Liquid glass pill — visible on light bg */
-  .nav-link::before {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    /* warm-tinted frost — reads against cream */
-    background: linear-gradient(160deg,
-      rgba(255,255,255,.82) 0%,
-      rgba(245,234,218,.68) 100%);
-    backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
-    -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.04);
-    /* specular top edge + depth shadow + hairline border */
-    box-shadow:
-      0 1px 0 inset rgba(255,255,255,1),
-      0 -1px 0 inset rgba(180,155,130,.18),
-      0 4px 18px rgba(140,115,90,.18),
-      0 0 0 1px rgba(200,180,158,.28);
-    border: none;
-    opacity: 0;
-    transform: scale(.84);
-    transition: opacity .24s ease, transform .24s cubic-bezier(.2,.8,.2,1);
-    pointer-events: none;
-  }
-  .nav-link:hover { color: var(--ink); }
-  .nav-link:hover::before { opacity: 1; transform: scale(1); }
 
-  .gold-rule {
+  /* ── RULES & DIVIDERS ── */
+  .blue-rule {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(160,140,116,.45), transparent);
+    background: linear-gradient(90deg, transparent, rgba(26,43,212,.3), transparent);
   }
 
   .section-tint {
-    background: rgba(245,237,216,.45);
-    border-top: 1px solid rgba(255,255,255,.7);
-    border-bottom: 1px solid rgba(255,255,255,.7);
+    background: rgba(26,43,212,.03);
+    border-top: 1px solid rgba(255,255,255,.8);
+    border-bottom: 1px solid rgba(255,255,255,.8);
   }
 
+  /* ── SERVICE ROWS ── */
   .service-row {
-    border-top: 1px solid rgba(163,140,116,.18);
+    border-top: 1px solid rgba(26,43,212,.1);
     border-radius: 16px;
     padding-left: 1.25rem; padding-right: 1.25rem;
     transition: background .3s ease;
   }
-  .service-row:last-child { border-bottom: 1px solid rgba(163,140,116,.18); }
-  .service-row:hover { background: rgba(255,255,255,.5); }
+  .service-row:last-child { border-bottom: 1px solid rgba(26,43,212,.1); }
+  .service-row:hover { background: rgba(255,255,255,.55); }
 
-  .service-num { font-family: "JetBrains Mono", monospace; color: var(--salmon); font-size: 12px; letter-spacing: .2em; }
+  .service-num {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--orange);
+    font-size: 12px; letter-spacing: .2em;
+  }
   .service-title {
-    font-family: "Cormorant Garamond", serif; font-weight: 500;
-    font-size: clamp(1.6rem,3vw,2.4rem); letter-spacing: -.01em;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem,3vw,2.2rem);
+    letter-spacing: -.02em;
+    color: var(--void);
   }
 
-  .quote-latin {
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-style: italic; font-weight: 500;
-    font-size: clamp(1.9rem,4vw,3rem); line-height: 1.22;
-    color: var(--ink);
-  }
-
+  /* ── ICON BADGE ── */
   .icon-badge {
     width: 38px; height: 38px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(201,107,71,.1);
-    border: 1px solid rgba(201,107,71,.22);
+    background: rgba(26,43,212,.08);
+    border: 1px solid rgba(26,43,212,.15);
     flex-shrink: 0;
   }
 
-  .card-arrow { transition: transform .3s ease, color .3s ease; color: var(--drab); }
+  .card-arrow { transition: transform .3s ease, color .3s ease; color: rgba(5,10,48,.4); }
 
-  .foot a { color: var(--drab); transition: color .2s ease; }
-  .foot a:hover { color: var(--ink); }
+  /* ── FOOTER ── */
+  .foot a { color: rgba(5,10,48,.45); transition: color .2s ease; }
+  .foot a:hover { color: var(--void); }
 
-  /* Lemon highlight pill */
-  .lemon-pill {
-    display: inline-block;
-    background: var(--lemon);
-    border-radius: 100px;
-    padding: .1em .55em;
-    color: var(--ink2);
-    font-style: normal;
-  }
+  /* ── ORANGE ACCENT DOT ── */
+  .dot-orange { color: var(--orange); }
 
   @keyframes scrollBob {
-    0%,100% { transform: translateY(0); opacity: .35; }
-    50%      { transform: translateY(8px); opacity: .6; }
+    0%,100% { transform: translateY(0); opacity: .3; }
+    50%      { transform: translateY(8px); opacity: .55; }
   }
 
-  ::selection { background: rgba(255,250,168,.75); color: var(--ink); }
+  ::selection { background: rgba(26,43,212,.18); color: var(--void); }
 
   #goldDust { pointer-events: none; }
   @media (max-width: 768px) {
     #goldDust { display: none; }
-    .orb { opacity: .5; }
+    .orb { opacity: .4; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
     .clip-reveal { clip-path: none !important; }
+    #condereTitle { clip-path: none !important; }
   }
 </style>
 </head>
@@ -366,16 +368,16 @@
 <header class="fixed top-0 inset-x-0 z-50 flex justify-center items-start pt-4 px-4 lg:px-8">
   <div class="glass-nav w-full max-w-4xl px-6 h-[54px] flex items-center justify-between gap-2">
     <a href="#top" class="flex items-baseline gap-2 shrink-0">
-      <span class="font-serif text-[20px] tracking-wide text-ink">CONDERE</span>
-      <span class="font-mono text-[9px] tracking-[.2em] text-drab">·MMXXVI</span>
+      <span style="font-family:'Syncopate',sans-serif;font-weight:700;font-size:17px;letter-spacing:.08em;color:var(--blue);">CONDERE</span>
+      <span class="font-mono text-[9px] tracking-[.2em]" style="color:rgba(5,10,48,.35);">·MMXXVI</span>
     </a>
-    <nav class="hidden md:flex items-center gap-7">
+    <nav class="hidden md:flex items-center gap-1">
       <a href="#produits" class="nav-link">Produits</a>
       <a href="#services" class="nav-link">Services</a>
       <a href="#a-propos" class="nav-link">À propos</a>
       <a href="#contact"  class="nav-link">Contact</a>
     </nav>
-    <a href="#contact" class="btn btn-drab shrink-0" style="padding:.5rem 1rem;font-size:13px;">
+    <a href="#contact" class="btn btn-outline shrink-0" style="padding:.5rem 1rem;font-size:13px;">
       Fonder un projet
     </a>
   </div>
@@ -388,10 +390,10 @@
   <div class="relative w-full max-w-5xl mx-auto text-center" style="z-index:1;">
 
     <div class="mono-label mb-10 reveal" style="transition-delay:.05s;">
-      <span class="text-salmon">·</span>&ensp;CONDERE · GENEVA · HELVETIA · MMXXVI
+      <span class="dot-orange">·</span>&ensp;CONDERE · GENEVA · HELVETIA · MMXXVI
     </div>
 
-    <!-- Title — laser reveal via JS -->
+    <!-- Laser title -->
     <div class="mb-8 overflow-hidden" style="position:relative;">
       <h1 id="condereTitle" class="hero-title select-none" style="clip-path:inset(0 100% 0 0);" aria-label="CONDERE">
         CONDERE
@@ -401,18 +403,18 @@
 
     <!-- Tagline -->
     <div class="reveal" style="transition-delay:.5s;">
-      <p class="mono-label tracking-[.22em] mb-5" style="color:var(--salmon);">Modular AI Foundation</p>
-      <p class="font-serif text-[clamp(1.3rem,2.2vw,1.9rem)] leading-[1.35] text-ink2/90 max-w-xl mx-auto">
+      <p class="mono-label tracking-[.22em] mb-5" style="color:var(--orange);">Modular AI Foundation</p>
+      <p class="text-[clamp(1.1rem,2vw,1.5rem)] leading-[1.45] font-light max-w-xl mx-auto" style="color:rgba(5,10,48,.7);">
         Des outils logiciels pensés avec l'IA,<br/>pour les entreprises qui avancent.
       </p>
-      <p class="mt-3 text-[16px] font-light" style="color:var(--drab);">
+      <p class="mt-3 text-[15px] font-light" style="color:rgba(5,10,48,.4);">
         Silencieux. Précis. Essentiels.
       </p>
     </div>
 
     <!-- CTAs -->
     <div class="mt-10 flex flex-wrap items-center justify-center gap-4 reveal" style="transition-delay:.7s;">
-      <a href="#produits" class="btn btn-salmon">
+      <a href="#produits" class="btn btn-blue">
         <span>Voir nos produits</span>
         <span class="font-mono text-[11px]">→</span>
       </a>
@@ -422,9 +424,9 @@
     </div>
 
     <!-- Scroll -->
-    <div class="mt-10 flex flex-col items-center gap-2 reveal" style="transition-delay:.9s;animation:scrollBob 2.5s ease-in-out infinite;">
+    <div class="mt-12 flex flex-col items-center gap-2 reveal" style="transition-delay:.9s;animation:scrollBob 2.5s ease-in-out infinite;">
       <span class="mono-label">scroll</span>
-      <div class="w-px h-8 rounded-full" style="background:linear-gradient(to bottom,var(--salmon),transparent);"></div>
+      <div class="w-px h-8 rounded-full" style="background:linear-gradient(to bottom,var(--blue),transparent);"></div>
     </div>
   </div>
 </section>
@@ -434,25 +436,25 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-start">
 
     <div class="lg:col-span-3 reveal">
-      <div class="mono-label mb-6"><span style="color:var(--salmon);">I.</span>&ensp;Étymologie</div>
-      <h2 class="font-serif text-[clamp(2rem,4.5vw,3.6rem)] leading-[1.05] tracking-[-.01em] mb-8 text-ink">
-        <em class="italic" style="color:var(--salmon);">condere</em><span class="text-drab">,</span>
-        <span> verbe latin</span><span class="text-drab"> :</span><br/>
+      <div class="mono-label mb-6"><span class="dot-orange">I.</span>&ensp;Étymologie</div>
+      <h2 class="section-heading text-[clamp(2rem,4.5vw,3.5rem)] mb-8">
+        <em class="italic font-semibold" style="color:var(--blue);">condere</em><span style="color:rgba(5,10,48,.35);">,</span>
+        <span> verbe latin</span><span style="color:rgba(5,10,48,.35);"> :</span><br/>
         <span>fonder, bâtir, établir.</span>
       </h2>
-      <div class="text-[17px] leading-[1.85] text-ink2/75 max-w-xl space-y-5 font-light">
+      <div class="space-y-5 font-light leading-[1.65]" style="font-size:clamp(0.875rem,1.1vw,1.125rem);color:rgba(5,10,48,.7);">
         <p>
           Virgile l'emploie dans le premier vers de l'Énéide pour désigner celui qui vint
-          <em class="font-normal" style="color:var(--salmon);">fonder</em> Rome. C'est la racine de notre mot <em class="font-normal text-ink2">fondateur</em> —
+          <em class="font-semibold not-italic" style="color:var(--blue);">fonder</em> Rome. C'est la racine de notre mot <strong class="font-semibold" style="color:var(--void);">fondateur</strong> —
           et c'est exactement ce que nous faisons.
         </p>
         <p>
           Nos outils intègrent l'IA là où elle change quelque chose de concret :
           éliminer les tâches répétitives, accélérer les décisions, libérer du temps
-          pour ce qui mérite vraiment de l'<span class="font-medium text-ink">attention humaine</span>.
+          pour ce qui mérite vraiment de l'<strong class="font-semibold" style="color:var(--void);">attention humaine</strong>.
           Pas de l'IA pour faire moderne — de l'IA pour travailler mieux, et avec plus de plaisir.
         </p>
-        <p style="color:var(--drab);">
+        <p style="color:rgba(5,10,48,.45);">
           Une PME qui adopte l'IA aujourd'hui ne suit pas une mode.
           Elle remet ses collaborateurs au centre de leur métier, débarrassés
           de ce qui les épuise. Notre rôle : faire en sorte que la technologie s'efface.
@@ -462,35 +464,35 @@
 
     <div class="lg:col-span-2 reveal lg:pt-14">
       <div class="glass-card p-8 lg:p-10">
-        <div class="mono-label mb-4" style="color:rgba(160,140,116,.7);">— P. Vergilius Maro, Aeneis I,1</div>
-        <p class="quote-latin">
+        <div class="mono-label mb-4">— P. Vergilius Maro, Aeneis I,1</div>
+        <p class="font-semibold italic text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.2]" style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--void);letter-spacing:-.02em;">
           "Troiae qui&nbsp;primus<br/>
           ab&nbsp;oris… Italiam<br/>
           venit."
         </p>
-        <p class="mt-5 font-serif italic text-[18px] leading-[1.5]" style="color:var(--drab);">
+        <p class="mt-5 italic text-[17px] leading-[1.5] font-light" style="color:rgba(5,10,48,.5);">
           Celui qui, le premier, vint des rivages de Troie… jusqu'en Italie.
         </p>
-        <div class="gold-rule my-8"></div>
+        <div class="blue-rule my-8"></div>
         <div class="space-y-5">
           <div class="flex items-start gap-3">
-            <span style="color:var(--salmon);" class="text-lg leading-none mt-0.5">·</span>
+            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
             <div>
-              <div class="font-mono text-[11px] text-ink2 tracking-wide">EU <span class="text-drab">/</span> CH</div>
+              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">EU <span style="color:rgba(5,10,48,.35);">/</span> CH</div>
               <div class="mono-label mt-0.5">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
             </div>
           </div>
           <div class="flex items-start gap-3">
-            <span style="color:var(--salmon);" class="text-lg leading-none mt-0.5">·</span>
+            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
             <div>
-              <div class="font-mono text-[11px] text-ink2 tracking-wide">FR <span class="text-drab">·</span> EN <span class="text-drab">·</span> DE <span class="text-drab">·</span> IT</div>
+              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">FR <span style="color:rgba(5,10,48,.35);">·</span> EN <span style="color:rgba(5,10,48,.35);">·</span> DE <span style="color:rgba(5,10,48,.35);">·</span> IT</div>
               <div class="mono-label mt-0.5">Livraison multilingue</div>
             </div>
           </div>
           <div class="flex items-start gap-3">
-            <span style="color:var(--salmon);" class="text-lg leading-none mt-0.5">·</span>
+            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
             <div>
-              <div class="font-mono text-[11px] text-ink2 tracking-wide">Swiss Made</div>
+              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">Swiss Made</div>
               <div class="mono-label mt-0.5">Conçu et maintenu en Suisse</div>
             </div>
           </div>
@@ -506,16 +508,16 @@
 
     <div class="flex items-end justify-between mb-14 reveal">
       <div>
-        <div class="mono-label mb-4"><span style="color:var(--salmon);">II.</span>&ensp;Produits</div>
-        <h2 class="font-serif text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] tracking-[-.015em] text-ink">
+        <div class="mono-label mb-4"><span class="dot-orange">II.</span>&ensp;Produits</div>
+        <h2 class="section-heading text-[clamp(2.2rem,5vw,3.8rem)]">
           Six modules.<br/>
-          <span style="color:var(--drab);" class="italic">Deux en production.</span>
+          <span style="color:rgba(5,10,48,.35);font-weight:400;">Deux en production.</span>
         </h2>
       </div>
-      <p class="hidden md:block max-w-xs text-[14px] font-light leading-relaxed" style="color:var(--drab);">
+      <p class="hidden md:block max-w-xs text-[14px] leading-relaxed font-light" style="color:rgba(5,10,48,.5);">
         Les noms d'empereurs sont des noms de code — assumés, provisoires.
         Chaque module naît comme MVP et trouve son nom définitif
-        <em class="font-normal text-ink2/70">en prouvant son utilité</em>.
+        <em class="not-italic font-medium" style="color:rgba(5,10,48,.6);">en prouvant son utilité</em>.
       </p>
     </div>
 
@@ -525,25 +527,25 @@
       <a href="https://augustus.condere.ch" target="_blank" rel="noopener" class="glass-card active block p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:var(--salmon);">PRODUCTUM · I</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(201,107,71,.45);">I</span>
+            <span class="mono-label dot-orange">PRODUCTUM · I</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(255,91,0,.4);">I</span>
           </div>
           <div class="flex-1">
             <div class="flex items-center gap-3 mb-3">
               <div class="icon-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--salmon);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--blue);">
                   <path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h7M9 8h3"/>
                 </svg>
               </div>
-              <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] text-ink">Augustus</h3>
+              <h3 class="subsection-heading text-[28px] leading-none">Augustus</h3>
             </div>
-            <p class="text-[16px] leading-relaxed font-light" style="color:var(--drab);">
+            <p class="text-[15px] leading-relaxed font-light" style="color:rgba(5,10,48,.55);">
               Lecture et validation intelligente de factures reçues.
               Extraction, contrôle, archivage — sans intervention manuelle.
             </p>
           </div>
-          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(163,140,116,.18);">
-            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(201,107,71,.6);">augustus.condere.ch</span>
+          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(26,43,212,.1);">
+            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(26,43,212,.5);">augustus.condere.ch</span>
             <span class="card-arrow font-mono text-[12px]">→ accéder</span>
           </div>
         </div>
@@ -553,27 +555,27 @@
       <a href="https://tiberius.condere.ch" target="_blank" rel="noopener" class="glass-card active block p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:var(--salmon);">PRODUCTUM · II</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(201,107,71,.45);">II</span>
+            <span class="mono-label dot-orange">PRODUCTUM · II</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(255,91,0,.4);">II</span>
           </div>
           <div class="flex-1">
             <div class="flex items-center gap-3 mb-3">
               <div class="icon-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--salmon);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--blue);">
                   <path d="M4 5a2 2 0 0 1 2-2h11v15H7a2 2 0 0 0-2 2"/>
                   <path d="M17 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7"/>
                   <path d="M9 8h5M9 11h5"/>
                 </svg>
               </div>
-              <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] text-ink">Tiberius</h3>
+              <h3 class="subsection-heading text-[28px] leading-none">Tiberius</h3>
             </div>
-            <p class="text-[16px] leading-relaxed font-light" style="color:var(--drab);">
+            <p class="text-[15px] leading-relaxed font-light" style="color:rgba(5,10,48,.55);">
               Bibliothèque de prompts curés pour PME. Modèles éprouvés,
               classés par métier — la qualité, pas le bruit.
             </p>
           </div>
-          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(163,140,116,.18);">
-            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(201,107,71,.6);">tiberius.condere.ch</span>
+          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(26,43,212,.1);">
+            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(26,43,212,.5);">tiberius.condere.ch</span>
             <span class="card-arrow font-mono text-[12px]">→ accéder</span>
           </div>
         </div>
@@ -583,15 +585,15 @@
       <div class="glass-card inactive p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(160,140,116,.5);">PRODUCTUM · III</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(160,140,116,.35);">III</span>
+            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · III</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">III</span>
           </div>
           <div class="flex-1">
-            <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] mb-3" style="color:var(--drab);">Caligula</h3>
-            <p class="text-[16px] font-light" style="color:rgba(160,140,116,.65);">En préparation.</p>
+            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Caligula</h3>
+            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
           </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(163,140,116,.1);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(201,107,71,.5);">Disponible prochainement</span>
+          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
+            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
           </div>
         </div>
       </div>
@@ -600,15 +602,15 @@
       <div class="glass-card inactive p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(160,140,116,.5);">PRODUCTUM · IV</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(160,140,116,.35);">IV</span>
+            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · IV</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">IV</span>
           </div>
           <div class="flex-1">
-            <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] mb-3" style="color:var(--drab);">Claudius</h3>
-            <p class="text-[16px] font-light" style="color:rgba(160,140,116,.65);">En préparation.</p>
+            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Claudius</h3>
+            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
           </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(163,140,116,.1);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(201,107,71,.5);">Disponible prochainement</span>
+          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
+            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
           </div>
         </div>
       </div>
@@ -617,15 +619,15 @@
       <div class="glass-card inactive p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(160,140,116,.5);">PRODUCTUM · V</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(160,140,116,.35);">V</span>
+            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · V</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">V</span>
           </div>
           <div class="flex-1">
-            <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] mb-3" style="color:var(--drab);">Nero</h3>
-            <p class="text-[16px] font-light" style="color:rgba(160,140,116,.65);">En préparation.</p>
+            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Nero</h3>
+            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
           </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(163,140,116,.1);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(201,107,71,.5);">Disponible prochainement</span>
+          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
+            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
           </div>
         </div>
       </div>
@@ -634,15 +636,15 @@
       <div class="glass-card inactive p-8 lg:p-9 reveal">
         <div class="relative z-10 flex flex-col h-full min-h-[280px]">
           <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(160,140,116,.5);">PRODUCTUM · VI</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(160,140,116,.35);">VI</span>
+            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · VI</span>
+            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">VI</span>
           </div>
           <div class="flex-1">
-            <h3 class="font-serif text-[34px] leading-none tracking-[-.01em] mb-3" style="color:var(--drab);">Galba</h3>
-            <p class="text-[16px] font-light" style="color:rgba(160,140,116,.65);">En préparation.</p>
+            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Galba</h3>
+            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
           </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(163,140,116,.1);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(201,107,71,.5);">Disponible prochainement</span>
+          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
+            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
           </div>
         </div>
       </div>
@@ -655,33 +657,33 @@
 <section id="services" class="relative py-28 lg:py-36" style="z-index:1;">
   <div class="max-w-6xl mx-auto px-6 lg:px-10">
     <div class="mb-16 reveal">
-      <div class="mono-label mb-4"><span style="color:var(--salmon);">III.</span>&ensp;Services</div>
-      <h2 class="font-serif text-[clamp(2.2rem,5vw,4rem)] leading-[1.05] tracking-[-.015em] text-ink">
+      <div class="mono-label mb-4"><span class="dot-orange">III.</span>&ensp;Services</div>
+      <h2 class="section-heading text-[clamp(2.2rem,5vw,3.8rem)]">
         Trois manières de bâtir<br/>
-        <span style="color:var(--drab);" class="italic">avec nous.</span>
+        <span style="color:rgba(5,10,48,.35);font-weight:400;">avec nous.</span>
       </h2>
     </div>
     <div>
       <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
         <div class="col-span-12 md:col-span-1 service-num">I.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title text-ink">Micro-SaaS sur mesure</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.75] max-w-md" style="color:var(--drab);">
+        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Micro-SaaS sur mesure</h3></div>
+        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
           Outils ciblés, pensés pour un workflow précis. Une fonction faite proprement
           plutôt que dix faites à moitié.
         </div>
       </div>
       <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
         <div class="col-span-12 md:col-span-1 service-num">II.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title text-ink">Audits SOP &amp; coaching IA</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.75] max-w-md" style="color:var(--drab);">
+        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Audits SOP &amp; coaching IA</h3></div>
+        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
           Cartographier vos processus, intégrer l'IA là où elle compte.
           Pas de magie — des décisions documentées.
         </div>
       </div>
       <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
         <div class="col-span-12 md:col-span-1 service-num">III.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title text-ink">Sites web essentiels</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.75] max-w-md" style="color:var(--drab);">
+        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Sites web essentiels</h3></div>
+        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
           Présence en ligne sobre, rapide, durable. Sans dépendances exotiques,
           maintenable dans cinq ans comme aujourd'hui.
         </div>
@@ -694,19 +696,19 @@
 <section class="relative py-28 lg:py-36 section-tint" style="z-index:1;">
   <div class="max-w-4xl mx-auto px-6 lg:px-10 reveal">
     <div class="glass-card p-12 lg:p-16 text-center">
-      <div class="mono-label mb-8"><span style="color:var(--salmon);">IV.</span>&ensp;Pourquoi Condere</div>
-      <p class="font-serif italic text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.55] text-ink2/85">
+      <div class="mono-label mb-8"><span class="dot-orange">IV.</span>&ensp;Pourquoi Condere</div>
+      <p class="font-light italic text-[clamp(1.2rem,2.4vw,1.9rem)] leading-[1.6]" style="color:rgba(5,10,48,.75);">
         "Plus de la moitié des PME suisses utilisent l'IA au quotidien.
         Beaucoup la subissent — dispersées entre des outils génériques,
         sans fil conducteur. Nous faisons le contraire&nbsp;:
         des modules ciblés qui absorbent ce qui est répétitif,
         redonnent du temps, et remettent les personnes
-        <span class="not-italic font-medium" style="color:var(--salmon);">au centre de leur métier.</span>"
+        <span class="not-italic font-semibold" style="color:var(--blue);">au centre de leur métier.</span>"
       </p>
       <div class="mt-10 flex items-center justify-center gap-3 mono-label">
-        <span class="w-10 h-px rounded-full" style="background:rgba(160,140,116,.4);"></span>
+        <span class="w-10 h-px rounded-full" style="background:rgba(26,43,212,.25);"></span>
         <span>Le manifeste Condere</span>
-        <span class="w-10 h-px rounded-full" style="background:rgba(160,140,116,.4);"></span>
+        <span class="w-10 h-px rounded-full" style="background:rgba(26,43,212,.25);"></span>
       </div>
     </div>
   </div>
@@ -718,19 +720,19 @@
     <div class="glass-card p-10 lg:p-14">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div>
-          <div class="mono-label mb-4"><span style="color:var(--salmon);">·</span>&ensp;Diagnostic</div>
-          <h2 class="font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-.015em] text-ink">
+          <div class="mono-label mb-4"><span class="dot-orange">·</span>&ensp;Diagnostic</div>
+          <h2 class="section-heading text-[clamp(1.8rem,3.5vw,3rem)]">
             En 3 minutes,<br/>
-            <em class="italic" style="color:var(--salmon);">trouvez votre module.</em>
+            <em class="italic font-semibold" style="color:var(--blue);">trouvez votre module.</em>
           </h2>
         </div>
         <div>
-          <p class="text-[16px] font-light leading-[1.85] mb-8" style="color:var(--drab);">
+          <p class="text-[16px] font-light leading-[1.65] mb-8" style="color:rgba(5,10,48,.55);">
             Décrivez vos tâches, vos frictions, vos routines.
             Nous analysons vos réponses et vous proposons les modules Condere
             adaptés à votre contexte — sans rendez-vous, sans engagement.
           </p>
-          <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn btn-salmon">
+          <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn btn-blue">
             <span>Répondre au questionnaire</span>
             <span class="font-mono text-[10px]">→</span>
           </a>
@@ -742,22 +744,21 @@
 
 <!-- ═══════════ FINAL CTA ═══════════ -->
 <section id="contact" class="relative py-28 lg:py-40 overflow-hidden" style="z-index:1;">
-  <!-- Lemon glow -->
   <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-    <div style="width:800px;height:500px;background:radial-gradient(ellipse,rgba(255,250,168,.55),transparent 65%);border-radius:50%;filter:blur(60px);"></div>
+    <div style="width:800px;height:500px;background:radial-gradient(ellipse,rgba(26,43,212,.07),transparent 65%);border-radius:50%;filter:blur(60px);"></div>
   </div>
   <div class="relative max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
-    <div class="mono-label mb-8"><span style="color:var(--salmon);">V.</span>&ensp;Fonder un projet</div>
-    <h2 class="font-serif text-[clamp(2.4rem,6vw,5.2rem)] leading-[.97] tracking-[-.025em] text-ink">
+    <div class="mono-label mb-8"><span class="dot-orange">V.</span>&ensp;Fonder un projet</div>
+    <h2 class="section-heading text-[clamp(2.4rem,6vw,5rem)]" style="line-height:.97;letter-spacing:-.025em;">
       Bâtissons quelque chose<br/>
-      <em class="italic" style="color:var(--salmon);">qui vous survivra.</em>
+      <em class="italic font-semibold" style="color:var(--blue);">qui vous survivra.</em>
     </h2>
-    <p class="mt-8 max-w-xl mx-auto text-[16px] font-light leading-relaxed" style="color:var(--drab);">
+    <p class="mt-8 max-w-xl mx-auto text-[16px] font-light leading-relaxed" style="color:rgba(5,10,48,.5);">
       Une question, un audit, un projet qui mûrit depuis trop longtemps —
       écrivez-nous. Réponse sous 48 heures, en français ou en anglais.
     </p>
     <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <a href="mailto:contact@condere.ch" class="btn btn-salmon">
+      <a href="mailto:contact@condere.ch" class="btn btn-blue">
         <span>contact@condere.ch</span>
         <span class="font-mono text-[11px]">→</span>
       </a>
@@ -769,11 +770,11 @@
 </section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
-<footer class="foot relative" style="z-index:1;border-top:1px solid rgba(163,140,116,.2);">
+<footer class="foot relative" style="z-index:1;border-top:1px solid rgba(26,43,212,.08);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
     <div class="flex items-baseline gap-3">
-      <span class="font-serif text-[18px] text-ink">Condere</span>
-      <span class="font-mono text-[11px] tracking-[.2em]" style="color:var(--drab);">· SUISSE · MMXXVI</span>
+      <span style="font-family:'Syncopate',sans-serif;font-weight:700;font-size:15px;letter-spacing:.08em;color:var(--blue);">CONDERE</span>
+      <span class="font-mono text-[10px] tracking-[.2em]" style="color:rgba(5,10,48,.35);">· SUISSE · MMXXVI</span>
     </div>
     <nav class="flex flex-wrap items-center gap-6 text-[13px]">
       <a href="mailto:contact@condere.ch" class="link-trace">contact@condere.ch</a>
@@ -786,12 +787,11 @@
 
 <!-- ═══════════ JS ═══════════ -->
 <script>
-/* ── LASER CONDERE ── */
+/* ── LASER CONDERE (blue beam / orange sparks) ── */
 (function(){
   const h1  = document.getElementById('condereTitle');
   const cv  = document.getElementById('laserCanvas');
   if (!h1 || !cv) return;
-
   const ctx = cv.getContext('2d');
   const DPR = Math.min(devicePixelRatio||1, 2);
   let W=0, H=0;
@@ -799,16 +799,15 @@
   function resize(){
     const r = cv.parentElement.getBoundingClientRect();
     W = r.width; H = r.height;
-    cv.width  = W * DPR;
-    cv.height = H * DPR;
+    cv.width  = W*DPR; cv.height = H*DPR;
     ctx.setTransform(DPR,0,0,DPR,0,0);
   }
   resize();
 
-  const DURATION = 2000;  // ms for the sweep
+  const DURATION = 2000;
   const parts = [];
-  /* spark colours: lemon, salmon, warm white, terra */
-  const COLS = ['255,250,168','201,107,71','255,220,180','184,88,64','255,255,240'];
+  /* brand sparks: blue, orange, white-blue */
+  const COLS = ['26,43,212','255,91,0','100,130,255','200,210,255','255,140,60'];
 
   function spark(x, y){
     const angle = -Math.PI/2 + (Math.random()-.5)*Math.PI*1.6;
@@ -817,11 +816,10 @@
       x, y,
       vx: Math.cos(angle)*spd,
       vy: Math.sin(angle)*spd,
-      life:0,
-      ttl: 18 + Math.random()*28,
-      r:   .6 + Math.random()*2.2,
-      a:   .7 + Math.random()*.3,
-      c:   COLS[Math.floor(Math.random()*COLS.length)]
+      life:0, ttl: 18+Math.random()*28,
+      r: .6+Math.random()*2.2,
+      a: .7+Math.random()*.3,
+      c: COLS[Math.floor(Math.random()*COLS.length)]
     });
   }
 
@@ -832,84 +830,77 @@
     const elapsed  = ts - startTs;
     const progress = Math.min(elapsed / DURATION, 1);
 
-    /* reveal text left-to-right */
-    const pct = ((1-progress)*100).toFixed(2);
-    h1.style.clipPath = `inset(0 ${pct}% 0 0)`;
+    h1.style.clipPath = `inset(0 ${((1-progress)*100).toFixed(2)}% 0 0)`;
 
-    /* laser x in canvas coords */
     const lx = W * progress;
     const ly = H / 2;
 
-    /* spawn sparks while sweeping */
     if(progress < 1){
       const burst = progress < .05 ? 8 : 3;
-      for(let i=0;i<burst;i++)
-        spark(lx, ly + (Math.random()-.5)*H*.7);
+      for(let i=0;i<burst;i++) spark(lx, ly+(Math.random()-.5)*H*.7);
     }
 
     ctx.clearRect(0,0,W,H);
 
-    /* ── beam ── */
+    /* beam */
     if(progress < 1){
-      /* vertical glow line */
-      const lg = ctx.createLinearGradient(0, 0, 0, H);
-      lg.addColorStop(0,   'rgba(255,250,168,0)');
-      lg.addColorStop(.3,  'rgba(255,240,140,.85)');
-      lg.addColorStop(.5,  'rgba(255,255,220,1)');
-      lg.addColorStop(.7,  'rgba(255,190,80,.85)');
-      lg.addColorStop(1,   'rgba(255,180,100,0)');
+      const lg = ctx.createLinearGradient(0,0,0,H);
+      lg.addColorStop(0,   'rgba(26,43,212,0)');
+      lg.addColorStop(.3,  'rgba(60,90,255,.8)');
+      lg.addColorStop(.5,  'rgba(120,150,255,1)');
+      lg.addColorStop(.7,  'rgba(60,90,255,.8)');
+      lg.addColorStop(1,   'rgba(26,43,212,0)');
 
       ctx.save();
       ctx.shadowBlur  = 28;
-      ctx.shadowColor = 'rgba(255,210,80,.9)';
+      ctx.shadowColor = 'rgba(26,43,212,.85)';
       ctx.beginPath();
-      ctx.moveTo(lx, 0); ctx.lineTo(lx, H);
+      ctx.moveTo(lx,0); ctx.lineTo(lx,H);
       ctx.strokeStyle = lg;
       ctx.lineWidth = 1.8;
       ctx.stroke();
       ctx.restore();
 
-      /* hot dot */
+      /* orange hot dot */
       ctx.save();
       ctx.shadowBlur  = 40;
-      ctx.shadowColor = 'rgba(255,230,80,1)';
+      ctx.shadowColor = 'rgba(255,91,0,1)';
       ctx.beginPath();
       ctx.arc(lx, ly, 3.5, 0, Math.PI*2);
-      ctx.fillStyle = '#fff8c0';
+      ctx.fillStyle = '#FF5B00';
       ctx.fill();
       ctx.restore();
 
-      /* trailing glow behind beam */
-      const trail = ctx.createLinearGradient(Math.max(0,lx-60), 0, lx, 0);
-      trail.addColorStop(0, 'rgba(255,240,140,0)');
-      trail.addColorStop(1, 'rgba(255,240,140,.06)');
+      /* blue trail */
+      const trail = ctx.createLinearGradient(Math.max(0,lx-60),0,lx,0);
+      trail.addColorStop(0, 'rgba(26,43,212,0)');
+      trail.addColorStop(1, 'rgba(26,43,212,.04)');
       ctx.fillStyle = trail;
-      ctx.fillRect(Math.max(0,lx-60), 0, 60, H);
+      ctx.fillRect(Math.max(0,lx-60),0,60,H);
     }
 
-    /* ── sparks ── */
+    /* sparks */
     for(let i=parts.length-1;i>=0;i--){
       const p=parts[i];
       p.life++; p.x+=p.vx; p.y+=p.vy;
       p.vy+=.09; p.vx*=.96;
       const t=p.life/p.ttl;
       if(t>=1){parts.splice(i,1);continue;}
-      const alpha = p.a*(1-t)*(t<.12?t/.12:1);
+      const alpha=p.a*(1-t)*(t<.12?t/.12:1);
       ctx.save();
-      ctx.shadowBlur  = 6;
-      ctx.shadowColor = `rgba(${p.c},.6)`;
+      ctx.shadowBlur=6;
+      ctx.shadowColor=`rgba(${p.c},.5)`;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r*(1-t*.4), 0, Math.PI*2);
-      ctx.fillStyle = `rgba(${p.c},${alpha.toFixed(3)})`;
+      ctx.arc(p.x,p.y,p.r*(1-t*.4),0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.c},${alpha.toFixed(3)})`;
       ctx.fill();
       ctx.restore();
     }
 
-    if(progress < 1 || parts.length > 0) requestAnimationFrame(tick);
+    if(progress<1||parts.length>0) requestAnimationFrame(tick);
     else ctx.clearRect(0,0,W,H);
   }
 
-  /* start after reveal animations */
   setTimeout(()=>{ resize(); requestAnimationFrame(tick); }, 350);
 })();
 
@@ -926,7 +917,7 @@
 /* Smooth scroll */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click', e=>{
-    const href = a.getAttribute('href');
+    const href=a.getAttribute('href');
     if(href.length>1){
       const t=document.querySelector(href);
       if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
@@ -934,11 +925,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
-/* Mouse parallax on aurora */
+/* Mouse parallax aurora */
 (function(){
   let mx=0,my=0,cx=0,cy=0;
   document.addEventListener('mousemove',e=>{
-    mx=(e.clientX/window.innerWidth -.5)*2;
+    mx=(e.clientX/window.innerWidth-.5)*2;
     my=(e.clientY/window.innerHeight-.5)*2;
   });
   const orbs=document.querySelectorAll('#aurora .orb');
@@ -946,8 +937,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   function tick(){
     cx+=(mx-cx)*.035; cy+=(my-cy)*.035;
     orbs.forEach((o,i)=>{
-      const f=s[i]||10;
-      const sign=i%2===0?1:-1;
+      const f=s[i]||10, sign=i%2===0?1:-1;
       o.style.transform=`translate(${cx*f*sign}px,${cy*f*sign}px)`;
     });
     requestAnimationFrame(tick);
@@ -955,16 +945,16 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   tick();
 })();
 
-/* Warm dust canvas (lemon + salmon tones) */
+/* Dust canvas (blue + orange) */
 (function(){
   const cv=document.getElementById('goldDust');
   if(!cv)return;
   const ctx=cv.getContext('2d');
   let W=0,H=0;
-  const DPR=Math.min(window.devicePixelRatio||1,2);
+  const DPR=Math.min(devicePixelRatio||1,2);
   const parts=[];
   const MAX=70;
-  const colors=['255,250,168','201,107,71','160,140,116'];
+  const COLS=['26,43,212','255,91,0','100,130,255','200,210,255'];
 
   function resize(){
     W=cv.parentElement.offsetWidth;
@@ -976,33 +966,26 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   window.addEventListener('resize',resize);
 
   function spawn(x,y){
-    const c=colors[Math.floor(Math.random()*colors.length)];
+    const c=COLS[Math.floor(Math.random()*COLS.length)];
     parts.push({
       x:x+(Math.random()-.5)*100,
       y:y+(Math.random()-.5)*40,
       vx:(Math.random()-.5)*.5,
       vy:-.25-Math.random()*.5,
-      life:0,
-      ttl:110+Math.random()*150,
-      r:.5+Math.random()*1.8,
-      a:.15+Math.random()*.3,
-      c
+      life:0, ttl:110+Math.random()*150,
+      r:.4+Math.random()*1.6,
+      a:.12+Math.random()*.2, c
     });
     if(parts.length>MAX) parts.splice(0,parts.length-MAX);
   }
 
   window.addEventListener('load',()=>{
     for(let i=0;i<7;i++){
-      setTimeout(()=>{
-        const px=W*(.12+i*.13);
-        for(let k=0;k<10;k++) spawn(px,H*.44);
-      },i*130+200);
+      setTimeout(()=>{ for(let k=0;k<8;k++) spawn(W*(.12+i*.13),H*.44); },i*130+200);
     }
   });
 
-  setInterval(()=>{
-    if(parts.length<35) spawn(W*(.1+Math.random()*.8),H*.44);
-  },550);
+  setInterval(()=>{ if(parts.length<35) spawn(W*(.1+Math.random()*.8),H*.44); },600);
 
   function tick(){
     ctx.clearRect(0,0,W,H);
