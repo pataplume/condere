@@ -154,8 +154,13 @@ p { line-height: 1.65; }
 }
 .hero-tr {
   position: absolute; top: 76px; right: 3rem;
-  text-align: right; pointer-events: none;
+  text-align: right;
 }
+.hero-tr-link {
+  text-decoration: none; display: block;
+  transition: opacity 200ms;
+}
+.hero-tr-link:hover .micro { color: var(--orange) !important; }
 .hero-bl {
   position: absolute; bottom: 3.5rem; left: 3rem;
   display: flex; align-items: center; gap: 10px;
@@ -180,8 +185,8 @@ p { line-height: 1.65; }
   display: block;
   font-family: 'Syncopate', sans-serif;
   font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.02em; line-height: 0.9;
-  font-size: clamp(3rem, 16.5vw, 26rem);
+  letter-spacing: 0; line-height: 0.9;
+  font-size: clamp(2.5rem, 13.5vw, 20rem);
   color: var(--blue);
   white-space: nowrap;
   clip-path: inset(0 0 100% 0);
@@ -204,27 +209,24 @@ p { line-height: 1.65; }
 .inner     { max-width: 1200px; margin: 0 auto; }
 .inner-pad { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
 
-/* Section number */
+/* Section title (replaces old section number) */
 .snum {
   margin-bottom: 3rem;
 }
 .snum-bar {
   width: 32px; height: 4px;
   background: var(--orange);
-  margin-bottom: 6px;
+  margin-bottom: 14px;
 }
-.snum-row {
-  display: flex; align-items: baseline; gap: 1.25rem;
-}
-.snum-fig {
+.snum-title {
+  display: block;
   font-family: 'Syncopate', sans-serif;
-  font-weight: 700; font-size: clamp(2rem,4vw,3rem);
-  color: var(--blue); line-height: 1;
-}
-.snum-label {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: rgba(5,10,48,.45);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+  color: var(--blue);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 /* ─── REVEAL ─── */
@@ -343,9 +345,11 @@ p { line-height: 1.65; }
   width: 5px; height: 5px; border-radius: 50%;
   display: inline-block; flex-shrink:0;
 }
-.sdot.on  { background: var(--orange); animation: blink 2s ease-in-out infinite; }
-.sdot.off { background: rgba(5,10,48,.22); }
+.sdot.on   { background: var(--orange); animation: blink 2s ease-in-out infinite; }
+.sdot.open { background: #00C853; animation: blink 1.6s ease-in-out infinite; }
+.sdot.off  { background: rgba(5,10,48,.22); }
 .pcard:hover .sdot.on { animation-duration: .8s; }
+.pcard:hover .sdot.open { animation-duration: .8s; }
 
 /* ─── 03 ZARYA ─── */
 .s-zarya .inner {
@@ -564,7 +568,7 @@ footer {
   footer { padding:4rem 1.5rem 0; }
   .footer-bottom { padding:1.5rem 0 2rem; flex-direction:column; align-items:flex-start; gap:.75rem; }
   .wf-wrap { height:400px; }
-  .snum-fig { font-size:1.75rem; }
+  .snum-title { font-size:1.5rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -603,7 +607,7 @@ footer {
     <li class="sep">·</li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Fonder un projet →</a>
+  <a href="#contact" class="nav-cta">Contactez-nous →</a>
   <button class="nav-burger" aria-label="Ouvrir le menu" onclick="document.getElementById('navOverlay').classList.add('open')">
     [ MENU ]
   </button>
@@ -641,10 +645,13 @@ footer {
   </div>
 
   <!-- Top-right overlay -->
-  <div class="hero-tr" aria-hidden="true">
-    <p class="micro" style="color:rgba(5,10,48,.45);">COORDONNÉES : 46.2044° N, 6.1432° E</p>
-    <p class="micro" style="color:rgba(5,10,48,.45); margin-top:3px;">GENÈVE / SUISSE</p>
-  </div>
+  <a class="hero-tr hero-tr-link"
+     href="https://www.google.com/maps/place/Jet+d'Eau/@46.2074,6.15591,17z"
+     target="_blank" rel="noopener"
+     aria-label="Voir la localisation sur Google Maps">
+    <p class="micro" style="color:rgba(5,10,48,.55);">COORDONNÉES : 46.20740° N, 6.15591° E</p>
+    <p class="micro" style="color:rgba(5,10,48,.55); margin-top:3px;">GENÈVE / SUISSE</p>
+  </a>
 
   <!-- Bottom-left overlay -->
   <div class="hero-bl" aria-hidden="true">
@@ -654,7 +661,7 @@ footer {
 
   <!-- Bottom-right overlay -->
   <div class="hero-br" aria-hidden="true">
-    <p class="micro" style="color:rgba(5,10,48,.4);">01 — MODULE FONDATION · MODULAR AI</p>
+    <p class="micro" style="color:rgba(5,10,48,.4);">01 — MODULAR AI FOUNDATION</p>
   </div>
 
   <!-- Main title -->
@@ -668,10 +675,7 @@ footer {
   <div class="inner">
     <div class="snum reveal">
       <div class="snum-bar"></div>
-      <div class="snum-row">
-        <span class="snum-fig">01.</span>
-        <span class="snum-label">— Fondation</span>
-      </div>
+      <span class="snum-title">FONDATION</span>
     </div>
     <h2 class="reveal" style="transition-delay:.05s;">
       un studio suisse spécialisé dans la conception de logiciels augmentés par l'intelligence artificielle.
@@ -701,10 +705,7 @@ footer {
   <div class="inner">
     <div class="snum reveal">
       <div class="snum-bar"></div>
-      <div class="snum-row">
-        <span class="snum-fig">02.</span>
-        <span class="snum-label">— Modules opérationnels</span>
-      </div>
+      <span class="snum-title">MODULES</span>
     </div>
     <h2 class="reveal" style="transition-delay:.05s;">quatre manières de bâtir avec nous.</h2>
     <div class="cards-grid reveal" style="transition-delay:.1s;">
@@ -723,7 +724,7 @@ footer {
       <!-- II -->
       <div class="pcard" tabindex="0" role="article">
         <div class="pcard-status">
-          <span class="sdot off"></span> OUVERT
+          <span class="sdot open"></span> OUVERT
         </div>
         <div class="pcard-num">II.</div>
         <h3>Agents IA sur-mesure</h3>
@@ -734,7 +735,7 @@ footer {
       <!-- III -->
       <div class="pcard" tabindex="0" role="article">
         <div class="pcard-status">
-          <span class="sdot off"></span> OUVERT
+          <span class="sdot open"></span> OUVERT
         </div>
         <div class="pcard-num">III.</div>
         <h3>Audit &amp; accompagnement IA</h3>
@@ -745,7 +746,7 @@ footer {
       <!-- IV -->
       <div class="pcard" tabindex="0" role="article">
         <div class="pcard-status">
-          <span class="sdot off"></span> OUVERT
+          <span class="sdot open"></span> OUVERT
         </div>
         <div class="pcard-num">IV.</div>
         <h3>Sites web &amp; présence en ligne</h3>
@@ -765,12 +766,8 @@ footer {
     <div class="zarya-left">
       <div class="snum reveal">
         <div class="snum-bar"></div>
-        <div class="snum-row">
-          <span class="snum-fig">03.</span>
-          <span class="snum-label">— Module I · En production</span>
-        </div>
+        <span class="snum-title">PRODUCTUM · I</span>
       </div>
-      <p class="zarya-pre reveal" style="transition-delay:.05s;">PRODUCTUM · I</p>
       <h2 class="zarya-h reveal" style="transition-delay:.1s;">ZARYA<span class="dot">.</span></h2>
       <p class="zarya-sub reveal" style="transition-delay:.15s;">le copilote opérationnel des fiduciaires suisses.</p>
       <p class="zarya-body reveal" style="transition-delay:.2s;">
@@ -837,10 +834,7 @@ footer {
   <div class="inner-pad">
     <div class="snum reveal">
       <div class="snum-bar"></div>
-      <div class="snum-row">
-        <span class="snum-fig">04.</span>
-        <span class="snum-label">— Architecture en direct</span>
-      </div>
+      <span class="snum-title">ARCHITECTURE</span>
     </div>
     <h2 class="reveal" style="transition-delay:.05s;">un système qui se construit sous vos yeux.</h2>
     <p class="body-p reveal" style="transition-delay:.1s;">
@@ -865,10 +859,7 @@ footer {
   <div class="inner">
     <div class="snum reveal">
       <div class="snum-bar"></div>
-      <div class="snum-row">
-        <span class="snum-fig">05.</span>
-        <span class="snum-label">— Fonder un projet</span>
-      </div>
+      <span class="snum-title">CONTACT</span>
     </div>
     <h2 class="contact-h reveal" style="transition-delay:.05s;">PARLONS<span style="display:inline-block;margin-left:.05em;">-EN<span class="dot">.</span></span></h2>
     <p class="body-p reveal" style="transition-delay:.1s;">
@@ -901,7 +892,7 @@ footer {
     <!-- Données système -->
     <div class="footer-sys">
       <span class="flabel">02. Système</span>
-      <pre>COORDONNÉES  46.2044° N, 6.1432° E
+      <pre>COORDONNÉES  46.20740° N, 6.15591° E
 SITE         GENÈVE / SUISSE
 JURIDICTION  CH · EU
 PROTOCOLE    V.02 — STUDIO
@@ -916,14 +907,13 @@ STATUT       <span class="co">● ACTIF</span></pre>
       <a href="#zarya">Zarya</a>
       <a href="#manifeste">Manifeste</a>
       <a href="#contact">Contact</a>
-      <a href="#" rel="noopener">LinkedIn ↗</a>
-      <a href="#" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/conderech" target="_blank" rel="noopener">LinkedIn ↗</a>
     </nav>
 
   </div>
 
   <div class="footer-bottom">
-    <span>© 2026 Condere Laboratory — Genève, Suisse</span>
+    <span>Condere · Studio logiciel IA · Genève, Suisse</span>
     <a href="mailto:contact@condere.ch">contact@condere.ch</a>
     <div class="f-active">
       <div class="blink-dot"></div>
