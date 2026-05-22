@@ -3,497 +3,452 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Condere — Fonder des outils numériques durables</title>
+<title>Condere — Modular AI Foundation · Genève</title>
 <meta name="description" content="Condere — micro-SaaS, audits IA et sites web pensés en Suisse pour les PME francophones." />
 
-<script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ice:    '#F4F6FC',
-          blue:   '#1A2BD4',
-          void:   '#050A30',
-          orange: '#FF5B00',
-        },
-        fontFamily: {
-          display: ['Syncopate', 'sans-serif'],
-          sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        },
-      }
-    }
-  }
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
 <style>
   :root {
-    --ice:    #F4F6FC;
-    --blue:   #1A2BD4;
-    --void:   #050A30;
-    --orange: #FF5B00;
+    --primary: #1a2bd4;
+    --bg: #f4f6fc;
+    --dark: #050a30;
+    --accent: #ff5b00;
+    --border: #e5e7eb;
   }
 
-  html, body { background: var(--ice); color: var(--void); }
-  body {
-    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
 
-  /* ── AURORA (cool blue / orange spatial) ── */
-  #aurora {
-    position: fixed; inset: 0; z-index: 0;
-    pointer-events: none; overflow: hidden;
-  }
-  .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(90px);
-    will-change: transform;
-  }
-  .orb-1 {
-    width: 700px; height: 520px;
-    background: radial-gradient(circle, rgba(26,43,212,.13) 0%, transparent 70%);
-    top: -160px; left: -180px;
-    animation: od1 22s ease-in-out infinite alternate;
-  }
-  .orb-2 {
-    width: 560px; height: 660px;
-    background: radial-gradient(circle, rgba(255,91,0,.08) 0%, transparent 70%);
-    top: 35%; right: -200px;
-    animation: od2 28s ease-in-out infinite alternate;
-  }
-  .orb-3 {
-    width: 820px; height: 480px;
-    background: radial-gradient(circle, rgba(26,43,212,.07) 0%, transparent 70%);
-    bottom: -120px; left: 20%;
-    animation: od3 34s ease-in-out infinite alternate;
-  }
-  .orb-4 {
-    width: 460px; height: 460px;
-    background: radial-gradient(circle, rgba(255,91,0,.05) 0%, transparent 70%);
-    top: 55%; left: 5%;
-    animation: od1 24s ease-in-out infinite alternate-reverse;
-  }
-  @keyframes od1 { to { transform: translate(70px, 55px) scale(1.08); } }
-  @keyframes od2 { to { transform: translate(-55px, -70px) scale(.92); } }
-  @keyframes od3 { 50% { transform: translate(35px,-45px) scale(1.04); } to { transform: translate(-25px,30px) scale(.97); } }
+  ::selection { background: var(--primary); color: white; }
 
-  /* ── GLASS (ice canvas) ── */
-  .glass-nav {
-    background: rgba(255,255,255,.72);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
-    border: 1px solid rgba(255,255,255,.92);
-    border-radius: 100px;
-    box-shadow:
-      0 4px 24px rgba(26,43,212,.08),
-      0 1px 0 inset rgba(255,255,255,1);
-  }
-
-  .glass-card {
-    background: rgba(255,255,255,.58);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255,255,255,.86);
-    border-radius: 24px;
-    box-shadow:
-      0 2px 0 inset rgba(255,255,255,.92),
-      0 -1px 0 inset rgba(26,43,212,.05),
-      0 8px 40px rgba(26,43,212,.07);
-    position: relative; overflow: hidden;
-    transition: transform .4s cubic-bezier(.2,.8,.2,1),
-                box-shadow .4s ease,
-                border-color .4s ease;
-  }
-  .glass-card::before {
-    content: "";
-    position: absolute; top: 0; left: 8%; right: 8%; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,1), transparent);
-    pointer-events: none;
-  }
-  .glass-card::after {
-    content: "";
-    position: absolute; top: 0; left: -80%;
-    width: 45%; height: 100%;
-    background: linear-gradient(105deg, transparent, rgba(255,255,255,.18), transparent);
-    transform: skewX(-18deg);
-    transition: left .65s ease;
-    pointer-events: none;
-  }
-  .glass-card.active:hover::after { left: 150%; }
-  .glass-card.active:hover {
-    transform: translateY(-6px) scale(1.015);
-    border-color: rgba(26,43,212,.3);
-    box-shadow:
-      0 2px 0 inset rgba(255,255,255,.92),
-      0 20px 60px rgba(26,43,212,.14),
-      0 0 0 1px rgba(26,43,212,.18);
-  }
-  .glass-card.active:hover .card-arrow { transform: translateX(6px); color: var(--blue); }
-  .glass-card.inactive { opacity: .42; cursor: not-allowed; }
-  .glass-card .card-soon { opacity: 0; transition: opacity .3s ease; }
-  .glass-card.inactive:hover .card-soon { opacity: 1; }
-
-  /* ── NAV GLASS PILL ── */
-  .nav-link {
-    font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 14px; font-weight: 500; letter-spacing: .01em;
-    color: rgba(5,10,48,.6);
-    transition: color .22s ease;
-    position: relative;
-    padding: .34rem .9rem;
-    border-radius: 100px;
-    white-space: nowrap;
-  }
-  .nav-link::before {
-    content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(160deg, rgba(255,255,255,.88) 0%, rgba(240,243,252,.72) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow:
-      0 1px 0 inset rgba(255,255,255,1),
-      0 -1px 0 inset rgba(26,43,212,.1),
-      0 4px 16px rgba(26,43,212,.12),
-      0 0 0 1px rgba(26,43,212,.12);
-    opacity: 0;
-    transform: scale(.84);
-    transition: opacity .24s ease, transform .24s cubic-bezier(.2,.8,.2,1);
-    pointer-events: none;
-  }
-  .nav-link:hover { color: var(--void); }
-  .nav-link:hover::before { opacity: 1; transform: scale(1); }
-
-  /* ── BUTTONS ── */
-  .btn {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .75rem 1.45rem; border-radius: 100px;
-    font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 14px; font-weight: 600; letter-spacing: .01em;
-    transition: all .28s cubic-bezier(.2,.8,.2,1);
-    cursor: pointer; white-space: nowrap;
-  }
-  .btn-blue {
-    background: linear-gradient(135deg, #2238E8, #1A2BD4);
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 20px rgba(26,43,212,.3), 0 1px 0 inset rgba(255,255,255,.18);
-  }
-  .btn-blue:hover {
-    background: linear-gradient(135deg, #2D44F8, #2236E0);
-    box-shadow: 0 8px 32px rgba(26,43,212,.45), 0 1px 0 inset rgba(255,255,255,.2);
-    transform: translateY(-2px);
-  }
-  .btn-glass {
-    background: rgba(255,255,255,.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: var(--void);
-    border: 1px solid rgba(255,255,255,.9);
-    box-shadow: 0 2px 16px rgba(26,43,212,.08), 0 1px 0 inset rgba(255,255,255,.92);
-  }
-  .btn-glass:hover {
-    background: rgba(255,255,255,.82);
-    border-color: rgba(26,43,212,.35);
-    color: var(--blue);
-    transform: translateY(-2px);
-  }
-  .btn-outline {
-    background: transparent;
-    color: var(--void);
-    border: 1px solid rgba(26,43,212,.3);
-  }
-  .btn-outline:hover {
-    background: rgba(26,43,212,.05);
-    border-color: rgba(26,43,212,.6);
-    color: var(--blue);
-    transform: translateY(-2px);
-  }
-
-  /* ── HERO TITLE (Syncopate Bold) ── */
-  .hero-title {
+  .font-title {
     font-family: 'Syncopate', sans-serif;
-    font-weight: 700;
-    font-size: clamp(2.3rem, 8vw, 7.5rem);
-    text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-weight: 700;
+  }
+
+  .grid-ui {
+    font-family: monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(244,246,252,.92);
+    backdrop-filter: blur(20px);
+  }
+  .topnav-logo {
+    display: flex; align-items: center; gap: .75rem;
+    text-decoration: none; color: var(--dark);
+  }
+  .topnav-logo-text {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .topnav-links { display: flex; gap: 2rem; }
+  .topnav-links a {
+    text-decoration: none; color: rgba(5,10,48,.55);
+    font-size: 13px; letter-spacing: .01em;
+    transition: color .2s;
+  }
+  .topnav-links a:hover { color: var(--dark); }
+  .topnav-cta {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .5rem 1.25rem; border-radius: 100px;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid rgba(5,10,48,.25);
+    color: var(--dark); text-decoration: none;
+    font-family: monospace;
+    transition: border-color .2s, color .2s;
+  }
+  .topnav-cta:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 3rem;
+    padding-top: 90px;
+    border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-meta {
+    position: relative; z-index: 20;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .hero-iss-bg {
+    position: absolute; top: 40%; left: 60%;
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 0.04; pointer-events: none;
+  }
+  .hero-bottom {
+    position: relative; z-index: 10;
+  }
+  .hero-title {
+    color: var(--primary);
+    text-transform: uppercase;
     line-height: 0.95;
-    color: var(--blue);
+    font-size: clamp(3rem, 15vw, 12rem);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  .hero-rule {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
   }
 
-  /* Clip reveal */
-  .clip-reveal {
-    clip-path: inset(0 100% 0 0);
-    animation: clipUp .95s cubic-bezier(.22,.68,0,1.15) forwards;
-  }
-  @keyframes clipUp { to { clip-path: inset(0 0% 0 0); } }
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
 
-  /* ── SECTION HEADINGS (Plus Jakarta Sans Bold) ── */
+  /* SECTION WRAPPERS */
+  .section-light { background: white; }
+  .section-bg   { background: var(--bg); }
+  .section-dark  { background: var(--dark); color: white; }
+  .section-pad   { padding: 5rem 3rem; border-bottom: 1px solid var(--border); }
+  .section-pad.section-dark { border-color: rgba(255,255,255,.08); }
+  .inner { max-width: 1072px; margin: 0 auto; }
+  .inner-wide { max-width: 1280px; margin: 0 auto; }
+
+  .section-label { margin-bottom: 2rem; }
   .section-heading {
-    font-family: "Plus Jakarta Sans", sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.1;
-    color: var(--void);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 2.5rem;
   }
-  .subsection-heading {
-    font-family: "Plus Jakarta Sans", sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--void);
-  }
+  .section-heading .muted { opacity: .35; }
+  .section-heading .accent { color: var(--primary); }
 
-  /* ── REVEAL ── */
-  .reveal {
-    opacity: 0; transform: translateY(26px);
-    transition: opacity .85s ease, transform .85s cubic-bezier(.2,.8,.2,1);
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
   }
-  .reveal.in { opacity: 1; transform: none; }
-
-  /* ── LINK TRACE (footer) ── */
-  .link-trace { position: relative; display: inline-block; }
-  .link-trace::after {
-    content: ""; position: absolute;
-    left: 0; right: 0; bottom: -3px; height: 1px;
-    background: var(--blue);
-    transform: scaleX(0); transform-origin: left center;
-    transition: transform .3s ease-out; border-radius: 1px;
-  }
-  .link-trace:hover::after { transform: scaleX(1); }
-
-  /* ── MICRO-UI (charter spec) ── */
-  .mono-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px; letter-spacing: .2em;
-    color: rgba(5,10,48,.45);
-    text-transform: uppercase;
-  }
-
-  /* ── RULES & DIVIDERS ── */
-  .blue-rule {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(26,43,212,.3), transparent);
-  }
-
-  .section-tint {
-    background: rgba(26,43,212,.03);
-    border-top: 1px solid rgba(255,255,255,.8);
-    border-bottom: 1px solid rgba(255,255,255,.8);
-  }
-
-  /* ── SERVICE ROWS ── */
-  .service-row {
-    border-top: 1px solid rgba(26,43,212,.1);
+  .card {
+    border: 1px solid var(--border);
     border-radius: 16px;
-    padding-left: 1.25rem; padding-right: 1.25rem;
-    transition: background .3s ease;
+    padding: 2rem;
+    background: white;
+    display: flex; flex-direction: column;
+    min-height: 280px;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
   }
-  .service-row:last-child { border-bottom: 1px solid rgba(26,43,212,.1); }
-  .service-row:hover { background: rgba(255,255,255,.55); }
-
-  .service-num {
-    font-family: "JetBrains Mono", monospace;
-    color: var(--orange);
-    font-size: 12px; letter-spacing: .2em;
+  .card.active { cursor: pointer; text-decoration: none; color: inherit; }
+  .card.active:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(255,91,0,.1);
+    border-color: rgba(255,91,0,.3);
   }
-  .service-title {
-    font-family: "Plus Jakarta Sans", sans-serif;
+  .card.inactive { opacity: .42; }
+  .card-num {
+    font-family: monospace; font-size: 10px; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--accent); opacity: .8;
+  }
+  .card.inactive .card-num { color: var(--dark); opacity: .25; }
+  .card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
-    font-size: clamp(1.5rem,3vw,2.2rem);
-    letter-spacing: -.02em;
-    color: var(--void);
+    font-size: 1.75rem; letter-spacing: -0.03em;
+    color: var(--dark); margin: 1rem 0 .5rem;
+  }
+  .card.inactive .card-title { opacity: .45; }
+  .card-body {
+    font-size: 15px; line-height: 1.7; font-weight: 300;
+    color: rgba(5,10,48,.6); flex: 1;
+  }
+  .card-foot {
+    margin-top: 1.5rem; padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .card-link {
+    font-family: monospace; font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent); opacity: .7;
+  }
+  .card-arrow {
+    font-family: monospace; font-size: 11px;
+    color: rgba(5,10,48,.4);
+    transition: transform .3s, color .3s;
+  }
+  .card.active:hover .card-arrow { transform: translateX(6px); color: var(--accent); }
+
+  /* SERVICES */
+  .service-list { margin-top: 1rem; }
+  .service-row {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 0;
+    display: grid;
+    grid-template-columns: 3rem 1fr 1fr;
+    gap: 2rem;
+    align-items: baseline;
+  }
+  .service-row:last-child { border-bottom: 1px solid var(--border); }
+  .service-num { font-family: monospace; font-size: 11px; color: var(--accent); letter-spacing: .2em; }
+  .service-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+  .service-desc { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(5,10,48,.6); }
+
+  /* QUOTE */
+  .quote-block {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4rem;
+    background: white;
+    text-align: center;
+  }
+  .quote-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+    letter-spacing: -0.03em;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+  }
+  .quote-divider {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+  }
+  .quote-divider span { font-family: monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; opacity: .4; }
+  .quote-divider div { height: 1px; width: 2.5rem; background: var(--border); }
+
+  /* 3D VIEWER */
+  #logo3d {
+    height: 600px; width: 100%;
+    background: rgba(255,255,255,.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.1);
+    overflow: hidden;
+    cursor: crosshair;
+    position: relative;
+  }
+  #logo3d canvas { display: block; }
+
+  /* DIAGNOSTIC */
+  .diagnostic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 4rem;
+    align-items: center;
   }
 
-  /* ── ICON BADGE ── */
-  .icon-badge {
-    width: 38px; height: 38px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(26,43,212,.08);
-    border: 1px solid rgba(26,43,212,.15);
-    flex-shrink: 0;
+  /* BUTTONS */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .875rem 2rem; border-radius: 100px;
+    background: var(--primary); color: white;
+    font-family: 'Lexend', sans-serif; font-size: 14px; font-weight: 400;
+    text-decoration: none;
+    transition: background .25s, box-shadow .25s, transform .25s;
+    box-shadow: 0 4px 20px rgba(26,43,212,.3);
   }
-
-  .card-arrow { transition: transform .3s ease, color .3s ease; color: rgba(5,10,48,.4); }
-
-  /* ── FOOTER ── */
-  .foot a { color: rgba(5,10,48,.45); transition: color .2s ease; }
-  .foot a:hover { color: var(--void); }
-
-  /* ── ORANGE ACCENT DOT ── */
-  .dot-orange { color: var(--orange); }
-
-  @keyframes scrollBob {
-    0%,100% { transform: translateY(0); opacity: .3; }
-    50%      { transform: translateY(8px); opacity: .55; }
+  .btn-primary:hover {
+    background: #1624b8;
+    box-shadow: 0 8px 32px rgba(26,43,212,.45);
+    transform: translateY(-2px);
   }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .875rem 2rem; border-radius: 100px;
+    border: 1px solid rgba(5,10,48,.2); color: var(--dark);
+    font-family: 'Lexend', sans-serif; font-size: 14px; font-weight: 400;
+    text-decoration: none;
+    transition: border-color .25s, color .25s, transform .25s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-outline-white {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .75rem 1.5rem; border-radius: 100px;
+    border: 1px solid rgba(255,255,255,.2); color: white;
+    font-family: monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color .2s;
+  }
+  .btn-outline-white:hover { border-color: rgba(255,255,255,.5); }
 
-  ::selection { background: rgba(26,43,212,.18); color: var(--void); }
+  /* FOOTER LINKS */
+  .foot-link {
+    font-family: monospace; font-size: 10px; text-transform: uppercase;
+    letter-spacing: .1em; opacity: .3; color: white; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .foot-link:hover { opacity: .7; }
 
-  #goldDust { pointer-events: none; }
+  /* ETYMO CARD */
+  .etymo-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    background: var(--bg);
+  }
+  .etymo-bullets { display: flex; flex-direction: column; gap: .875rem; }
+  .etymo-bullet { display: flex; gap: .5rem; align-items: baseline; }
+  .etymo-bullet .dot { color: var(--accent); font-size: 14px; flex-shrink: 0; }
+
   @media (max-width: 768px) {
-    #goldDust { display: none; }
-    .orb { opacity: .4; }
+    .topnav { padding: 1rem 1.5rem; }
+    .topnav-links { display: none; }
+    .hero { padding: 1.5rem; padding-top: 80px; }
+    .section-pad { padding: 3rem 1.5rem; }
+    .service-row { grid-template-columns: 1fr; gap: .75rem; }
+    #logo3d { height: 400px; }
+    .quote-block { padding: 2rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
-    .clip-reveal { clip-path: none !important; }
-    #condereTitle { clip-path: none !important; }
   }
 </style>
 </head>
-
 <body>
 
-<!-- AURORA -->
-<div id="aurora" aria-hidden="true">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-  <div class="orb orb-4"></div>
-</div>
-
-<!-- ═══════════ NAV ═══════════ -->
-<header class="fixed top-0 inset-x-0 z-50 flex justify-center items-start pt-4 px-4 lg:px-8">
-  <div class="glass-nav w-full max-w-4xl px-6 h-[54px] flex items-center justify-between gap-2">
-    <a href="#top" class="flex items-baseline gap-2 shrink-0">
-      <span style="font-family:'Syncopate',sans-serif;font-weight:700;font-size:17px;letter-spacing:.08em;color:var(--blue);">CONDERE</span>
-      <span class="font-mono text-[9px] tracking-[.2em]" style="color:rgba(5,10,48,.35);">·MMXXVI</span>
-    </a>
-    <nav class="hidden md:flex items-center gap-1">
-      <a href="#produits" class="nav-link">Produits</a>
-      <a href="#services" class="nav-link">Services</a>
-      <a href="#a-propos" class="nav-link">À propos</a>
-      <a href="#contact"  class="nav-link">Contact</a>
-    </nav>
-    <a href="#contact" class="btn btn-outline shrink-0" style="padding:.5rem 1rem;font-size:13px;">
-      Fonder un projet
-    </a>
+<!-- NAV -->
+<nav class="topnav">
+  <a href="#top" class="topnav-logo">
+    <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="46" width="70" height="8" fill="#1a2bd4"/>
+      <rect x="15" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="27" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="15" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="27" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="65" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="77" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="65" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="77" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="#1a2bd4"/>
+    </svg>
+    <span class="topnav-logo-text">CONDERE</span>
+  </a>
+  <div class="topnav-links">
+    <a href="#produits">Produits</a>
+    <a href="#services">Services</a>
+    <a href="#a-propos">À propos</a>
+    <a href="#contact">Contact</a>
   </div>
-</header>
+  <a href="#contact" class="topnav-cta">Fonder un projet</a>
+</nav>
 
-<!-- ═══════════ HERO ═══════════ -->
-<section id="top" class="relative flex flex-col items-center justify-center pt-32 pb-16 px-6" style="z-index:1;">
-  <canvas id="goldDust" class="absolute inset-0 w-full h-full" style="z-index:0;"></canvas>
-
-  <div class="relative w-full max-w-5xl mx-auto text-center" style="z-index:1;">
-
-    <div class="mono-label mb-10 reveal" style="transition-delay:.05s;">
-      <span class="dot-orange">·</span>&ensp;CONDERE · GENEVA · HELVETIA · MMXXVI
-    </div>
-
-    <!-- Laser title -->
-    <div class="mb-8 overflow-hidden" style="position:relative;">
-      <h1 id="condereTitle" class="hero-title select-none" style="clip-path:inset(0 100% 0 0);" aria-label="CONDERE">
-        CONDERE
-      </h1>
-      <canvas id="laserCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;"></canvas>
-    </div>
-
-    <!-- Tagline -->
-    <div class="reveal" style="transition-delay:.5s;">
-      <p class="mono-label tracking-[.22em] mb-5" style="color:var(--orange);">Modular AI Foundation</p>
-      <p class="text-[clamp(1.1rem,2vw,1.5rem)] leading-[1.45] font-light max-w-xl mx-auto" style="color:rgba(5,10,48,.7);">
-        Des outils logiciels pensés avec l'IA,<br/>pour les entreprises qui avancent.
-      </p>
-      <p class="mt-3 text-[15px] font-light" style="color:rgba(5,10,48,.4);">
-        Silencieux. Précis. Essentiels.
+<!-- ═══ HERO ═══ -->
+<section id="top" class="hero">
+  <div class="hero-meta">
+    <div>
+      <p class="grid-ui">Protocole Système : v.01-modular</p>
+      <p style="font-size:14px;max-width:180px;opacity:.6;margin-top:5px;font-weight:300;">
+        Modular IA foundation for orbital scaled operations.
       </p>
     </div>
-
-    <!-- CTAs -->
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4 reveal" style="transition-delay:.7s;">
-      <a href="#produits" class="btn btn-blue">
-        <span>Voir nos produits</span>
-        <span class="font-mono text-[11px]">→</span>
-      </a>
-      <a href="#contact" class="btn btn-glass">
-        <span>Demander un audit</span>
-      </a>
+    <div class="grid-ui" style="text-align:right;">
+      Coordonnées : 46.2044° N, 6.1432° E<br/>
+      Genève / Suisse
     </div>
+  </div>
 
-    <!-- Scroll -->
-    <div class="mt-12 flex flex-col items-center gap-2 reveal" style="transition-delay:.9s;animation:scrollBob 2.5s ease-in-out infinite;">
-      <span class="mono-label">scroll</span>
-      <div class="w-px h-8 rounded-full" style="background:linear-gradient(to bottom,var(--blue),transparent);"></div>
+  <!-- Watermark ISS -->
+  <div class="hero-iss-bg" aria-hidden="true">
+    <svg width="1200" height="1200" viewBox="0 0 100 100" fill="none">
+      <rect x="15" y="46" width="70" height="8" fill="#1a2bd4"/>
+      <rect x="15" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="27" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="15" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="27" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="65" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="77" y="10" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="65" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="77" y="62" width="8" height="28" fill="#1a2bd4"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="#1a2bd4"/>
+    </svg>
+  </div>
+
+  <div class="hero-bottom">
+    <h1 class="font-title hero-title">CONDERE.</h1>
+    <div class="hero-rule">
+      <div class="grid-ui">© 2026 Condere Laboratory — Genève, Suisse</div>
+      <div class="grid-ui">01 — Module Fondation · Modular AI</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ ETYMOLOGY ═══════════ -->
-<section id="a-propos" class="relative py-28 lg:py-36" style="z-index:1;">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-start">
+<!-- ═══ ETYMOLOGIE ═══ -->
+<section id="a-propos" class="section-pad section-light">
+  <div class="inner">
+    <p class="grid-ui section-label">01. Étymologie</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4rem;align-items:start;">
 
-    <div class="lg:col-span-3 reveal">
-      <div class="mono-label mb-6"><span class="dot-orange">I.</span>&ensp;Étymologie</div>
-      <h2 class="section-heading text-[clamp(2rem,4.5vw,3.5rem)] mb-8">
-        <em class="italic font-semibold" style="color:var(--blue);">condere</em><span style="color:rgba(5,10,48,.35);">,</span>
-        <span> verbe latin</span><span style="color:rgba(5,10,48,.35);"> :</span><br/>
-        <span>fonder, bâtir, établir.</span>
-      </h2>
-      <div class="space-y-5 font-light leading-[1.65]" style="font-size:clamp(0.875rem,1.1vw,1.125rem);color:rgba(5,10,48,.7);">
-        <p>
+      <div class="reveal">
+        <h2 class="section-heading" style="font-size:clamp(2.5rem,7vw,4.5rem);">
+          <em class="accent" style="font-style:normal;">condere</em>,<br/>
+          <span class="muted" style="font-size:.55em;">verbe latin</span>
+        </h2>
+        <p style="font-size:1.0625rem;line-height:1.75;font-weight:300;opacity:.7;margin-bottom:1.25rem;">
           Virgile l'emploie dans le premier vers de l'Énéide pour désigner celui qui vint
-          <em class="font-semibold not-italic" style="color:var(--blue);">fonder</em> Rome. C'est la racine de notre mot <strong class="font-semibold" style="color:var(--void);">fondateur</strong> —
-          et c'est exactement ce que nous faisons.
+          <em style="color:var(--primary);font-style:normal;">fonder</em> Rome. C'est la racine de notre mot
+          <em style="color:var(--dark);font-style:normal;font-weight:600;">fondateur</em>.
         </p>
-        <p>
+        <p style="font-size:1.0625rem;line-height:1.75;font-weight:300;opacity:.7;">
           Nos outils intègrent l'IA là où elle change quelque chose de concret :
           éliminer les tâches répétitives, accélérer les décisions, libérer du temps
-          pour ce qui mérite vraiment de l'<strong class="font-semibold" style="color:var(--void);">attention humaine</strong>.
-          Pas de l'IA pour faire moderne — de l'IA pour travailler mieux, et avec plus de plaisir.
-        </p>
-        <p style="color:rgba(5,10,48,.45);">
-          Une PME qui adopte l'IA aujourd'hui ne suit pas une mode.
-          Elle remet ses collaborateurs au centre de leur métier, débarrassés
-          de ce qui les épuise. Notre rôle : faire en sorte que la technologie s'efface.
+          pour ce qui mérite vraiment de l'<strong style="font-weight:600;opacity:1;color:var(--dark);">attention humaine</strong>.
         </p>
       </div>
-    </div>
 
-    <div class="lg:col-span-2 reveal lg:pt-14">
-      <div class="glass-card p-8 lg:p-10">
-        <div class="mono-label mb-4">— P. Vergilius Maro, Aeneis I,1</div>
-        <p class="font-semibold italic text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.2]" style="font-family:'Plus Jakarta Sans',sans-serif;color:var(--void);letter-spacing:-.02em;">
-          "Troiae qui&nbsp;primus<br/>
-          ab&nbsp;oris… Italiam<br/>
-          venit."
-        </p>
-        <p class="mt-5 italic text-[17px] leading-[1.5] font-light" style="color:rgba(5,10,48,.5);">
-          Celui qui, le premier, vint des rivages de Troie… jusqu'en Italie.
-        </p>
-        <div class="blue-rule my-8"></div>
-        <div class="space-y-5">
-          <div class="flex items-start gap-3">
-            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
-            <div>
-              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">EU <span style="color:rgba(5,10,48,.35);">/</span> CH</div>
-              <div class="mono-label mt-0.5">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
+      <div class="reveal" style="transition-delay:.15s;">
+        <div class="etymo-card">
+          <p class="grid-ui" style="opacity:1;margin-bottom:1rem;">— P. Vergilius Maro, Aeneis I,1</p>
+          <p class="font-title" style="font-size:1.75rem;line-height:1.3;letter-spacing:-0.04em;margin-bottom:1.5rem;">
+            "Troiae qui&nbsp;primus ab&nbsp;oris…<br/>Italiam venit."
+          </p>
+          <div style="height:1px;background:var(--border);margin-bottom:1.5rem;"></div>
+          <div class="etymo-bullets">
+            <div class="etymo-bullet">
+              <span class="dot">·</span>
+              <div>
+                <div class="grid-ui" style="opacity:1;">EU / CH</div>
+                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
-            <div>
-              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">FR <span style="color:rgba(5,10,48,.35);">·</span> EN <span style="color:rgba(5,10,48,.35);">·</span> DE <span style="color:rgba(5,10,48,.35);">·</span> IT</div>
-              <div class="mono-label mt-0.5">Livraison multilingue</div>
+            <div class="etymo-bullet">
+              <span class="dot">·</span>
+              <div>
+                <div class="grid-ui" style="opacity:1;">FR · EN · DE · IT</div>
+                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Livraison multilingue</div>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="dot-orange text-lg leading-none mt-0.5">·</span>
-            <div>
-              <div class="font-mono text-[11px] tracking-wide" style="color:var(--void);">Swiss Made</div>
-              <div class="mono-label mt-0.5">Conçu et maintenu en Suisse</div>
+            <div class="etymo-bullet">
+              <span class="dot">·</span>
+              <div>
+                <div class="grid-ui" style="opacity:1;">Swiss Made</div>
+                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Conçu et maintenu en Suisse</div>
+              </div>
             </div>
           </div>
         </div>
@@ -502,508 +457,327 @@
   </div>
 </section>
 
-<!-- ═══════════ PRODUITS ═══════════ -->
-<section id="produits" class="relative py-28 lg:py-36 section-tint" style="z-index:1;">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-    <div class="flex items-end justify-between mb-14 reveal">
-      <div>
-        <div class="mono-label mb-4"><span class="dot-orange">II.</span>&ensp;Produits</div>
-        <h2 class="section-heading text-[clamp(2.2rem,5vw,3.8rem)]">
-          Six modules.<br/>
-          <span style="color:rgba(5,10,48,.35);font-weight:400;">Deux en production.</span>
-        </h2>
-      </div>
-      <p class="hidden md:block max-w-xs text-[14px] leading-relaxed font-light" style="color:rgba(5,10,48,.5);">
-        Les noms d'empereurs sont des noms de code — assumés, provisoires.
-        Chaque module naît comme MVP et trouve son nom définitif
-        <em class="not-italic font-medium" style="color:rgba(5,10,48,.6);">en prouvant son utilité</em>.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      <!-- AUGUSTUS -->
-      <a href="https://augustus.condere.ch" target="_blank" rel="noopener" class="glass-card active block p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label dot-orange">PRODUCTUM · I</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(255,91,0,.4);">I</span>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="icon-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--blue);">
-                  <path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h7M9 8h3"/>
-                </svg>
-              </div>
-              <h3 class="subsection-heading text-[28px] leading-none">Augustus</h3>
-            </div>
-            <p class="text-[15px] leading-relaxed font-light" style="color:rgba(5,10,48,.55);">
-              Lecture et validation intelligente de factures reçues.
-              Extraction, contrôle, archivage — sans intervention manuelle.
-            </p>
-          </div>
-          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(26,43,212,.1);">
-            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(26,43,212,.5);">augustus.condere.ch</span>
-            <span class="card-arrow font-mono text-[12px]">→ accéder</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- TIBERIUS -->
-      <a href="https://tiberius.condere.ch" target="_blank" rel="noopener" class="glass-card active block p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label dot-orange">PRODUCTUM · II</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(255,91,0,.4);">II</span>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="icon-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--blue);">
-                  <path d="M4 5a2 2 0 0 1 2-2h11v15H7a2 2 0 0 0-2 2"/>
-                  <path d="M17 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7"/>
-                  <path d="M9 8h5M9 11h5"/>
-                </svg>
-              </div>
-              <h3 class="subsection-heading text-[28px] leading-none">Tiberius</h3>
-            </div>
-            <p class="text-[15px] leading-relaxed font-light" style="color:rgba(5,10,48,.55);">
-              Bibliothèque de prompts curés pour PME. Modèles éprouvés,
-              classés par métier — la qualité, pas le bruit.
-            </p>
-          </div>
-          <div class="mt-8 pt-5 flex items-center justify-between" style="border-top:1px solid rgba(26,43,212,.1);">
-            <span class="font-mono text-[11px] tracking-[.1em]" style="color:rgba(26,43,212,.5);">tiberius.condere.ch</span>
-            <span class="card-arrow font-mono text-[12px]">→ accéder</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- CALIGULA -->
-      <div class="glass-card inactive p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · III</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">III</span>
-          </div>
-          <div class="flex-1">
-            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Caligula</h3>
-            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
-          </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CLAUDIUS -->
-      <div class="glass-card inactive p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · IV</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">IV</span>
-          </div>
-          <div class="flex-1">
-            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Claudius</h3>
-            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
-          </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- NERO -->
-      <div class="glass-card inactive p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · V</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">V</span>
-          </div>
-          <div class="flex-1">
-            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Nero</h3>
-            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
-          </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- GALBA -->
-      <div class="glass-card inactive p-8 lg:p-9 reveal">
-        <div class="relative z-10 flex flex-col h-full min-h-[280px]">
-          <div class="flex items-start justify-between mb-8">
-            <span class="mono-label" style="color:rgba(5,10,48,.25);">PRODUCTUM · VI</span>
-            <span class="font-mono text-[11px] tracking-[.2em]" style="color:rgba(5,10,48,.2);">VI</span>
-          </div>
-          <div class="flex-1">
-            <h3 class="subsection-heading text-[28px] leading-none mb-3" style="color:rgba(5,10,48,.4);">Galba</h3>
-            <p class="text-[15px] font-light" style="color:rgba(5,10,48,.35);">En préparation.</p>
-          </div>
-          <div class="mt-8 pt-5" style="border-top:1px solid rgba(26,43,212,.06);">
-            <span class="card-soon font-mono text-[11px] italic" style="color:rgba(26,43,212,.4);">Disponible prochainement</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ SERVICES ═══════════ -->
-<section id="services" class="relative py-28 lg:py-36" style="z-index:1;">
-  <div class="max-w-6xl mx-auto px-6 lg:px-10">
-    <div class="mb-16 reveal">
-      <div class="mono-label mb-4"><span class="dot-orange">III.</span>&ensp;Services</div>
-      <h2 class="section-heading text-[clamp(2.2rem,5vw,3.8rem)]">
-        Trois manières de bâtir<br/>
-        <span style="color:rgba(5,10,48,.35);font-weight:400;">avec nous.</span>
+<!-- ═══ PRODUITS ═══ -->
+<section id="produits" class="section-pad">
+  <div class="inner">
+    <div class="reveal">
+      <p class="grid-ui section-label">02. Produits</p>
+      <h2 class="section-heading">
+        Six modules.<br/>
+        <span class="muted">Deux en production.</span>
       </h2>
     </div>
-    <div>
-      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
-        <div class="col-span-12 md:col-span-1 service-num">I.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Micro-SaaS sur mesure</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
+    <div class="cards-grid">
+
+      <a href="https://augustus.condere.ch" target="_blank" rel="noopener" class="card active reveal">
+        <div class="card-num">PRODUCTUM · I</div>
+        <div class="card-title">Augustus</div>
+        <p class="card-body">
+          Lecture et validation intelligente de factures reçues.
+          Extraction, contrôle, archivage — sans intervention manuelle.
+        </p>
+        <div class="card-foot">
+          <span class="card-link">augustus.condere.ch</span>
+          <span class="card-arrow">→ accéder</span>
+        </div>
+      </a>
+
+      <a href="https://tiberius.condere.ch" target="_blank" rel="noopener" class="card active reveal" style="transition-delay:.05s;">
+        <div class="card-num">PRODUCTUM · II</div>
+        <div class="card-title">Tiberius</div>
+        <p class="card-body">
+          Bibliothèque de prompts curés pour PME. Modèles éprouvés,
+          classés par métier — la qualité, pas le bruit.
+        </p>
+        <div class="card-foot">
+          <span class="card-link">tiberius.condere.ch</span>
+          <span class="card-arrow">→ accéder</span>
+        </div>
+      </a>
+
+      <div class="card inactive reveal" style="transition-delay:.1s;">
+        <div class="card-num">PRODUCTUM · III</div>
+        <div class="card-title">Caligula</div>
+        <p class="card-body">En préparation.</p>
+        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
+      </div>
+
+      <div class="card inactive reveal" style="transition-delay:.15s;">
+        <div class="card-num">PRODUCTUM · IV</div>
+        <div class="card-title">Claudius</div>
+        <p class="card-body">En préparation.</p>
+        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
+      </div>
+
+      <div class="card inactive reveal" style="transition-delay:.2s;">
+        <div class="card-num">PRODUCTUM · V</div>
+        <div class="card-title">Nero</div>
+        <p class="card-body">En préparation.</p>
+        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
+      </div>
+
+      <div class="card inactive reveal" style="transition-delay:.25s;">
+        <div class="card-num">PRODUCTUM · VI</div>
+        <div class="card-title">Galba</div>
+        <p class="card-body">En préparation.</p>
+        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services" class="section-pad section-light">
+  <div class="inner">
+    <div class="reveal">
+      <p class="grid-ui section-label">03. Services</p>
+      <h2 class="section-heading">
+        Trois manières<br/>
+        <span class="muted">de bâtir avec nous.</span>
+      </h2>
+    </div>
+    <div class="service-list">
+      <div class="service-row reveal">
+        <div class="service-num">I.</div>
+        <h3 class="service-title">Micro-SaaS sur mesure</h3>
+        <p class="service-desc">
           Outils ciblés, pensés pour un workflow précis. Une fonction faite proprement
           plutôt que dix faites à moitié.
-        </div>
+        </p>
       </div>
-      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
-        <div class="col-span-12 md:col-span-1 service-num">II.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Audits SOP &amp; coaching IA</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
+      <div class="service-row reveal" style="transition-delay:.1s;">
+        <div class="service-num">II.</div>
+        <h3 class="service-title">Audits SOP &amp; coaching IA</h3>
+        <p class="service-desc">
           Cartographier vos processus, intégrer l'IA là où elle compte.
           Pas de magie — des décisions documentées.
-        </div>
+        </p>
       </div>
-      <div class="service-row py-10 lg:py-12 grid grid-cols-12 gap-6 items-baseline reveal">
-        <div class="col-span-12 md:col-span-1 service-num">III.</div>
-        <div class="col-span-12 md:col-span-5"><h3 class="service-title">Sites web essentiels</h3></div>
-        <div class="col-span-12 md:col-span-6 text-[16px] font-light leading-[1.65] max-w-md" style="color:rgba(5,10,48,.55);">
+      <div class="service-row reveal" style="transition-delay:.2s;">
+        <div class="service-num">III.</div>
+        <h3 class="service-title">Sites web essentiels</h3>
+        <p class="service-desc">
           Présence en ligne sobre, rapide, durable. Sans dépendances exotiques,
           maintenable dans cinq ans comme aujourd'hui.
-        </div>
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ MANIFESTO ═══════════ -->
-<section class="relative py-28 lg:py-36 section-tint" style="z-index:1;">
-  <div class="max-w-4xl mx-auto px-6 lg:px-10 reveal">
-    <div class="glass-card p-12 lg:p-16 text-center">
-      <div class="mono-label mb-8"><span class="dot-orange">IV.</span>&ensp;Pourquoi Condere</div>
-      <p class="font-light italic text-[clamp(1.2rem,2.4vw,1.9rem)] leading-[1.6]" style="color:rgba(5,10,48,.75);">
+<!-- ═══ MANIFESTE ═══ -->
+<section class="section-pad">
+  <div class="inner">
+    <p class="grid-ui section-label reveal">04. Pourquoi Condere</p>
+    <div class="quote-block reveal" style="transition-delay:.1s;">
+      <p class="quote-text">
         "Plus de la moitié des PME suisses utilisent l'IA au quotidien.
         Beaucoup la subissent — dispersées entre des outils génériques,
-        sans fil conducteur. Nous faisons le contraire&nbsp;:
-        des modules ciblés qui absorbent ce qui est répétitif,
-        redonnent du temps, et remettent les personnes
-        <span class="not-italic font-semibold" style="color:var(--blue);">au centre de leur métier.</span>"
+        sans fil conducteur. Nous faisons le contraire : des modules ciblés
+        qui absorbent ce qui est répétitif, redonnent du temps, et remettent
+        les personnes <span style="color:var(--primary);">au centre de leur métier.</span>"
       </p>
-      <div class="mt-10 flex items-center justify-center gap-3 mono-label">
-        <span class="w-10 h-px rounded-full" style="background:rgba(26,43,212,.25);"></span>
+      <div class="quote-divider">
+        <div></div>
         <span>Le manifeste Condere</span>
-        <span class="w-10 h-px rounded-full" style="background:rgba(26,43,212,.25);"></span>
+        <div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ DIAGNOSTIC ═══════════ -->
-<section class="relative py-20 lg:py-28" style="z-index:1;">
-  <div class="max-w-4xl mx-auto px-6 lg:px-10 reveal">
-    <div class="glass-card p-10 lg:p-14">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div>
-          <div class="mono-label mb-4"><span class="dot-orange">·</span>&ensp;Diagnostic</div>
-          <h2 class="section-heading text-[clamp(1.8rem,3.5vw,3rem)]">
-            En 3 minutes,<br/>
-            <em class="italic font-semibold" style="color:var(--blue);">trouvez votre module.</em>
-          </h2>
+<!-- ═══ 3D LOGO ═══ -->
+<section class="section-pad section-dark">
+  <div class="inner-wide" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:4rem;align-items:center;">
+
+    <div class="reveal">
+      <p class="grid-ui" style="opacity:1;color:rgba(255,255,255,.4);margin-bottom:2rem;">05. Visualisation 3D</p>
+      <h2 class="font-title" style="font-size:clamp(2.5rem,7vw,5rem);text-transform:uppercase;line-height:.85;margin-bottom:2rem;color:white;">
+        Modular<br/>Space
+      </h2>
+      <p style="font-size:1.0625rem;font-weight:300;opacity:.6;line-height:1.7;max-width:380px;margin-bottom:2rem;color:white;">
+        Construire des systèmes complexes à partir de blocs simples et interchangeables.
+        Faites pivoter le module pour explorer sa structure.
+      </p>
+      <span class="btn-outline-white">Interagir avec le modèle →</span>
+    </div>
+
+    <div class="reveal" style="transition-delay:.1s;">
+      <div id="logo3d">
+        <div class="grid-ui" style="position:absolute;top:2rem;left:2rem;color:rgba(255,255,255,.3);z-index:10;opacity:1;">
+          Vue Active: Orbital_01
         </div>
-        <div>
-          <p class="text-[16px] font-light leading-[1.65] mb-8" style="color:rgba(5,10,48,.55);">
-            Décrivez vos tâches, vos frictions, vos routines.
-            Nous analysons vos réponses et vous proposons les modules Condere
-            adaptés à votre contexte — sans rendez-vous, sans engagement.
-          </p>
-          <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn btn-blue">
-            <span>Répondre au questionnaire</span>
-            <span class="font-mono text-[10px]">→</span>
-          </a>
-        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ DIAGNOSTIC ═══ -->
+<section class="section-pad section-light">
+  <div class="inner reveal">
+    <p class="grid-ui section-label">06. Diagnostic</p>
+    <div class="diagnostic-grid">
+      <div>
+        <h2 class="section-heading">
+          En 3 minutes,<br/>
+          <span class="accent">trouvez votre module.</span>
+        </h2>
+      </div>
+      <div>
+        <p style="font-size:15px;font-weight:300;line-height:1.75;opacity:.65;margin-bottom:2rem;">
+          Décrivez vos tâches, vos frictions, vos routines. Nous analysons vos réponses
+          et vous proposons les modules Condere adaptés à votre contexte —
+          sans rendez-vous, sans engagement.
+        </p>
+        <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn-primary">
+          Répondre au questionnaire →
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ FINAL CTA ═══════════ -->
-<section id="contact" class="relative py-28 lg:py-40 overflow-hidden" style="z-index:1;">
-  <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-    <div style="width:800px;height:500px;background:radial-gradient(ellipse,rgba(26,43,212,.07),transparent 65%);border-radius:50%;filter:blur(60px);"></div>
-  </div>
-  <div class="relative max-w-4xl mx-auto px-6 lg:px-10 text-center reveal">
-    <div class="mono-label mb-8"><span class="dot-orange">V.</span>&ensp;Fonder un projet</div>
-    <h2 class="section-heading text-[clamp(2.4rem,6vw,5rem)]" style="line-height:.97;letter-spacing:-.025em;">
-      Bâtissons quelque chose<br/>
-      <em class="italic font-semibold" style="color:var(--blue);">qui vous survivra.</em>
-    </h2>
-    <p class="mt-8 max-w-xl mx-auto text-[16px] font-light leading-relaxed" style="color:rgba(5,10,48,.5);">
-      Une question, un audit, un projet qui mûrit depuis trop longtemps —
-      écrivez-nous. Réponse sous 48 heures, en français ou en anglais.
-    </p>
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <a href="mailto:contact@condere.ch" class="btn btn-blue">
-        <span>contact@condere.ch</span>
-        <span class="font-mono text-[11px]">→</span>
-      </a>
-      <a href="#produits" class="btn btn-glass">
-        <span>Explorer les produits</span>
-      </a>
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="section-pad" style="padding-top:7rem;padding-bottom:7rem;">
+  <div class="inner" style="text-align:center;">
+    <div class="reveal">
+      <p class="grid-ui section-label" style="justify-content:center;display:flex;">07. Fonder un projet</p>
+      <h2 class="font-title" style="font-size:clamp(2.5rem,8vw,7rem);text-transform:uppercase;line-height:.85;margin-bottom:1.5rem;">
+        Bâtissons<br/>quelque chose<br/><span style="color:var(--primary);">qui vous survivra.</span>
+      </h2>
+      <p style="font-size:15px;font-weight:300;line-height:1.75;opacity:.6;max-width:480px;margin:0 auto 2.5rem;">
+        Une question, un audit, un projet qui mûrit depuis trop longtemps —
+        écrivez-nous. Réponse sous 48 heures, en français ou en anglais.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="mailto:contact@condere.ch" class="btn-primary">contact@condere.ch →</a>
+        <a href="#produits" class="btn-outline">Explorer les produits</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer class="foot relative" style="z-index:1;border-top:1px solid rgba(26,43,212,.08);">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-    <div class="flex items-baseline gap-3">
-      <span style="font-family:'Syncopate',sans-serif;font-weight:700;font-size:15px;letter-spacing:.08em;color:var(--blue);">CONDERE</span>
-      <span class="font-mono text-[10px] tracking-[.2em]" style="color:rgba(5,10,48,.35);">· SUISSE · MMXXVI</span>
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:var(--dark);color:white;padding:4rem 3rem;overflow:hidden;position:relative;">
+  <div style="position:relative;z-index:10;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:3rem;">
+    <div>
+      <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+        <rect x="15" y="46" width="70" height="8" fill="white"/>
+        <rect x="15" y="10" width="8" height="28" fill="white"/>
+        <rect x="27" y="10" width="8" height="28" fill="white"/>
+        <rect x="15" y="62" width="8" height="28" fill="white"/>
+        <rect x="27" y="62" width="8" height="28" fill="white"/>
+        <rect x="65" y="10" width="8" height="28" fill="white"/>
+        <rect x="77" y="10" width="8" height="28" fill="white"/>
+        <rect x="65" y="62" width="8" height="28" fill="white"/>
+        <rect x="77" y="62" width="8" height="28" fill="white"/>
+        <rect x="42" y="38" width="16" height="24" rx="1" fill="white"/>
+      </svg>
+      <div class="grid-ui" style="opacity:.4;margin-top:1.5rem;color:white;">
+        Condere Intelligence<br/>Tous les modules sont actifs.
+      </div>
     </div>
-    <nav class="flex flex-wrap items-center gap-6 text-[13px]">
-      <a href="mailto:contact@condere.ch" class="link-trace">contact@condere.ch</a>
-      <a href="#" class="link-trace">LinkedIn</a>
-      <a href="#" class="link-trace">GitHub</a>
+    <div class="font-title" style="font-size:clamp(4rem,14vw,14rem);line-height:1;letter-spacing:-0.06em;opacity:.07;pointer-events:none;text-transform:uppercase;color:white;">
+      Condere
+    </div>
+  </div>
+  <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;">
+    <span class="grid-ui" style="opacity:.3;color:white;">Construit pour le futur</span>
+    <nav style="display:flex;gap:2rem;">
+      <a href="mailto:contact@condere.ch" class="foot-link">contact@condere.ch</a>
+      <a href="#" class="foot-link">LinkedIn</a>
+      <a href="#" class="foot-link">GitHub</a>
     </nav>
-    <div class="mono-label">v · I.0 · stable</div>
+    <span class="grid-ui" style="opacity:.3;color:white;">Dernière mise à jour: 12.05.2026</span>
   </div>
 </footer>
 
-<!-- ═══════════ JS ═══════════ -->
+<!-- JS -->
 <script>
-/* ── LASER CONDERE (blue beam / orange sparks) ── */
-(function(){
-  const h1  = document.getElementById('condereTitle');
-  const cv  = document.getElementById('laserCanvas');
-  if (!h1 || !cv) return;
-  const ctx = cv.getContext('2d');
-  const DPR = Math.min(devicePixelRatio||1, 2);
-  let W=0, H=0;
+/* ── 3D Logo Viewer ── */
+(function () {
+  const mount = document.getElementById('logo3d');
+  if (!mount || typeof THREE === 'undefined') return;
 
-  function resize(){
-    const r = cv.parentElement.getBoundingClientRect();
-    W = r.width; H = r.height;
-    cv.width  = W*DPR; cv.height = H*DPR;
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-  }
-  resize();
+  const w = mount.clientWidth || 600;
+  const h = mount.clientHeight || 600;
 
-  const DURATION = 2000;
-  const parts = [];
-  /* brand sparks: blue, orange, white-blue */
-  const COLS = ['26,43,212','255,91,0','100,130,255','200,210,255','255,140,60'];
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  mount.appendChild(renderer.domElement);
 
-  function spark(x, y){
-    const angle = -Math.PI/2 + (Math.random()-.5)*Math.PI*1.6;
-    const spd   = .8 + Math.random()*3.5;
-    parts.push({
-      x, y,
-      vx: Math.cos(angle)*spd,
-      vy: Math.sin(angle)*spd,
-      life:0, ttl: 18+Math.random()*28,
-      r: .6+Math.random()*2.2,
-      a: .7+Math.random()*.3,
-      c: COLS[Math.floor(Math.random()*COLS.length)]
-    });
-  }
+  const group = new THREE.Group();
+  const blueMat = new THREE.MeshStandardMaterial({ color: '#1a2bd4', metalness: 0.1, roughness: 0.8 });
+  const darkMat = new THREE.MeshStandardMaterial({ color: '#1a2342', metalness: 0.1, roughness: 0.8 });
 
-  let startTs = null;
+  group.add(new THREE.Mesh(new THREE.BoxGeometry(7, 0.8, 0.8), darkMat));
+  group.add(new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.4, 1.6), darkMat));
 
-  function tick(ts){
-    if(!startTs) startTs = ts;
-    const elapsed  = ts - startTs;
-    const progress = Math.min(elapsed / DURATION, 1);
+  const panelGeo = new THREE.BoxGeometry(1.2, 2.8, 0.6);
+  [
+    [-2.5, 1.8, 0], [-1.2, 1.8, 0], [-2.5, -1.8, 0], [-1.2, -1.8, 0],
+    [ 1.2, 1.8, 0], [ 2.5, 1.8, 0], [ 1.2, -1.8, 0], [ 2.5, -1.8, 0],
+  ].forEach(pos => {
+    const m = new THREE.Mesh(panelGeo, blueMat);
+    m.position.set(...pos);
+    group.add(m);
+  });
 
-    h1.style.clipPath = `inset(0 ${((1-progress)*100).toFixed(2)}% 0 0)`;
+  scene.add(group);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.5);
+  dir.position.set(5, 5, 5);
+  scene.add(dir);
+  camera.position.z = 10;
 
-    const lx = W * progress;
-    const ly = H / 2;
+  let mx = 0, my = 0;
+  mount.addEventListener('mousemove', e => {
+    const r = mount.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width) * 2 - 1;
+    my = -((e.clientY - r.top) / r.height) * 2 + 1;
+  });
 
-    if(progress < 1){
-      const burst = progress < .05 ? 8 : 3;
-      for(let i=0;i<burst;i++) spark(lx, ly+(Math.random()-.5)*H*.7);
-    }
+  (function animate() {
+    requestAnimationFrame(animate);
+    group.rotation.y += 0.005 + mx * 0.02;
+    group.rotation.x += my * 0.02;
+    renderer.render(scene, camera);
+  })();
 
-    ctx.clearRect(0,0,W,H);
-
-    /* beam */
-    if(progress < 1){
-      const lg = ctx.createLinearGradient(0,0,0,H);
-      lg.addColorStop(0,   'rgba(26,43,212,0)');
-      lg.addColorStop(.3,  'rgba(60,90,255,.8)');
-      lg.addColorStop(.5,  'rgba(120,150,255,1)');
-      lg.addColorStop(.7,  'rgba(60,90,255,.8)');
-      lg.addColorStop(1,   'rgba(26,43,212,0)');
-
-      ctx.save();
-      ctx.shadowBlur  = 28;
-      ctx.shadowColor = 'rgba(26,43,212,.85)';
-      ctx.beginPath();
-      ctx.moveTo(lx,0); ctx.lineTo(lx,H);
-      ctx.strokeStyle = lg;
-      ctx.lineWidth = 1.8;
-      ctx.stroke();
-      ctx.restore();
-
-      /* orange hot dot */
-      ctx.save();
-      ctx.shadowBlur  = 40;
-      ctx.shadowColor = 'rgba(255,91,0,1)';
-      ctx.beginPath();
-      ctx.arc(lx, ly, 3.5, 0, Math.PI*2);
-      ctx.fillStyle = '#FF5B00';
-      ctx.fill();
-      ctx.restore();
-
-      /* blue trail */
-      const trail = ctx.createLinearGradient(Math.max(0,lx-60),0,lx,0);
-      trail.addColorStop(0, 'rgba(26,43,212,0)');
-      trail.addColorStop(1, 'rgba(26,43,212,.04)');
-      ctx.fillStyle = trail;
-      ctx.fillRect(Math.max(0,lx-60),0,60,H);
-    }
-
-    /* sparks */
-    for(let i=parts.length-1;i>=0;i--){
-      const p=parts[i];
-      p.life++; p.x+=p.vx; p.y+=p.vy;
-      p.vy+=.09; p.vx*=.96;
-      const t=p.life/p.ttl;
-      if(t>=1){parts.splice(i,1);continue;}
-      const alpha=p.a*(1-t)*(t<.12?t/.12:1);
-      ctx.save();
-      ctx.shadowBlur=6;
-      ctx.shadowColor=`rgba(${p.c},.5)`;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r*(1-t*.4),0,Math.PI*2);
-      ctx.fillStyle=`rgba(${p.c},${alpha.toFixed(3)})`;
-      ctx.fill();
-      ctx.restore();
-    }
-
-    if(progress<1||parts.length>0) requestAnimationFrame(tick);
-    else ctx.clearRect(0,0,W,H);
-  }
-
-  setTimeout(()=>{ resize(); requestAnimationFrame(tick); }, 350);
+  window.addEventListener('resize', () => {
+    const nw = mount.clientWidth || 600;
+    const nh = mount.clientHeight || 600;
+    camera.aspect = nw / nh;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nw, nh);
+  });
 })();
 
-/* Scroll reveal */
-(function(){
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+/* ── Scroll Reveal ── */
+(function () {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  },{ threshold:.1, rootMargin:'0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }, { threshold: .1, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
 
-/* Smooth scroll */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', e=>{
-    const href=a.getAttribute('href');
-    if(href.length>1){
-      const t=document.querySelector(href);
-      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+/* ── Smooth Scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href.length > 1) {
+      const t = document.querySelector(href);
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     }
   });
 });
-
-/* Mouse parallax aurora */
-(function(){
-  let mx=0,my=0,cx=0,cy=0;
-  document.addEventListener('mousemove',e=>{
-    mx=(e.clientX/window.innerWidth-.5)*2;
-    my=(e.clientY/window.innerHeight-.5)*2;
-  });
-  const orbs=document.querySelectorAll('#aurora .orb');
-  const s=[22,14,9,16];
-  function tick(){
-    cx+=(mx-cx)*.035; cy+=(my-cy)*.035;
-    orbs.forEach((o,i)=>{
-      const f=s[i]||10, sign=i%2===0?1:-1;
-      o.style.transform=`translate(${cx*f*sign}px,${cy*f*sign}px)`;
-    });
-    requestAnimationFrame(tick);
-  }
-  tick();
-})();
-
-/* Dust canvas (blue + orange) */
-(function(){
-  const cv=document.getElementById('goldDust');
-  if(!cv)return;
-  const ctx=cv.getContext('2d');
-  let W=0,H=0;
-  const DPR=Math.min(devicePixelRatio||1,2);
-  const parts=[];
-  const MAX=70;
-  const COLS=['26,43,212','255,91,0','100,130,255','200,210,255'];
-
-  function resize(){
-    W=cv.parentElement.offsetWidth;
-    H=cv.parentElement.offsetHeight;
-    cv.width=W*DPR; cv.height=H*DPR;
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-  }
-  resize();
-  window.addEventListener('resize',resize);
-
-  function spawn(x,y){
-    const c=COLS[Math.floor(Math.random()*COLS.length)];
-    parts.push({
-      x:x+(Math.random()-.5)*100,
-      y:y+(Math.random()-.5)*40,
-      vx:(Math.random()-.5)*.5,
-      vy:-.25-Math.random()*.5,
-      life:0, ttl:110+Math.random()*150,
-      r:.4+Math.random()*1.6,
-      a:.12+Math.random()*.2, c
-    });
-    if(parts.length>MAX) parts.splice(0,parts.length-MAX);
-  }
-
-  window.addEventListener('load',()=>{
-    for(let i=0;i<7;i++){
-      setTimeout(()=>{ for(let k=0;k<8;k++) spawn(W*(.12+i*.13),H*.44); },i*130+200);
-    }
-  });
-
-  setInterval(()=>{ if(parts.length<35) spawn(W*(.1+Math.random()*.8),H*.44); },600);
-
-  function tick(){
-    ctx.clearRect(0,0,W,H);
-    for(let i=parts.length-1;i>=0;i--){
-      const p=parts[i];
-      p.life++; p.x+=p.vx; p.y+=p.vy; p.vy+=.002;
-      const t=p.life/p.ttl;
-      if(t>=1){parts.splice(i,1);continue;}
-      const alpha=p.a*(1-t)*(t<.12?t/.12:1);
-      ctx.beginPath();
-      ctx.fillStyle=`rgba(${p.c},${alpha.toFixed(3)})`;
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fill();
-    }
-    requestAnimationFrame(tick);
-  }
-  tick();
-})();
 </script>
 
 </body>
