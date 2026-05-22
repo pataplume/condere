@@ -174,15 +174,16 @@ p { line-height: 1.65; }
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-.hero-title-wrap { padding: 0 3rem; position: relative; z-index: 10; padding-bottom: 3.5rem; }
+.hero-title-wrap { padding: 0 1.5rem; position: relative; z-index: 10; padding-bottom: 3.5rem; }
 
 .hero-word {
   display: block;
   font-family: 'Syncopate', sans-serif;
   font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.05em; line-height: 0.95;
-  font-size: clamp(2.5rem, 12vw, 14rem);
+  letter-spacing: 0.02em; line-height: 0.9;
+  font-size: clamp(3rem, 16.5vw, 26rem);
   color: var(--blue);
+  white-space: nowrap;
   clip-path: inset(0 0 100% 0);
   animation: revealUp 0.65s ease-out 0.5s forwards;
 }
@@ -1036,23 +1037,23 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 
     const TOOLTIPS = {
-      email:     'Déclencheur initial — un email entrant dans la boîte du cabinet.',
-      classif:   'L'IA analyse le contenu et détermine la catégorie du document.',
-      facture:   'Détecté comme facture fournisseur ou note d'honoraires.',
-      demande:   'Demande d'information ou de prestation d'un client.',
-      fiscal:    'Document fiscal : déclaration TVA, bilan, avis de taxation.',
-      ocr:       'Extraction textuelle et structurale du PDF ou de l'image.',
-      tva:       'Compare le montant au seuil légal CH 2026, alerte si discordance.',
-      rapproch:  'Associe la facture à un dossier client existant dans le CRM.',
-      archiv:    'Classement définitif avec nommage normalisé, stockage CH.',
-      intent:    'Identifie l'intention : question, urgence, pièce manquante.',
-      reponse:   'Génère un brouillon de réponse contextuel pour validation.',
-      routage:   'Assigne au collaborateur compétent selon la charge et le domaine.',
-      crmupd:    'Met à jour le dossier client avec le statut et la date.',
-      detect:    'Classifie le type fiscal : déclaration IS, TVA, salaires…',
-      rattach:   'Associe le document au bon client et à la bonne période fiscale.',
-      checklist: 'Coche l'élément dans la checklist de complétude du dossier.',
-      relance:   'Programme une relance conditionnelle si pièces toujours manquantes.',
+      email:     `Déclencheur initial — un email entrant dans la boîte du cabinet.`,
+      classif:   `L'IA analyse le contenu et détermine la catégorie du document.`,
+      facture:   `Détecté comme facture fournisseur ou note d'honoraires.`,
+      demande:   `Demande d'information ou de prestation d'un client.`,
+      fiscal:    `Document fiscal : déclaration TVA, bilan, avis de taxation.`,
+      ocr:       `Extraction textuelle et structurale du PDF ou de l'image.`,
+      tva:       `Compare le montant au seuil légal CH 2026, alerte si discordance.`,
+      rapproch:  `Associe la facture à un dossier client existant dans le CRM.`,
+      archiv:    `Classement définitif avec nommage normalisé, stockage CH.`,
+      intent:    `Identifie l'intention : question, urgence, pièce manquante.`,
+      reponse:   `Génère un brouillon de réponse contextuel pour validation.`,
+      routage:   `Assigne au collaborateur compétent selon la charge et le domaine.`,
+      crmupd:    `Met à jour le dossier client avec le statut et la date.`,
+      detect:    `Classifie le type fiscal : déclaration IS, TVA, salaires…`,
+      rattach:   `Associe le document au bon client et à la bonne période fiscale.`,
+      checklist: `Coche l'élément dans la checklist de complétude du dossier.`,
+      relance:   `Programme une relance conditionnelle si pièces toujours manquantes.`,
     };
 
     // Defs
