@@ -3,781 +3,1390 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Condere — Modular AI Foundation · Genève</title>
-<meta name="description" content="Condere — micro-SaaS, audits IA et sites web pensés en Suisse pour les PME francophones." />
+<title>Condere — Studio logiciel suisse · Genève</title>
+<meta name="description" content="Studio logiciel suisse basé à Genève. Logiciels métiers, agents IA sur-mesure, audit et accompagnement IA, sites web. Premier module : Zarya, l'ERP IA-native des fiduciaires suisses.">
+<meta property="og:title" content="Condere — Modular AI Foundation">
+<meta property="og:description" content="Studio logiciel suisse. On édite des logiciels métiers et on construit des agents IA sur-mesure pour les PME.">
+<meta property="og:url" content="https://condere.ch">
+<meta name="theme-color" content="#F4F6FC">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 
 <style>
-  :root {
-    --primary: #1a2bd4;
-    --bg: #f4f6fc;
-    --dark: #050a30;
-    --accent: #ff5b00;
-    --border: #e5e7eb;
-  }
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ice:    #F4F6FC;
+  --blue:   #1A2BD4;
+  --void:   #050A30;
+  --orange: #FF5B00;
+  --mono:   ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
 
-  html, body {
-    background: var(--bg);
-    color: var(--dark);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ice);
+  color: var(--void);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--blue); color: var(--ice); }
 
-  ::selection { background: var(--primary); color: white; }
+/* ─── TYPOGRAPHY ─── */
+.display, h1 {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+}
+h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+p { line-height: 1.65; }
+.micro {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
 
-  .font-title {
-    font-family: 'Syncopate', sans-serif;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-  }
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(244,246,252,.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(5,10,48,.08);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--void);
+}
+.nav-logo-text {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.08em;
+}
+.nav-links {
+  display: flex; align-items: center;
+  list-style: none; gap: 0;
+}
+.nav-links a {
+  font-size: 14px; color: rgba(5,10,48,.6);
+  text-decoration: none; padding: 0 1.25rem;
+  transition: color 200ms;
+}
+.nav-links a:hover { color: var(--void); }
+.nav-links .sep { color: rgba(5,10,48,.22); font-size: 11px; padding: 0; }
+.nav-cta {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--void);
+  text-decoration: none; padding: 8px 18px;
+  border: 1px solid var(--void);
+  transition: background 200ms, color 200ms, border-color 200ms;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--blue); color: var(--ice); border-color: var(--blue); }
+.nav-burger {
+  display: none;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; background: none; cursor: pointer;
+  border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px;
+}
 
-  .grid-ui {
-    font-family: monospace;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.4;
-  }
+/* Nav overlay mobile */
+.nav-overlay {
+  display: none; position: fixed; inset: 0; z-index: 90;
+  background: var(--ice);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+}
+.nav-overlay.open { display: flex; }
+.nav-overlay a {
+  font-family: 'Syncopate', sans-serif; font-size: 1.75rem;
+  text-decoration: none; color: var(--void);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.nav-overlay-close {
+  position: absolute; top: 1.25rem; right: 1.5rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; background: none; cursor: pointer;
+  border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px;
+}
 
-  /* NAV */
-  .topnav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.25rem 3rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(244,246,252,.92);
-    backdrop-filter: blur(20px);
-  }
-  .topnav-logo {
-    display: flex; align-items: center; gap: .75rem;
-    text-decoration: none; color: var(--dark);
-  }
-  .topnav-logo-text {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 700; font-size: 14px; letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .topnav-links { display: flex; gap: 2rem; }
-  .topnav-links a {
-    text-decoration: none; color: rgba(5,10,48,.55);
-    font-size: 13px; letter-spacing: .01em;
-    transition: color .2s;
-  }
-  .topnav-links a:hover { color: var(--dark); }
-  .topnav-cta {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .5rem 1.25rem; border-radius: 100px;
-    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-    border: 1px solid rgba(5,10,48,.25);
-    color: var(--dark); text-decoration: none;
-    font-family: monospace;
-    transition: border-color .2s, color .2s;
-  }
-  .topnav-cta:hover { border-color: var(--accent); color: var(--accent); }
+/* ─── HERO ─── */
+.hero {
+  position: relative; height: 100vh; min-height: 620px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-top: 60px; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -48%);
+  height: 64vh; width: auto;
+  opacity: 0.09; pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  animation: revealLR 1.2s ease-out 0.15s forwards;
+}
+@keyframes revealLR { to { clip-path: inset(0 0% 0 0); } }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    padding: 3rem;
-    padding-top: 90px;
-    border-bottom: 1px solid var(--border);
-    display: flex; flex-direction: column; justify-content: space-between;
-    overflow: hidden;
-    position: relative;
-  }
-  .hero-meta {
-    position: relative; z-index: 20;
-    display: flex; justify-content: space-between; align-items: flex-start;
-  }
-  .hero-iss-bg {
-    position: absolute; top: 40%; left: 60%;
-    transform: translate(-50%, -50%) scale(1.25);
-    opacity: 0.04; pointer-events: none;
-  }
-  .hero-bottom {
-    position: relative; z-index: 10;
-  }
-  .hero-title {
-    color: var(--primary);
-    text-transform: uppercase;
-    line-height: 0.95;
-    font-size: clamp(3rem, 15vw, 12rem);
-    white-space: nowrap;
-    letter-spacing: 0.05em;
-  }
-  .hero-rule {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-top: 1rem;
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-  }
+.hero-tl {
+  position: absolute; top: 76px; left: 3rem;
+  pointer-events: none;
+}
+.hero-tr {
+  position: absolute; top: 76px; right: 3rem;
+  text-align: right; pointer-events: none;
+}
+.hero-bl {
+  position: absolute; bottom: 3.5rem; left: 3rem;
+  display: flex; align-items: center; gap: 10px;
+  pointer-events: none;
+}
+.hero-br {
+  position: absolute; bottom: 3.5rem; right: 3rem;
+  text-align: right; pointer-events: none;
+}
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-  .reveal.in { opacity: 1; transform: none; }
+.blink-dot {
+  width: 6px; height: 6px;
+  background: var(--orange);
+  flex-shrink: 0;
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-  /* SECTION WRAPPERS */
-  .section-light { background: white; }
-  .section-bg   { background: var(--bg); }
-  .section-dark  { background: var(--dark); color: white; }
-  .section-pad   { padding: 5rem 3rem; border-bottom: 1px solid var(--border); }
-  .section-pad.section-dark { border-color: rgba(255,255,255,.08); }
-  .inner { max-width: 1072px; margin: 0 auto; }
-  .inner-wide { max-width: 1280px; margin: 0 auto; }
+.hero-title-wrap { padding: 0 3rem; position: relative; z-index: 10; padding-bottom: 3.5rem; }
 
-  .section-label { margin-bottom: 2rem; }
-  .section-heading {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    margin-bottom: 2.5rem;
-  }
-  .section-heading .muted { opacity: .35; }
-  .section-heading .accent { color: var(--primary); }
+.hero-word {
+  display: block;
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; line-height: 0.95;
+  font-size: clamp(4rem, 18vw, 22rem);
+  color: var(--blue);
+  clip-path: inset(0 0 100% 0);
+  animation: revealUp 0.65s ease-out 0.5s forwards;
+}
+.hero-word .dot {
+  color: var(--orange);
+  display: inline-block;
+  transform: scale(0);
+  animation: popIn 0.3s cubic-bezier(.34,1.56,.64,1) 1.25s forwards;
+}
+@keyframes revealUp  { to { clip-path: inset(0 0 0% 0); } }
+@keyframes popIn     { to { transform: scale(1); } }
 
-  /* CARDS */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-  .card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    background: white;
-    display: flex; flex-direction: column;
-    min-height: 280px;
-    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-  }
-  .card.active { cursor: pointer; text-decoration: none; color: inherit; }
-  .card.active:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(255,91,0,.1);
-    border-color: rgba(255,91,0,.3);
-  }
-  .card.inactive { opacity: .42; }
-  .card-num {
-    font-family: monospace; font-size: 10px; letter-spacing: .15em;
-    text-transform: uppercase; color: var(--accent); opacity: .8;
-  }
-  .card.inactive .card-num { color: var(--dark); opacity: .25; }
-  .card-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 700;
-    font-size: 1.75rem; letter-spacing: -0.03em;
-    color: var(--dark); margin: 1rem 0 .5rem;
-  }
-  .card.inactive .card-title { opacity: .45; }
-  .card-body {
-    font-size: 15px; line-height: 1.7; font-weight: 300;
-    color: rgba(5,10,48,.6); flex: 1;
-  }
-  .card-foot {
-    margin-top: 1.5rem; padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .card-link {
-    font-family: monospace; font-size: 10px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--accent); opacity: .7;
-  }
-  .card-arrow {
-    font-family: monospace; font-size: 11px;
-    color: rgba(5,10,48,.4);
-    transition: transform .3s, color .3s;
-  }
-  .card.active:hover .card-arrow { transform: translateX(6px); color: var(--accent); }
+/* ─── SECTION SHELL ─── */
+.section {
+  padding: 7rem 3rem;
+  border-top: 1px solid rgba(5,10,48,.1);
+}
+.inner     { max-width: 1200px; margin: 0 auto; }
+.inner-pad { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
 
-  /* SERVICES */
-  .service-list { margin-top: 1rem; }
-  .service-row {
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 0;
-    display: grid;
-    grid-template-columns: 3rem 1fr 1fr;
-    gap: 2rem;
-    align-items: baseline;
-  }
-  .service-row:last-child { border-bottom: 1px solid var(--border); }
-  .service-num { font-family: monospace; font-size: 11px; color: var(--accent); letter-spacing: .2em; }
-  .service-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    letter-spacing: -0.03em;
-  }
-  .service-desc { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(5,10,48,.6); }
+/* Section number */
+.snum {
+  margin-bottom: 3rem;
+}
+.snum-bar {
+  width: 32px; height: 4px;
+  background: var(--orange);
+  margin-bottom: 6px;
+}
+.snum-row {
+  display: flex; align-items: baseline; gap: 1.25rem;
+}
+.snum-fig {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; font-size: clamp(2rem,4vw,3rem);
+  color: var(--blue); line-height: 1;
+}
+.snum-label {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(5,10,48,.45);
+}
 
-  /* QUOTE */
-  .quote-block {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 4rem;
-    background: white;
-    text-align: center;
-  }
-  .quote-text {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.25rem, 2.2vw, 1.8rem);
-    letter-spacing: -0.03em;
-    line-height: 1.4;
-    margin-bottom: 2rem;
-  }
-  .quote-divider {
-    display: flex; align-items: center; justify-content: center; gap: 1rem;
-  }
-  .quote-divider span { font-family: monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; opacity: .4; }
-  .quote-divider div { height: 1px; width: 2.5rem; background: var(--border); }
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+.reveal.visible { opacity: 1; transform: none; }
 
-  /* 3D VIEWER */
-  #logo3d {
-    height: 600px; width: 100%;
-    background: rgba(255,255,255,.05);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,.1);
-    overflow: hidden;
-    cursor: crosshair;
-    position: relative;
-  }
-  #logo3d canvas { display: block; }
+/* ─── LINK UNDERLINE ─── */
+.ul-trace {
+  background-image: linear-gradient(to right, var(--orange), var(--orange));
+  background-size: 0% 1px; background-position: 0 100%;
+  background-repeat: no-repeat; text-decoration: none;
+  transition: background-size 300ms ease;
+}
+.ul-trace:hover { background-size: 100% 1px; }
 
-  /* DIAGNOSTIC */
-  .diagnostic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 4rem;
-    align-items: center;
-  }
+/* ─── 01 MANIFESTE ─── */
+.s-manifeste h2 {
+  font-size: clamp(1.75rem, 4.5vw, 3.75rem);
+  max-width: 22ch; color: var(--void); margin-bottom: 1.75rem;
+}
+.s-manifeste .body-p {
+  max-width: 60ch;
+  font-size: clamp(.9375rem, 1.05vw, 1.125rem);
+  color: rgba(5,10,48,.72); margin-bottom: 3rem;
+}
+.mband {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(5,10,48,.1);
+}
+.mband-item {
+  padding: 1.5rem 1.75rem;
+  border-right: 1px solid rgba(5,10,48,.1);
+}
+.mband-item:last-child { border-right: none; }
+.mband-key {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--void); display: flex; align-items: center; gap: 6px;
+  margin-bottom: 3px;
+}
+.mband-val {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(5,10,48,.48);
+}
+.osq { width:5px; height:5px; background:var(--orange); display:inline-block; flex-shrink:0; }
 
-  /* BUTTONS */
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .875rem 2rem; border-radius: 100px;
-    background: var(--primary); color: white;
-    font-family: 'Lexend', sans-serif; font-size: 14px; font-weight: 400;
-    text-decoration: none;
-    transition: background .25s, box-shadow .25s, transform .25s;
-    box-shadow: 0 4px 20px rgba(26,43,212,.3);
-  }
-  .btn-primary:hover {
-    background: #1624b8;
-    box-shadow: 0 8px 32px rgba(26,43,212,.45);
-    transform: translateY(-2px);
-  }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .875rem 2rem; border-radius: 100px;
-    border: 1px solid rgba(5,10,48,.2); color: var(--dark);
-    font-family: 'Lexend', sans-serif; font-size: 14px; font-weight: 400;
-    text-decoration: none;
-    transition: border-color .25s, color .25s, transform .25s;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-  .btn-outline-white {
-    display: inline-flex; align-items: center; gap: .5rem;
-    padding: .75rem 1.5rem; border-radius: 100px;
-    border: 1px solid rgba(255,255,255,.2); color: white;
-    font-family: monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-    text-decoration: none;
-    transition: border-color .2s;
-  }
-  .btn-outline-white:hover { border-color: rgba(255,255,255,.5); }
+/* ─── 02 CE QU'ON FAIT ─── */
+.s-studio h2 {
+  font-size: clamp(1.75rem, 4.5vw, 3.75rem);
+  color: var(--void); margin-bottom: 2.5rem;
+}
+.cards-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: rgba(5,10,48,.12);
+  border: 1px solid rgba(5,10,48,.12);
+}
+.pcard {
+  background: var(--ice); padding: 2.5rem;
+  position: relative; display: flex; flex-direction: column;
+  min-height: 320px;
+  transition: background 280ms cubic-bezier(.4,0,.2,1),
+              transform  280ms cubic-bezier(.4,0,.2,1),
+              box-shadow 280ms cubic-bezier(.4,0,.2,1);
+  cursor: default; outline: none;
+}
+.pcard:hover, .pcard:focus-visible {
+  background: var(--blue); transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(26,43,212,.25); z-index:1;
+}
+.pcard:focus-visible { outline: 2px solid var(--orange); outline-offset:2px; }
 
-  /* FOOTER LINKS */
-  .foot-link {
-    font-family: monospace; font-size: 10px; text-transform: uppercase;
-    letter-spacing: .1em; opacity: .3; color: white; text-decoration: none;
-    transition: opacity .2s;
-  }
-  .foot-link:hover { opacity: .7; }
+.pcard-status {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(5,10,48,.4);
+  display: flex; align-items: center; gap: 5px;
+  transition: color 280ms;
+}
+.pcard:hover .pcard-status,
+.pcard:focus-visible .pcard-status { color: var(--orange); }
 
-  /* ETYMO CARD */
-  .etymo-card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    background: var(--bg);
-  }
-  .etymo-bullets { display: flex; flex-direction: column; gap: .875rem; }
-  .etymo-bullet { display: flex; gap: .5rem; align-items: baseline; }
-  .etymo-bullet .dot { color: var(--accent); font-size: 14px; flex-shrink: 0; }
+.pcard-num {
+  font-family: 'Syncopate', sans-serif; font-weight: 700;
+  font-size: 3.5rem; line-height: 1;
+  color: var(--blue); transition: color 280ms; margin-bottom: .875rem;
+}
+.pcard:hover .pcard-num,
+.pcard:focus-visible .pcard-num { color: var(--orange); }
 
-  @media (max-width: 768px) {
-    .topnav { padding: 1rem 1.5rem; }
-    .topnav-links { display: none; }
-    .hero { padding: 1.5rem; padding-top: 80px; }
-    .section-pad { padding: 3rem 1.5rem; }
-    .service-row { grid-template-columns: 1fr; gap: .75rem; }
-    #logo3d { height: 400px; }
-    .quote-block { padding: 2rem; }
-  }
+.pcard h3 {
+  font-size: 1.125rem; color: var(--void);
+  transition: color 280ms; margin-bottom: .75rem;
+}
+.pcard:hover h3, .pcard:focus-visible h3 { color: var(--ice); }
 
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1 !important; transform: none !important; }
-  }
+.pcard p {
+  font-size: .9375rem; line-height: 1.65;
+  color: rgba(5,10,48,.68); flex:1; transition: color 280ms;
+}
+.pcard:hover p, .pcard:focus-visible p { color: rgba(244,246,252,.78); }
+
+.pcard-arrow {
+  position: absolute; bottom: 1.5rem; right: 1.5rem;
+  color: var(--orange); font-family: var(--mono); font-size: 14px;
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 280ms, transform 280ms;
+}
+.pcard:hover .pcard-arrow,
+.pcard:focus-visible .pcard-arrow { opacity:1; transform:none; }
+
+.sdot {
+  width: 5px; height: 5px; border-radius: 50%;
+  display: inline-block; flex-shrink:0;
+}
+.sdot.on  { background: var(--orange); animation: blink 2s ease-in-out infinite; }
+.sdot.off { background: rgba(5,10,48,.22); }
+.pcard:hover .sdot.on { animation-duration: .8s; }
+
+/* ─── 03 ZARYA ─── */
+.s-zarya .inner {
+  display: grid; grid-template-columns: 3fr 2fr;
+  gap: 5rem; align-items: start;
+}
+.zarya-pre {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.zarya-h {
+  font-family: 'Syncopate', sans-serif; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; line-height: 0.95;
+  font-size: clamp(3rem, 8vw, 7rem); color: var(--blue); margin-bottom: .875rem;
+}
+.zarya-h .dot { color: var(--orange); }
+.zarya-sub {
+  font-size: clamp(1.125rem, 1.7vw, 1.5rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  color: var(--void); margin-bottom: 1.75rem;
+}
+.zarya-body {
+  font-size: clamp(.9375rem, 1vw, 1.0625rem);
+  color: rgba(5,10,48,.72); max-width: 55ch; margin-bottom: 2.25rem;
+}
+.zbullets { list-style:none; display:flex; flex-direction:column; gap:1.125rem; margin-bottom:2.5rem; max-width:55ch; }
+.zbullets li { display:flex; gap:16px; align-items:flex-start; }
+.zbullet-sq { width:6px; height:6px; background:var(--orange); margin-top:9px; flex-shrink:0; }
+.zbullets p { font-size:.9375rem; line-height:1.65; color:rgba(5,10,48,.78); }
+.zbullets strong { font-weight:700; color:var(--void); }
+.zarya-ctas { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+.btn-outline-blue {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--blue); text-decoration:none;
+  padding:14px 28px; border:1px solid var(--blue);
+  background:transparent;
+  transition: background 200ms, color 200ms;
+}
+.btn-outline-blue:hover { background:var(--blue); color:var(--ice); }
+.zarya-pilot {
+  font-size:.9375rem; color:rgba(5,10,48,.55);
+  text-decoration:none;
+  background-image: linear-gradient(to right,var(--orange),var(--orange));
+  background-size:0% 1px; background-position:0 100%; background-repeat:no-repeat;
+  transition: background-size 300ms ease, color 300ms ease;
+}
+.zarya-pilot:hover { color:var(--void); background-size:100% 1px; }
+
+/* Tech card */
+.zarya-card {
+  background: #EEF0F8; border: 1px solid rgba(5,10,48,.15);
+  padding: 2rem; position: sticky; top: 80px;
+}
+.zarya-card pre {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.07em; line-height: 1.9;
+  color: rgba(5,10,48,.72);
+  white-space: pre-wrap; overflow-wrap: break-word;
+}
+.co { color: var(--orange); }
+
+/* ─── 04 WORKFLOW ─── */
+.s-workflow { padding: 7rem 0; border-top: 1px solid rgba(5,10,48,.1); }
+.s-workflow h2 {
+  font-size: clamp(1.75rem, 4.5vw, 3.75rem);
+  color: var(--void); margin-bottom: 1rem;
+}
+.s-workflow .body-p {
+  max-width: 50ch; color:rgba(5,10,48,.62); margin-bottom:3rem;
+  font-size: clamp(.9375rem,1.05vw,1.0625rem);
+}
+.wf-wrap {
+  width:100%; height:580px;
+  background:#EEF0F8;
+  border-top: 1px solid rgba(5,10,48,.12);
+  border-bottom: 1px solid rgba(5,10,48,.12);
+  position:relative; overflow:hidden;
+}
+.wf-wrap svg { display:block; }
+.wf-controls {
+  position:absolute; bottom:1.25rem; left:1.5rem; z-index:10;
+}
+.wf-btn {
+  font-family:var(--mono); font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase; background:none; cursor:pointer;
+  border:1px solid rgba(5,10,48,.25); color:rgba(5,10,48,.55);
+  padding:5px 10px; transition: color 200ms, border-color 200ms;
+}
+.wf-btn:hover { color:var(--void); border-color:var(--void); }
+.wf-counter {
+  position:absolute; bottom:1.25rem; right:1.5rem; z-index:10;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+  color:rgba(5,10,48,.5);
+}
+.wf-counter .cn { color:var(--void); font-size:18px; }
+
+/* ─── 05 CONTACT ─── */
+.s-contact h2.contact-h {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; line-height: 0.95;
+  font-size: clamp(3rem, 7vw, 6rem);
+  color: var(--blue); margin-bottom: 1.75rem;
+}
+.s-contact h2.contact-h .dot { color: var(--orange); }
+.s-contact .body-p {
+  max-width: 50ch; font-size: clamp(1rem,1.1vw,1.125rem);
+  color: rgba(5,10,48,.68); margin-bottom: 2.75rem;
+}
+.contact-email-link {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  color: var(--void); text-decoration: none;
+  display: inline-flex; align-items: baseline; gap: .5rem;
+}
+.contact-email-link .ea {
+  color: var(--orange); opacity:0;
+  transform: translateX(-8px);
+  transition: opacity 200ms, transform 200ms;
+  font-family: var(--mono); font-size: .55em;
+}
+.contact-email-link:hover .ea { opacity:1; transform:none; }
+.contact-meta {
+  margin-top: 1.5rem;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(5,10,48,.42);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--void); color: var(--ice);
+  padding: 7.5rem 3rem 0;
+}
+.footer-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 5rem; padding-bottom: 5rem;
+}
+.flabel {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--orange); display: block; margin-bottom: 1.75rem;
+}
+.footer-etymo h3 {
+  font-size: 1.25rem; font-style: italic;
+  color: var(--ice); margin-bottom: 1rem;
+}
+.footer-etymo p {
+  font-size: .9375rem; line-height: 1.7;
+  color: rgba(244,246,252,.6); margin-bottom: 1rem;
+}
+.footer-etymo .citation {
+  font-style: italic; opacity: .5; font-size: .875rem;
+}
+.footer-sys pre {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .07em; line-height: 2;
+  color: rgba(244,246,252,.58); white-space: pre-wrap;
+}
+.footer-nav a {
+  display: block; font-size: 14px;
+  color: rgba(244,246,252,.62);
+  text-decoration: none; padding: .375rem 0;
+  background-image: linear-gradient(to right,var(--orange),var(--orange));
+  background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size 300ms ease, color 300ms ease;
+}
+.footer-nav a:hover { color: var(--ice); background-size: 100% 1px; }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  padding: 1.5rem 0 3rem;
+  border-top: 1px solid rgba(244,246,252,.1);
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom span,
+.footer-bottom a {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(244,246,252,.32); text-decoration: none;
+}
+.f-active {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(244,246,252,.32);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .cards-grid { grid-template-columns: repeat(2,1fr); }
+  .s-zarya .inner { grid-template-columns:1fr; gap:3rem; }
+  .zarya-card { position:static; }
+  .footer-grid { grid-template-columns:1fr 1fr; gap:3rem; }
+}
+@media (max-width: 640px) {
+  .nav { padding:0 1.5rem; }
+  .nav-links, .nav-cta { display:none; }
+  .nav-burger { display:block; }
+  .hero-word { font-size: clamp(4rem,22vw,8rem); }
+  .hero-tr { display:none; }
+  .hero-tl, .hero-bl, .hero-br { left:1.5rem; right:1.5rem; }
+  .hero-title-wrap { padding:0 1.5rem; padding-bottom:2.5rem; }
+  .section { padding:4.5rem 1.5rem; }
+  .s-workflow { padding:4.5rem 0; }
+  .inner-pad { padding:0 1.5rem; }
+  .mband { grid-template-columns:1fr; }
+  .mband-item { border-right:none; border-bottom:1px solid rgba(5,10,48,.1); }
+  .cards-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; gap:2.5rem; padding-bottom:3rem; }
+  footer { padding:4rem 1.5rem 0; }
+  .footer-bottom { padding:1.5rem 0 2rem; flex-direction:column; align-items:flex-start; gap:.75rem; }
+  .wf-wrap { height:400px; }
+  .snum-fig { font-size:1.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity:1 !important; transform:none !important; }
+  .hero-bg { clip-path:none !important; opacity:.08; }
+  .hero-word { clip-path:none !important; }
+  .hero-word .dot { transform:none !important; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="topnav">
-  <a href="#top" class="topnav-logo">
-    <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="15" y="46" width="70" height="8" fill="#1a2bd4"/>
-      <rect x="15" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="27" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="15" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="27" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="65" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="77" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="65" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="77" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="42" y="38" width="16" height="24" rx="1" fill="#1a2bd4"/>
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" role="navigation" aria-label="Navigation principale">
+  <a href="#top" class="nav-logo">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <rect x="15" y="46" width="70" height="8" fill="var(--blue)"/>
+      <rect x="15" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="15" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="var(--blue)"/>
     </svg>
-    <span class="topnav-logo-text">CONDERE</span>
+    <span class="nav-logo-text">CONDERE</span>
   </a>
-  <div class="topnav-links">
-    <a href="#produits">Produits</a>
-    <a href="#services">Services</a>
-    <a href="#a-propos">À propos</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <a href="#contact" class="topnav-cta">Fonder un projet</a>
+  <ul class="nav-links" role="list">
+    <li><a href="#studio">Studio</a></li>
+    <li class="sep">·</li>
+    <li><a href="#zarya">Zarya</a></li>
+    <li class="sep">·</li>
+    <li><a href="#manifeste">Manifeste</a></li>
+    <li class="sep">·</li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Fonder un projet →</a>
+  <button class="nav-burger" aria-label="Ouvrir le menu" onclick="document.getElementById('navOverlay').classList.add('open')">
+    [ MENU ]
+  </button>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section id="top" class="hero">
-  <div class="hero-meta">
-    <div>
-      <p class="grid-ui">Protocole Système : v.01-modular</p>
-      <p style="font-size:14px;max-width:180px;opacity:.6;margin-top:5px;font-weight:300;">
-        Modular IA foundation for orbital scaled operations.
+<div id="navOverlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu navigation">
+  <button class="nav-overlay-close" onclick="document.getElementById('navOverlay').classList.remove('open')" aria-label="Fermer le menu">[ FERMER ]</button>
+  <a href="#studio" onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
+  <a href="#zarya"  onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="#manifeste" onclick="document.getElementById('navOverlay').classList.remove('open')">Manifeste</a>
+  <a href="#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="top" class="hero" aria-label="Hero">
+
+  <!-- Watermark SVG -->
+  <svg class="hero-bg" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <rect x="15" y="46" width="70" height="8" fill="var(--blue)"/>
+    <rect x="15" y="10" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="27" y="10" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="15" y="62" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="27" y="62" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="65" y="10" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="77" y="10" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="65" y="62" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="77" y="62" width="8"  height="28" fill="var(--blue)"/>
+    <rect x="42" y="38" width="16" height="24" rx="1" fill="var(--blue)"/>
+  </svg>
+
+  <!-- Top-left overlay -->
+  <div class="hero-tl" aria-hidden="true">
+    <p class="micro" style="color:rgba(5,10,48,.48); margin-bottom:4px;">PROTOCOLE SYSTÈME : V.02 — STUDIO</p>
+    <p style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:14px; color:rgba(5,10,48,.82);">MODULAR AI FOUNDATION</p>
+  </div>
+
+  <!-- Top-right overlay -->
+  <div class="hero-tr" aria-hidden="true">
+    <p class="micro" style="color:rgba(5,10,48,.45);">COORDONNÉES : 46.2044° N, 6.1432° E</p>
+    <p class="micro" style="color:rgba(5,10,48,.45); margin-top:3px;">GENÈVE / SUISSE</p>
+  </div>
+
+  <!-- Bottom-left overlay -->
+  <div class="hero-bl" aria-hidden="true">
+    <div class="blink-dot"></div>
+    <p class="micro" style="color:rgba(5,10,48,.55);">STATUT : ACTIF · OUVERTURE PUBLIQUE Q4 2026</p>
+  </div>
+
+  <!-- Bottom-right overlay -->
+  <div class="hero-br" aria-hidden="true">
+    <p class="micro" style="color:rgba(5,10,48,.4);">01 — MODULE FONDATION · MODULAR AI</p>
+  </div>
+
+  <!-- Main title -->
+  <div class="hero-title-wrap">
+    <h1 class="hero-word">CONDERE<span class="dot" aria-hidden="true">.</span></h1>
+  </div>
+</section>
+
+<!-- ══════════════════ 01 — MANIFESTE ══════════════════ -->
+<section id="manifeste" class="section s-manifeste">
+  <div class="inner">
+    <div class="snum reveal">
+      <div class="snum-bar"></div>
+      <div class="snum-row">
+        <span class="snum-fig">01.</span>
+        <span class="snum-label">— Fondation</span>
+      </div>
+    </div>
+    <h2 class="reveal" style="transition-delay:.05s;">
+      un studio suisse spécialisé dans la conception de logiciels augmentés par l'intelligence artificielle.
+    </h2>
+    <p class="body-p reveal" style="transition-delay:.1s;">
+      Nous développons des solutions capables d'automatiser les tâches répétitives, de structurer l'information et d'accélérer les processus métier.
+    </p>
+    <div class="mband reveal" style="transition-delay:.15s;">
+      <div class="mband-item">
+        <div class="mband-key">EU / CH</div>
+        <div class="mband-val">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
+      </div>
+      <div class="mband-item">
+        <div class="mband-key">FR · EN · DE · IT</div>
+        <div class="mband-val">Livraison multilingue</div>
+      </div>
+      <div class="mband-item">
+        <div class="mband-key"><span class="osq"></span> Swiss Made</div>
+        <div class="mband-val">Conçu et maintenu en Suisse</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 02 — CE QU'ON FAIT ══════════════════ -->
+<section id="studio" class="section s-studio">
+  <div class="inner">
+    <div class="snum reveal">
+      <div class="snum-bar"></div>
+      <div class="snum-row">
+        <span class="snum-fig">02.</span>
+        <span class="snum-label">— Modules opérationnels</span>
+      </div>
+    </div>
+    <h2 class="reveal" style="transition-delay:.05s;">quatre manières de bâtir avec nous.</h2>
+    <div class="cards-grid reveal" style="transition-delay:.1s;">
+
+      <!-- I -->
+      <div class="pcard" tabindex="0" role="article">
+        <div class="pcard-status">
+          <span class="sdot on"></span> ZARYA EN PRODUCTION
+        </div>
+        <div class="pcard-num">I.</div>
+        <h3>Logiciels métiers</h3>
+        <p>Des outils pensés pour une profession entière. On choisit un secteur, on apprend son langage, on construit le logiciel qu'il aurait dû avoir depuis dix ans.</p>
+        <span class="pcard-arrow">→</span>
+      </div>
+
+      <!-- II -->
+      <div class="pcard" tabindex="0" role="article">
+        <div class="pcard-status">
+          <span class="sdot off"></span> OUVERT
+        </div>
+        <div class="pcard-num">II.</div>
+        <h3>Agents IA sur-mesure</h3>
+        <p>Pour les entreprises qui ont une tâche précise à automatiser. On conçoit l'agent, on le branche à vos outils, on l'entraîne sur vos cas réels.</p>
+        <span class="pcard-arrow">→</span>
+      </div>
+
+      <!-- III -->
+      <div class="pcard" tabindex="0" role="article">
+        <div class="pcard-status">
+          <span class="sdot off"></span> OUVERT
+        </div>
+        <div class="pcard-num">III.</div>
+        <h3>Audit &amp; accompagnement IA</h3>
+        <p>Cartographier vos processus, identifier où l'IA crée de la valeur, accompagner vos équipes. Pas de magie — des décisions documentées.</p>
+        <span class="pcard-arrow">→</span>
+      </div>
+
+      <!-- IV -->
+      <div class="pcard" tabindex="0" role="article">
+        <div class="pcard-status">
+          <span class="sdot off"></span> OUVERT
+        </div>
+        <div class="pcard-num">IV.</div>
+        <h3>Sites web &amp; présence en ligne</h3>
+        <p>Sobres, rapides, durables. Sans dépendances exotiques, maintenables dans cinq ans comme aujourd'hui.</p>
+        <span class="pcard-arrow">→</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 03 — ZARYA ══════════════════ -->
+<section id="zarya" class="section s-zarya">
+  <div class="inner">
+
+    <!-- Left column -->
+    <div class="zarya-left">
+      <div class="snum reveal">
+        <div class="snum-bar"></div>
+        <div class="snum-row">
+          <span class="snum-fig">03.</span>
+          <span class="snum-label">— Module I · En production</span>
+        </div>
+      </div>
+      <p class="zarya-pre reveal" style="transition-delay:.05s;">PRODUCTUM · I</p>
+      <h2 class="zarya-h reveal" style="transition-delay:.1s;">ZARYA<span class="dot">.</span></h2>
+      <p class="zarya-sub reveal" style="transition-delay:.15s;">le copilote opérationnel des fiduciaires suisses.</p>
+      <p class="zarya-body reveal" style="transition-delay:.2s;">
+        Zarya orchestre tout ce qui arrive dans un cabinet — emails, documents, factures, échéances, salaires — et garde une vision temps réel de l'état de chaque dossier client. Plus besoin de chercher : on sait à tout instant ce qui est complet, ce qui manque, et ce qui devient critique.
       </p>
+      <p class="zarya-body reveal" style="transition-delay:.25s; margin-top:-.75rem;">
+        Conçu pour la Suisse romande. Hébergé en Suisse. Respectueux du secret fiscal et de la nLPD.
+      </p>
+      <ul class="zbullets reveal" style="transition-delay:.3s;" aria-label="Fonctionnalités Zarya">
+        <li>
+          <div class="zbullet-sq"></div>
+          <p><strong>Inbox documentaire intelligente</strong> — Réception, OCR, classement et nommage automatiques. L'IA propose, vous validez en un clic.</p>
+        </li>
+        <li>
+          <div class="zbullet-sq"></div>
+          <p><strong>CRM augmenté</strong> — Centre de vérité du cabinet. Score de risque par dossier, échéances suivies, documents attendus listés.</p>
+        </li>
+        <li>
+          <div class="zbullet-sq"></div>
+          <p><strong>Relances et validations automatisées</strong> — Échéances fiscales, validations salariales mensuelles, suivi des réponses clients.</p>
+        </li>
+      </ul>
+      <div class="zarya-ctas reveal" style="transition-delay:.35s;">
+        <a href="https://zarya.condere.ch" class="btn-outline-blue">Découvrir Zarya →</a>
+        <a href="#contact" class="zarya-pilot">Programme pilote — places limitées</a>
+      </div>
     </div>
-    <div class="grid-ui" style="text-align:right;">
-      Coordonnées : 46.2044° N, 6.1432° E<br/>
-      Genève / Suisse
+
+    <!-- Right column — tech card -->
+    <aside class="zarya-card reveal" style="transition-delay:.15s;" aria-label="Fiche technique Zarya">
+      <pre><span class="co">&gt; ZARYA / FICHE TECHNIQUE
+&gt; ──────────────────────────────</span>
+
+  CIBLE        Fiduciaires suisses
+  RÉGION       Suisse romande (initial)
+  STATUT       <span class="co">En production · MVP Q3 2026</span>
+
+  STACK
+  ├─ Backend     Next.js + Postgres
+  ├─ LLM         Anthropic API
+  ├─ Storage     NAS client / EU
+  └─ Intégr.     Microsoft 365, Bexio
+                 Abacus, Crésus
+
+  CONFORMITÉ
+  ├─ Hébergement Suisse
+  ├─ nLPD        <span class="co">✓</span>
+  ├─ Secret fisc.<span class="co">✓</span>
+  └─ Audit log   <span class="co">✓</span>
+
+  MODULES
+  <span class="co">[P0]</span> Doc · CRM · Calendar
+  <span class="co">[P1]</span> Search · Facture
+  [P2] Salaire
+
+  <span class="co">● PROGRAMME PILOTE OUVERT</span></pre>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 04 — WORKFLOW ══════════════════ -->
+<section id="workflow" class="s-workflow" aria-label="Visualisation workflow Zarya">
+  <div class="inner-pad">
+    <div class="snum reveal">
+      <div class="snum-bar"></div>
+      <div class="snum-row">
+        <span class="snum-fig">04.</span>
+        <span class="snum-label">— Architecture en direct</span>
+      </div>
     </div>
+    <h2 class="reveal" style="transition-delay:.05s;">un système qui se construit sous vos yeux.</h2>
+    <p class="body-p reveal" style="transition-delay:.1s;">
+      Voici ce qui se passe dans un cabinet fiduciaire quand un seul email arrive. Multipliez par 200 par semaine.
+    </p>
   </div>
 
-  <!-- Watermark ISS -->
-  <div class="hero-iss-bg" aria-hidden="true">
-    <svg width="1200" height="1200" viewBox="0 0 100 100" fill="none">
-      <rect x="15" y="46" width="70" height="8" fill="#1a2bd4"/>
-      <rect x="15" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="27" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="15" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="27" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="65" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="77" y="10" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="65" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="77" y="62" width="8" height="28" fill="#1a2bd4"/>
-      <rect x="42" y="38" width="16" height="24" rx="1" fill="#1a2bd4"/>
-    </svg>
-  </div>
-
-  <div class="hero-bottom">
-    <h1 class="font-title hero-title">CONDERE.</h1>
-    <div class="hero-rule">
-      <div class="grid-ui">© 2026 Condere Laboratory — Genève, Suisse</div>
-      <div class="grid-ui">01 — Module Fondation · Modular AI</div>
+  <div class="wf-wrap" id="wfContainer"
+       aria-label="Visualisation animée d'un workflow Zarya : du tri d'un email à son traitement complet."
+       role="img">
+    <div class="wf-controls">
+      <button class="wf-btn" id="wfPlayPause">❚❚ PAUSE</button>
+    </div>
+    <div class="wf-counter">
+      DÉCISIONS / MIN : <span class="cn" id="wfCounter">0</span>
     </div>
   </div>
 </section>
 
-<!-- ═══ ETYMOLOGIE ═══ -->
-<section id="a-propos" class="section-pad section-light">
+<!-- ══════════════════ 05 — CONTACT ══════════════════ -->
+<section id="contact" class="section s-contact">
   <div class="inner">
-    <p class="grid-ui section-label">01. Étymologie</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4rem;align-items:start;">
-
-      <div class="reveal">
-        <h2 class="section-heading" style="font-size:clamp(2.5rem,7vw,4.5rem);">
-          <em class="accent" style="font-style:normal;">condere</em>,<br/>
-          <span class="muted" style="font-size:.55em;">verbe latin</span>
-        </h2>
-        <p style="font-size:1.0625rem;line-height:1.75;font-weight:300;opacity:.7;margin-bottom:1.25rem;">
-          Virgile l'emploie dans le premier vers de l'Énéide pour désigner celui qui vint
-          <em style="color:var(--primary);font-style:normal;">fonder</em> Rome. C'est la racine de notre mot
-          <em style="color:var(--dark);font-style:normal;font-weight:600;">fondateur</em>.
-        </p>
-        <p style="font-size:1.0625rem;line-height:1.75;font-weight:300;opacity:.7;">
-          Nos outils intègrent l'IA là où elle change quelque chose de concret :
-          éliminer les tâches répétitives, accélérer les décisions, libérer du temps
-          pour ce qui mérite vraiment de l'<strong style="font-weight:600;opacity:1;color:var(--dark);">attention humaine</strong>.
-        </p>
-      </div>
-
-      <div class="reveal" style="transition-delay:.15s;">
-        <div class="etymo-card">
-          <p class="grid-ui" style="opacity:1;margin-bottom:1rem;">— P. Vergilius Maro, Aeneis I,1</p>
-          <p class="font-title" style="font-size:1.75rem;line-height:1.3;letter-spacing:-0.04em;margin-bottom:1.5rem;">
-            "Troiae qui&nbsp;primus ab&nbsp;oris…<br/>Italiam venit."
-          </p>
-          <div style="height:1px;background:var(--border);margin-bottom:1.5rem;"></div>
-          <div class="etymo-bullets">
-            <div class="etymo-bullet">
-              <span class="dot">·</span>
-              <div>
-                <div class="grid-ui" style="opacity:1;">EU / CH</div>
-                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Données hébergées en Europe (RGPD) ou Suisse (nLPD)</div>
-              </div>
-            </div>
-            <div class="etymo-bullet">
-              <span class="dot">·</span>
-              <div>
-                <div class="grid-ui" style="opacity:1;">FR · EN · DE · IT</div>
-                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Livraison multilingue</div>
-              </div>
-            </div>
-            <div class="etymo-bullet">
-              <span class="dot">·</span>
-              <div>
-                <div class="grid-ui" style="opacity:1;">Swiss Made</div>
-                <div class="grid-ui" style="opacity:.55;margin-top:2px;">Conçu et maintenu en Suisse</div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="snum reveal">
+      <div class="snum-bar"></div>
+      <div class="snum-row">
+        <span class="snum-fig">05.</span>
+        <span class="snum-label">— Fonder un projet</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ═══ PRODUITS ═══ -->
-<section id="produits" class="section-pad">
-  <div class="inner">
-    <div class="reveal">
-      <p class="grid-ui section-label">02. Produits</p>
-      <h2 class="section-heading">
-        Six modules.<br/>
-        <span class="muted">Deux en production.</span>
-      </h2>
-    </div>
-    <div class="cards-grid">
-
-      <a href="https://augustus.condere.ch" target="_blank" rel="noopener" class="card active reveal">
-        <div class="card-num">PRODUCTUM · I</div>
-        <div class="card-title">Augustus</div>
-        <p class="card-body">
-          Lecture et validation intelligente de factures reçues.
-          Extraction, contrôle, archivage — sans intervention manuelle.
-        </p>
-        <div class="card-foot">
-          <span class="card-link">augustus.condere.ch</span>
-          <span class="card-arrow">→ accéder</span>
-        </div>
+    <h2 class="contact-h reveal" style="transition-delay:.05s;">PARLONS<span style="display:inline-block;margin-left:.05em;">-EN<span class="dot">.</span></span></h2>
+    <p class="body-p reveal" style="transition-delay:.1s;">
+      Une question, un audit, un projet qui mûrit depuis trop longtemps — écrivez-nous. Réponse sous 48 heures, en français, anglais, allemand ou italien.
+    </p>
+    <div class="reveal" style="transition-delay:.15s;">
+      <a href="mailto:contact@condere.ch" class="contact-email-link ul-trace">
+        contact@condere.ch<span class="ea">→</span>
       </a>
-
-      <a href="https://tiberius.condere.ch" target="_blank" rel="noopener" class="card active reveal" style="transition-delay:.05s;">
-        <div class="card-num">PRODUCTUM · II</div>
-        <div class="card-title">Tiberius</div>
-        <p class="card-body">
-          Bibliothèque de prompts curés pour PME. Modèles éprouvés,
-          classés par métier — la qualité, pas le bruit.
-        </p>
-        <div class="card-foot">
-          <span class="card-link">tiberius.condere.ch</span>
-          <span class="card-arrow">→ accéder</span>
-        </div>
-      </a>
-
-      <div class="card inactive reveal" style="transition-delay:.1s;">
-        <div class="card-num">PRODUCTUM · III</div>
-        <div class="card-title">Caligula</div>
-        <p class="card-body">En préparation.</p>
-        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
-      </div>
-
-      <div class="card inactive reveal" style="transition-delay:.15s;">
-        <div class="card-num">PRODUCTUM · IV</div>
-        <div class="card-title">Claudius</div>
-        <p class="card-body">En préparation.</p>
-        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
-      </div>
-
-      <div class="card inactive reveal" style="transition-delay:.2s;">
-        <div class="card-num">PRODUCTUM · V</div>
-        <div class="card-title">Nero</div>
-        <p class="card-body">En préparation.</p>
-        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
-      </div>
-
-      <div class="card inactive reveal" style="transition-delay:.25s;">
-        <div class="card-num">PRODUCTUM · VI</div>
-        <div class="card-title">Galba</div>
-        <p class="card-body">En préparation.</p>
-        <div class="card-foot"><span class="grid-ui" style="opacity:.3;">Disponible prochainement</span></div>
-      </div>
-
+      <p class="contact-meta">Réponse sous 48H · FR / EN / DE / IT · Genève / Suisse</p>
     </div>
   </div>
 </section>
 
-<!-- ═══ SERVICES ═══ -->
-<section id="services" class="section-pad section-light">
-  <div class="inner">
-    <div class="reveal">
-      <p class="grid-ui section-label">03. Services</p>
-      <h2 class="section-heading">
-        Trois manières<br/>
-        <span class="muted">de bâtir avec nous.</span>
-      </h2>
-    </div>
-    <div class="service-list">
-      <div class="service-row reveal">
-        <div class="service-num">I.</div>
-        <h3 class="service-title">Micro-SaaS sur mesure</h3>
-        <p class="service-desc">
-          Outils ciblés, pensés pour un workflow précis. Une fonction faite proprement
-          plutôt que dix faites à moitié.
-        </p>
-      </div>
-      <div class="service-row reveal" style="transition-delay:.1s;">
-        <div class="service-num">II.</div>
-        <h3 class="service-title">Audits SOP &amp; coaching IA</h3>
-        <p class="service-desc">
-          Cartographier vos processus, intégrer l'IA là où elle compte.
-          Pas de magie — des décisions documentées.
-        </p>
-      </div>
-      <div class="service-row reveal" style="transition-delay:.2s;">
-        <div class="service-num">III.</div>
-        <h3 class="service-title">Sites web essentiels</h3>
-        <p class="service-desc">
-          Présence en ligne sobre, rapide, durable. Sans dépendances exotiques,
-          maintenable dans cinq ans comme aujourd'hui.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-grid">
 
-<!-- ═══ MANIFESTE ═══ -->
-<section class="section-pad">
-  <div class="inner">
-    <p class="grid-ui section-label reveal">04. Pourquoi Condere</p>
-    <div class="quote-block reveal" style="transition-delay:.1s;">
-      <p class="quote-text">
-        "Plus de la moitié des PME suisses utilisent l'IA au quotidien.
-        Beaucoup la subissent — dispersées entre des outils génériques,
-        sans fil conducteur. Nous faisons le contraire : des modules ciblés
-        qui absorbent ce qui est répétitif, redonnent du temps, et remettent
-        les personnes <span style="color:var(--primary);">au centre de leur métier.</span>"
+    <!-- Étymologie -->
+    <div class="footer-etymo">
+      <span class="flabel">01. Étymologie</span>
+      <h3>condere, verbe latin</h3>
+      <p>
+        Virgile l'emploie dans le premier vers de l'Énéide pour désigner celui qui vint <em>fonder</em> Rome. C'est la racine de notre mot <em>fondateur</em>.
       </p>
-      <div class="quote-divider">
-        <div></div>
-        <span>Le manifeste Condere</span>
-        <div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 3D LOGO ═══ -->
-<section class="section-pad section-dark">
-  <div class="inner-wide" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:4rem;align-items:center;">
-
-    <div class="reveal">
-      <p class="grid-ui" style="opacity:1;color:rgba(255,255,255,.4);margin-bottom:2rem;">05. Visualisation 3D</p>
-      <h2 class="font-title" style="font-size:clamp(2.5rem,7vw,5rem);text-transform:uppercase;line-height:.85;margin-bottom:2rem;color:white;">
-        Modular<br/>Space
-      </h2>
-      <p style="font-size:1.0625rem;font-weight:300;opacity:.6;line-height:1.7;max-width:380px;margin-bottom:2rem;color:white;">
-        Construire des systèmes complexes à partir de blocs simples et interchangeables.
-        Faites pivoter le module pour explorer sa structure.
-      </p>
-      <span class="btn-outline-white">Interagir avec le modèle →</span>
+      <p class="citation">— P. Vergilius Maro, Aeneis I,1<br/>
+        « Troiae qui primus ab oris… Italiam venit. »</p>
     </div>
 
-    <div class="reveal" style="transition-delay:.1s;">
-      <div id="logo3d">
-        <div class="grid-ui" style="position:absolute;top:2rem;left:2rem;color:rgba(255,255,255,.3);z-index:10;opacity:1;">
-          Vue Active: Orbital_01
-        </div>
-      </div>
+    <!-- Données système -->
+    <div class="footer-sys">
+      <span class="flabel">02. Système</span>
+      <pre>COORDONNÉES  46.2044° N, 6.1432° E
+SITE         GENÈVE / SUISSE
+JURIDICTION  CH · EU
+PROTOCOLE    V.02 — STUDIO
+DERNIÈRE MAJ 22.05.2026
+STATUT       <span class="co">● ACTIF</span></pre>
     </div>
 
-  </div>
-</section>
-
-<!-- ═══ DIAGNOSTIC ═══ -->
-<section class="section-pad section-light">
-  <div class="inner reveal">
-    <p class="grid-ui section-label">06. Diagnostic</p>
-    <div class="diagnostic-grid">
-      <div>
-        <h2 class="section-heading">
-          En 3 minutes,<br/>
-          <span class="accent">trouvez votre module.</span>
-        </h2>
-      </div>
-      <div>
-        <p style="font-size:15px;font-weight:300;line-height:1.75;opacity:.65;margin-bottom:2rem;">
-          Décrivez vos tâches, vos frictions, vos routines. Nous analysons vos réponses
-          et vous proposons les modules Condere adaptés à votre contexte —
-          sans rendez-vous, sans engagement.
-        </p>
-        <a href="https://tally.so/r/2Ebgqg" target="_blank" rel="noopener" class="btn-primary">
-          Répondre au questionnaire →
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CONTACT ═══ -->
-<section id="contact" class="section-pad" style="padding-top:7rem;padding-bottom:7rem;">
-  <div class="inner" style="text-align:center;">
-    <div class="reveal">
-      <p class="grid-ui section-label" style="justify-content:center;display:flex;">07. Fonder un projet</p>
-      <h2 class="font-title" style="font-size:clamp(2.5rem,8vw,7rem);text-transform:uppercase;line-height:.85;margin-bottom:1.5rem;">
-        Bâtissons<br/>quelque chose<br/><span style="color:var(--primary);">qui vous survivra.</span>
-      </h2>
-      <p style="font-size:15px;font-weight:300;line-height:1.75;opacity:.6;max-width:480px;margin:0 auto 2.5rem;">
-        Une question, un audit, un projet qui mûrit depuis trop longtemps —
-        écrivez-nous. Réponse sous 48 heures, en français ou en anglais.
-      </p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="mailto:contact@condere.ch" class="btn-primary">contact@condere.ch →</a>
-        <a href="#produits" class="btn-outline">Explorer les produits</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-<footer style="background:var(--dark);color:white;padding:4rem 3rem;overflow:hidden;position:relative;">
-  <div style="position:relative;z-index:10;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:3rem;">
-    <div>
-      <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
-        <rect x="15" y="46" width="70" height="8" fill="white"/>
-        <rect x="15" y="10" width="8" height="28" fill="white"/>
-        <rect x="27" y="10" width="8" height="28" fill="white"/>
-        <rect x="15" y="62" width="8" height="28" fill="white"/>
-        <rect x="27" y="62" width="8" height="28" fill="white"/>
-        <rect x="65" y="10" width="8" height="28" fill="white"/>
-        <rect x="77" y="10" width="8" height="28" fill="white"/>
-        <rect x="65" y="62" width="8" height="28" fill="white"/>
-        <rect x="77" y="62" width="8" height="28" fill="white"/>
-        <rect x="42" y="38" width="16" height="24" rx="1" fill="white"/>
-      </svg>
-      <div class="grid-ui" style="opacity:.4;margin-top:1.5rem;color:white;">
-        Condere Intelligence<br/>Tous les modules sont actifs.
-      </div>
-    </div>
-    <div class="font-title" style="font-size:clamp(4rem,14vw,14rem);line-height:1;letter-spacing:-0.06em;opacity:.07;pointer-events:none;text-transform:uppercase;color:white;">
-      Condere
-    </div>
-  </div>
-  <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;">
-    <span class="grid-ui" style="opacity:.3;color:white;">Construit pour le futur</span>
-    <nav style="display:flex;gap:2rem;">
-      <a href="mailto:contact@condere.ch" class="foot-link">contact@condere.ch</a>
-      <a href="#" class="foot-link">LinkedIn</a>
-      <a href="#" class="foot-link">GitHub</a>
+    <!-- Navigation -->
+    <nav class="footer-nav" aria-label="Navigation footer">
+      <span class="flabel">03. Navigation</span>
+      <a href="#studio">Studio</a>
+      <a href="#zarya">Zarya</a>
+      <a href="#manifeste">Manifeste</a>
+      <a href="#contact">Contact</a>
+      <a href="#" rel="noopener">LinkedIn ↗</a>
+      <a href="#" rel="noopener">GitHub ↗</a>
     </nav>
-    <span class="grid-ui" style="opacity:.3;color:white;">Dernière mise à jour: 12.05.2026</span>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Condere Laboratory — Genève, Suisse</span>
+    <a href="mailto:contact@condere.ch">contact@condere.ch</a>
+    <div class="f-active">
+      <div class="blink-dot"></div>
+      Tous les modules sont actifs.
+    </div>
   </div>
 </footer>
 
-<!-- JS -->
+<!-- ══════════════════ JS ══════════════════ -->
 <script>
-/* ── 3D Logo Viewer ── */
-(function () {
-  const mount = document.getElementById('logo3d');
-  if (!mount || typeof THREE === 'undefined') return;
-
-  const w = mount.clientWidth || 600;
-  const h = mount.clientHeight || 600;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  mount.appendChild(renderer.domElement);
-
-  const group = new THREE.Group();
-  const blueMat = new THREE.MeshStandardMaterial({ color: '#1a2bd4', metalness: 0.1, roughness: 0.8 });
-  const darkMat = new THREE.MeshStandardMaterial({ color: '#1a2342', metalness: 0.1, roughness: 0.8 });
-
-  group.add(new THREE.Mesh(new THREE.BoxGeometry(7, 0.8, 0.8), darkMat));
-  group.add(new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.4, 1.6), darkMat));
-
-  const panelGeo = new THREE.BoxGeometry(1.2, 2.8, 0.6);
-  [
-    [-2.5, 1.8, 0], [-1.2, 1.8, 0], [-2.5, -1.8, 0], [-1.2, -1.8, 0],
-    [ 1.2, 1.8, 0], [ 2.5, 1.8, 0], [ 1.2, -1.8, 0], [ 2.5, -1.8, 0],
-  ].forEach(pos => {
-    const m = new THREE.Mesh(panelGeo, blueMat);
-    m.position.set(...pos);
-    group.add(m);
-  });
-
-  scene.add(group);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-  const dir = new THREE.DirectionalLight(0xffffff, 0.5);
-  dir.position.set(5, 5, 5);
-  scene.add(dir);
-  camera.position.z = 10;
-
-  let mx = 0, my = 0;
-  mount.addEventListener('mousemove', e => {
-    const r = mount.getBoundingClientRect();
-    mx = ((e.clientX - r.left) / r.width) * 2 - 1;
-    my = -((e.clientY - r.top) / r.height) * 2 + 1;
-  });
-
-  (function animate() {
-    requestAnimationFrame(animate);
-    group.rotation.y += 0.005 + mx * 0.02;
-    group.rotation.x += my * 0.02;
-    renderer.render(scene, camera);
-  })();
-
-  window.addEventListener('resize', () => {
-    const nw = mount.clientWidth || 600;
-    const nh = mount.clientHeight || 600;
-    camera.aspect = nw / nh;
-    camera.updateProjectionMatrix();
-    renderer.setSize(nw, nh);
-  });
-})();
-
 /* ── Scroll Reveal ── */
 (function () {
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-  }, { threshold: .1, rootMargin: '0px 0px -6% 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 })();
 
 /* ── Smooth Scroll ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const href = a.getAttribute('href');
-    if (href.length > 1) {
-      const t = document.querySelector(href);
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    }
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
 });
+
+/* ── D3.js Workflow ── */
+(function () {
+  const container = document.getElementById('wfContainer');
+  if (!container || typeof d3 === 'undefined') return;
+
+  const BLUE   = '#1A2BD4';
+  const ORANGE = '#FF5B00';
+  const VOID   = '#050A30';
+  const TOTAL_DURATION = 15000;
+
+  let paused = false;
+  let globalStartTime = null;
+  let animationId = null;
+  let counterValue = 0;
+  let counterTarget = 247;
+  let counterStart  = null;
+  let activeNodeId  = null;
+  let isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const NODES = [
+    { id:'email',    label:'EMAIL REÇU',          px:.5,  py:.1,  phase:1, depth:0 },
+    { id:'classif',  label:'CLASSIFICATION IA',   px:.5,  py:.24, phase:2, depth:1 },
+    { id:'facture',  label:'FACTURE',              px:.18, py:.40, phase:2, depth:2 },
+    { id:'demande',  label:'DEMANDE CLIENT',       px:.5,  py:.40, phase:2, depth:2 },
+    { id:'fiscal',   label:'DOC. FISCAL',          px:.82, py:.40, phase:2, depth:2 },
+    { id:'ocr',      label:'OCR EXTRACTION',       px:.18, py:.52, phase:3, depth:3 },
+    { id:'tva',      label:'VALIDATION TVA',       px:.18, py:.64, phase:3, depth:4 },
+    { id:'rapproch', label:'RAPPROCHEMENT CRM',    px:.18, py:.76, phase:3, depth:5 },
+    { id:'archiv',   label:'ARCHIVAGE CH',         px:.18, py:.88, phase:3, depth:6 },
+    { id:'intent',   label:'ANALYSE INTENTION',   px:.5,  py:.52, phase:3, depth:3 },
+    { id:'reponse',  label:'RÉPONSE BROUILLON',   px:.5,  py:.64, phase:3, depth:4 },
+    { id:'routage',  label:'ROUTAGE COLLAB.',      px:.5,  py:.76, phase:3, depth:5 },
+    { id:'crmupd',   label:'CRM UPDATE',           px:.5,  py:.88, phase:3, depth:6 },
+    { id:'detect',   label:'DÉTECTION TYPE',       px:.82, py:.52, phase:3, depth:3 },
+    { id:'rattach',  label:'RATTACHEMENT CLIENT',  px:.82, py:.64, phase:3, depth:4 },
+    { id:'checklist',label:'CHECKLIST MAJ',        px:.82, py:.76, phase:3, depth:5 },
+    { id:'relance',  label:'RELANCE COND.',        px:.82, py:.88, phase:3, depth:6 },
+  ];
+
+  const LINKS_TREE = [
+    { s:'email',    t:'classif' },
+    { s:'classif',  t:'facture' }, { s:'classif', t:'demande' }, { s:'classif', t:'fiscal' },
+    { s:'facture',  t:'ocr' },     { s:'ocr',     t:'tva' },     { s:'tva',     t:'rapproch' },   { s:'rapproch', t:'archiv' },
+    { s:'demande',  t:'intent' },  { s:'intent',  t:'reponse' }, { s:'reponse', t:'routage' },    { s:'routage',  t:'crmupd' },
+    { s:'fiscal',   t:'detect' },  { s:'detect',  t:'rattach' }, { s:'rattach', t:'checklist' },  { s:'checklist',t:'relance' },
+  ];
+
+  const LINKS_CROSS = [
+    { s:'tva',     t:'reponse' },
+    { s:'reponse', t:'rattach' },
+  ];
+
+  function init() {
+    container.querySelectorAll('svg.wf-svg').forEach(s => s.remove());
+
+    const W = container.clientWidth;
+    const H = container.clientHeight;
+
+    const svg = d3.select(container).append('svg')
+      .attr('class', 'wf-svg')
+      .attr('width', W).attr('height', H)
+      .style('position','absolute').style('top',0).style('left',0);
+
+    // tooltip
+    let tooltip = container.querySelector('.wf-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.className = 'wf-tooltip';
+      Object.assign(tooltip.style, {
+        position:'absolute', background:'rgba(5,10,48,.88)', color:'#F4F6FC',
+        fontFamily:'var(--mono)', fontSize:'10px', letterSpacing:'.1em', textTransform:'uppercase',
+        padding:'8px 12px', pointerEvents:'none', opacity:'0', transition:'opacity 150ms',
+        maxWidth:'200px', lineHeight:'1.6', zIndex:'20'
+      });
+      container.appendChild(tooltip);
+    }
+
+    const nodeMap = {};
+    NODES.forEach(n => {
+      n.x = n.px * W;
+      n.y = n.py * H;
+      nodeMap[n.id] = n;
+    });
+
+    const TOOLTIPS = {
+      email:     'Déclencheur initial — un email entrant dans la boîte du cabinet.',
+      classif:   'L'IA analyse le contenu et détermine la catégorie du document.',
+      facture:   'Détecté comme facture fournisseur ou note d'honoraires.',
+      demande:   'Demande d'information ou de prestation d'un client.',
+      fiscal:    'Document fiscal : déclaration TVA, bilan, avis de taxation.',
+      ocr:       'Extraction textuelle et structurale du PDF ou de l'image.',
+      tva:       'Compare le montant au seuil légal CH 2026, alerte si discordance.',
+      rapproch:  'Associe la facture à un dossier client existant dans le CRM.',
+      archiv:    'Classement définitif avec nommage normalisé, stockage CH.',
+      intent:    'Identifie l'intention : question, urgence, pièce manquante.',
+      reponse:   'Génère un brouillon de réponse contextuel pour validation.',
+      routage:   'Assigne au collaborateur compétent selon la charge et le domaine.',
+      crmupd:    'Met à jour le dossier client avec le statut et la date.',
+      detect:    'Classifie le type fiscal : déclaration IS, TVA, salaires…',
+      rattach:   'Associe le document au bon client et à la bonne période fiscale.',
+      checklist: 'Coche l'élément dans la checklist de complétude du dossier.',
+      relance:   'Programme une relance conditionnelle si pièces toujours manquantes.',
+    };
+
+    // Defs
+    const defs = svg.append('defs');
+    defs.append('filter').attr('id','glow')
+      .append('feGaussianBlur').attr('stdDeviation','2').attr('result','blur');
+    defs.select('filter')
+      .append('feMerge').selectAll('feMergeNode')
+      .data(['blur','SourceGraphic']).enter().append('feMergeNode')
+      .attr('in', d => d);
+
+    const gLinks = svg.append('g').attr('class','g-links');
+    const gCross = svg.append('g').attr('class','g-cross');
+    const gNodes = svg.append('g').attr('class','g-nodes');
+
+    // Pre-draw all links (invisible)
+    LINKS_TREE.forEach(l => {
+      const s = nodeMap[l.s], t = nodeMap[l.t];
+      if (!s||!t) return;
+      const len = Math.hypot(t.x-s.x, t.y-s.y);
+      gLinks.append('line')
+        .attr('class',`link link-${l.s}-${l.t}`)
+        .attr('x1',s.x).attr('y1',s.y).attr('x2',t.x).attr('y2',t.y)
+        .attr('stroke', VOID).attr('stroke-opacity',.35).attr('stroke-width',1)
+        .attr('stroke-dasharray',len).attr('stroke-dashoffset',len)
+        .style('opacity',0);
+    });
+
+    LINKS_CROSS.forEach(l => {
+      const s = nodeMap[l.s], t = nodeMap[l.t];
+      if (!s||!t) return;
+      const len = Math.hypot(t.x-s.x, t.y-s.y);
+      gCross.append('line')
+        .attr('class',`cross cross-${l.s}-${l.t}`)
+        .attr('x1',s.x).attr('y1',s.y).attr('x2',t.x).attr('y2',t.y)
+        .attr('stroke', ORANGE).attr('stroke-opacity',.4).attr('stroke-width',1)
+        .attr('stroke-dasharray','4 4').attr('stroke-dashoffset',0)
+        .style('opacity',0);
+    });
+
+    // Pre-draw all nodes (invisible)
+    NODES.forEach(n => {
+      const r = n.depth === 0 ? 14 : n.depth <= 2 ? 12 : 9;
+      const g = gNodes.append('g').attr('class',`ngrp ngrp-${n.id}`)
+        .attr('transform',`translate(${n.x},${n.y})`)
+        .style('opacity',0).style('cursor','pointer');
+
+      g.append('circle').attr('class',`node node-${n.id}`)
+        .attr('r',r)
+        .attr('fill', n.depth === 0 ? BLUE : n.depth <= 2 ? BLUE : '#EEF0F8')
+        .attr('stroke', n.depth === 0 ? ORANGE : 'none')
+        .attr('stroke-width', n.depth === 0 ? 2 : 0);
+
+      // Label
+      const lx = n.px > 0.5 ? -(r+5) : n.px < 0.5 ? (r+5) : 0;
+      const anchor = n.px > 0.5 ? 'end' : n.px < 0.5 ? 'start' : 'middle';
+      const ly = n.depth >= 1 && n.px === 0.5 ? -(r+5) : r+12;
+      g.append('text')
+        .attr('x',lx).attr('y',ly)
+        .attr('text-anchor',anchor)
+        .style('font-family','var(--mono)').style('font-size','9px')
+        .style('letter-spacing','.08em').style('text-transform','uppercase')
+        .style('fill',`rgba(5,10,48,.72)`).style('pointer-events','none')
+        .text(n.label);
+
+      // Hover
+      g.on('mouseenter', (event) => {
+        if (activeNodeId !== n.id) {
+          d3.select(`.node-${n.id}`).attr('stroke',ORANGE).attr('stroke-width',2)
+            .transition().duration(150).attr('r', r*1.3);
+        }
+        const tip = TOOLTIPS[n.id] || '';
+        if (tip) {
+          const rect = container.getBoundingClientRect();
+          tooltip.textContent = n.label + ' — ' + tip;
+          tooltip.style.opacity = '1';
+          let tx = event.clientX - rect.left + 12;
+          let ty = event.clientY - rect.top + 12;
+          if (tx + 220 > W) tx = event.clientX - rect.left - 220;
+          tooltip.style.left = tx + 'px';
+          tooltip.style.top  = ty + 'px';
+        }
+      })
+      .on('mousemove', (event) => {
+        const rect = container.getBoundingClientRect();
+        let tx = event.clientX - rect.left + 12;
+        let ty = event.clientY - rect.top  + 12;
+        if (tx + 220 > W) tx = event.clientX - rect.left - 220;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top  = ty + 'px';
+      })
+      .on('mouseleave', () => {
+        if (activeNodeId !== n.id) {
+          d3.select(`.node-${n.id}`).attr('stroke', n.depth === 0 ? ORANGE : 'none')
+            .attr('stroke-width', n.depth === 0 ? 2 : 0)
+            .transition().duration(150).attr('r', r);
+        }
+        tooltip.style.opacity = '0';
+      })
+      .on('click', () => {
+        if (activeNodeId === n.id) {
+          // deselect
+          activeNodeId = null;
+          gNodes.selectAll('.ngrp').transition().duration(300).style('opacity', d => 1);
+          // restore all opacities based on phase
+          return;
+        }
+        activeNodeId = n.id;
+        paused = true;
+        document.getElementById('wfPlayPause').textContent = '▶ REJOUER';
+        // Dim all, highlight node + neighbors
+        const neighbors = new Set([n.id]);
+        LINKS_TREE.forEach(l => {
+          if (l.s === n.id) neighbors.add(l.t);
+          if (l.t === n.id) neighbors.add(l.s);
+        });
+        gNodes.selectAll('.ngrp').each(function(d, i) {
+          const cls = this.getAttribute('class');
+          const nid = cls.replace(/.*ngrp-(\S+).*/, '$1');
+          d3.select(this).transition().duration(300)
+            .style('opacity', neighbors.has(nid) ? 1 : 0.15);
+        });
+      });
+    });
+
+    // Particles layer
+    const gParticles = svg.append('g').attr('class','g-particles');
+
+    return { svg, nodeMap, gLinks, gCross, gNodes, gParticles, W, H };
+  }
+
+  function showNode(id, delay) {
+    return new Promise(res => {
+      setTimeout(() => {
+        const g = d3.select(`.ngrp-${id}`);
+        g.transition().duration(350).style('opacity',1)
+          .on('end', res);
+        // Active glow pulse
+        const node = d3.select(`.node-${id}`);
+        const origStroke = node.attr('stroke');
+        node.attr('stroke', ORANGE).attr('stroke-width',2)
+          .attr('filter','url(#glow)');
+        setTimeout(() => {
+          if (activeNodeId !== id) {
+            node.attr('stroke', origStroke)
+              .attr('stroke-width', origStroke ? 2 : 0)
+              .attr('filter', null);
+          }
+        }, 600);
+      }, delay);
+    });
+  }
+
+  function showLink(cls, delay) {
+    return new Promise(res => {
+      setTimeout(() => {
+        const line = d3.select(`.link-${cls}`);
+        const len = parseFloat(line.attr('stroke-dasharray')) || 0;
+        line.style('opacity',1)
+          .transition().duration(500).ease(d3.easeLinear)
+          .attr('stroke-dashoffset', 0)
+          .on('end', res);
+      }, delay);
+    });
+  }
+
+  function showCross(cls, delay) {
+    setTimeout(() => {
+      d3.select(`.cross-${cls}`).transition().duration(600).style('opacity',1);
+    }, delay);
+  }
+
+  function spawnParticle(svg, s, t, delay, gParticles) {
+    setTimeout(() => {
+      const dur = 1500 + Math.random() * 500;
+      const c = gParticles.append('circle')
+        .attr('r', 3).attr('fill', ORANGE).attr('opacity', .85)
+        .attr('cx', s.x).attr('cy', s.y);
+      c.transition().duration(dur).ease(d3.easeLinear)
+        .attr('cx', t.x).attr('cy', t.y)
+        .attr('opacity', 0)
+        .on('end', () => c.remove());
+    }, delay);
+  }
+
+  function runCounterAnim(counterEl) {
+    counterStart = Date.now();
+    function step() {
+      const elapsed = Date.now() - counterStart;
+      const progress = Math.min(elapsed / 2000, 1);
+      const val = Math.round(counterTarget * progress);
+      counterEl.textContent = val;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function resetAll(ctx) {
+    if (!ctx) return;
+    ctx.gLinks.selectAll('line').transition().duration(400).style('opacity',0)
+      .on('end', function() { d3.select(this).attr('stroke-dashoffset', parseFloat(d3.select(this).attr('stroke-dasharray'))||0); });
+    ctx.gCross.selectAll('line').transition().duration(400).style('opacity',0);
+    ctx.gNodes.selectAll('.ngrp').transition().duration(400).style('opacity',0);
+    ctx.gParticles.selectAll('circle').remove();
+    document.getElementById('wfCounter').textContent = '0';
+    activeNodeId = null;
+  }
+
+  let ctx = null;
+
+  async function runAnimation() {
+    if (isReduced) {
+      // Show static final state
+      ctx = init();
+      NODES.forEach(n => d3.select(`.ngrp-${n.id}`).style('opacity',1));
+      ctx.gLinks.selectAll('line').style('opacity',1).attr('stroke-dashoffset',0);
+      ctx.gCross.selectAll('line').style('opacity',1);
+      document.getElementById('wfCounter').textContent = '247';
+      return;
+    }
+
+    ctx = init();
+    let t = 0; // ms timeline
+
+    // Phase 1 — EMAIL REÇU
+    await showNode('email', t);
+    t += 600;
+
+    // Phase 2 — CLASSIFICATION IA
+    showLink('email-classif', t);
+    await showNode('classif', t + 400);
+    t += 900;
+
+    // 3 branches
+    const branches = [
+      ['facture','email-classif','classif-facture'],
+      ['demande','classif-facture','classif-demande'],
+      ['fiscal', 'classif-demande','classif-fiscal'],
+    ];
+    for (let i = 0; i < branches.length; i++) {
+      const [nid,,lk] = branches[i];
+      showLink(lk, t + i*180);
+      showNode(nid, t + i*180 + 300);
+    }
+    t += 1000;
+
+    // Phase 3 — sub-branches (interleaved)
+    const chains = [
+      ['ocr','facture-ocr'],
+      ['intent','demande-intent'],
+      ['detect','fiscal-detect'],
+      ['tva','ocr-tva'],
+      ['reponse','intent-reponse'],
+      ['rattach','detect-rattach'],
+      ['rapproch','tva-rapproch'],
+      ['routage','reponse-routage'],
+      ['checklist','rattach-checklist'],
+      ['archiv','rapproch-archiv'],
+      ['crmupd','routage-crmupd'],
+      ['relance','checklist-relance'],
+    ];
+    for (let i = 0; i < chains.length; i++) {
+      const [nid, lk] = chains[i];
+      showLink(lk, t + i*200);
+      showNode(nid, t + i*200 + 250);
+    }
+    t += 4500;
+
+    // Phase 4 — cross-connections
+    showCross('tva-reponse', t);
+    showCross('reponse-rattach', t + 300);
+    t += 1500;
+
+    // Phase 5 — particles + counter
+    const counterEl = document.getElementById('wfCounter');
+    runCounterAnim(counterEl);
+
+    const edgesForParticles = LINKS_TREE.filter(l =>
+      ['email-classif','classif-facture','classif-demande','classif-fiscal',
+       'facture-ocr','ocr-tva','demande-intent','fiscal-detect',
+       'tva-rapproch','intent-reponse','detect-rattach'].includes(`${l.s}-${l.t}`)
+    );
+    const nodeMap = {};
+    NODES.forEach(n => { nodeMap[n.id] = n; });
+
+    for (let rep = 0; rep < 8; rep++) {
+      edgesForParticles.forEach(l => {
+        if (ctx) spawnParticle(ctx.svg, nodeMap[l.s], nodeMap[l.t], rep * 400 + Math.random()*200, ctx.gParticles);
+      });
+    }
+    t += 3000;
+
+    // Phase 6 — fade + reset
+    setTimeout(() => {
+      if (paused) return;
+      if (ctx) {
+        ctx.gNodes.selectAll('.ngrp').transition().duration(1000).style('opacity',.2);
+        ctx.gLinks.selectAll('line').transition().duration(1000).style('opacity',.1);
+        ctx.gCross.selectAll('line').transition().duration(1000).style('opacity',.1);
+      }
+      setTimeout(() => {
+        if (!paused) runAnimation();
+      }, 1200);
+    }, t);
+  }
+
+  // Play/pause
+  document.getElementById('wfPlayPause').addEventListener('click', () => {
+    paused = !paused;
+    document.getElementById('wfPlayPause').textContent = paused ? '▶ REJOUER' : '❚❚ PAUSE';
+    if (!paused) { activeNodeId = null; runAnimation(); }
+  });
+
+  // Pause when out of viewport
+  const wfObserver = new IntersectionObserver(entries => {
+    const visible = entries[0].isIntersecting;
+    if (!visible && !paused) {
+      paused = true;
+      document.getElementById('wfPlayPause').textContent = '▶ REJOUER';
+    }
+    if (visible && paused && !activeNodeId) {
+      paused = false;
+      document.getElementById('wfPlayPause').textContent = '❚❚ PAUSE';
+      runAnimation();
+    }
+  }, { threshold: 0.2 });
+  wfObserver.observe(container);
+
+  // Resize
+  window.addEventListener('resize', () => { if (ctx) { resetAll(ctx); runAnimation(); } });
+
+  // Start
+  runAnimation();
+})();
 </script>
 
 </body>
