@@ -415,7 +415,36 @@ p { line-height: 1.65; }
 }
 .co { color: var(--orange); }
 
-/* ─── 04 WORKFLOW ─── */
+/* ─── 04 UNITY ─── */
+.s-unity .inner {
+  display: grid; grid-template-columns: 3fr 2fr;
+  gap: 5rem; align-items: start;
+}
+.unity-h {
+  font-family: 'Syncopate', sans-serif; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; line-height: 0.95;
+  font-size: clamp(3rem, 8vw, 7rem); color: #7C3AED; margin-bottom: .875rem;
+}
+.unity-h .dot { color: var(--orange); }
+.btn-outline-violet {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: #7C3AED; text-decoration: none;
+  padding: 14px 28px; border: 1px solid #7C3AED;
+  background: transparent;
+  transition: background 200ms, color 200ms;
+}
+.btn-outline-violet:hover { background: #7C3AED; color: var(--ice); }
+.unity-pilot {
+  font-size: .9375rem; color: rgba(5,10,48,.55);
+  text-decoration: none;
+  background-image: linear-gradient(to right, #7C3AED, #7C3AED);
+  background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size 300ms ease, color 300ms ease;
+}
+.unity-pilot:hover { color: var(--void); background-size: 100% 1px; }
+
+/* ─── 05 WORKFLOW ─── */
 .s-workflow { padding: 7rem 0; border-top: 1px solid rgba(5,10,48,.1); }
 .s-workflow h2 {
   font-size: clamp(1.75rem, 4.5vw, 3.75rem);
@@ -550,6 +579,7 @@ footer {
   .cards-grid { grid-template-columns: repeat(2,1fr); }
   .s-zarya .inner { grid-template-columns:1fr; gap:3rem; }
   .zarya-card { position:static; }
+  .s-unity .inner { grid-template-columns:1fr; gap:3rem; }
   .footer-grid { grid-template-columns:1fr 1fr; gap:3rem; }
 }
 @media (max-width: 640px) {
@@ -605,6 +635,8 @@ footer {
     <li class="sep">·</li>
     <li><a href="#zarya">Zarya</a></li>
     <li class="sep">·</li>
+    <li><a href="#unity">Unity</a></li>
+    <li class="sep">·</li>
     <li><a href="#manifeste">Manifeste</a></li>
     <li class="sep">·</li>
     <li><a href="#contact">Contact</a></li>
@@ -617,10 +649,11 @@ footer {
 
 <div id="navOverlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu navigation">
   <button class="nav-overlay-close" onclick="document.getElementById('navOverlay').classList.remove('open')" aria-label="Fermer le menu">[ FERMER ]</button>
-  <a href="#studio" onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
-  <a href="#zarya"  onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="#studio"    onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
+  <a href="#zarya"     onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="#unity"     onclick="document.getElementById('navOverlay').classList.remove('open')">Unity</a>
   <a href="#manifeste" onclick="document.getElementById('navOverlay').classList.remove('open')">Manifeste</a>
-  <a href="#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+  <a href="#contact"   onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
 </div>
 
 <!-- ══════════════════ HERO ══════════════════ -->
@@ -679,7 +712,7 @@ footer {
       <div class="snum-bar"></div>
     </div>
     <h2 class="reveal" style="transition-delay:.05s; color:#050A30;">
-      Studio suisse spécialisé dans la conception de logiciels augmentés par l'intelligence artificielle.
+      Studio suisse spécialisé dans la création d'outils augmentés par l'intelligence artificielle.
     </h2>
     <p class="body-p reveal" style="transition-delay:.1s;">
       Nous développons des solutions capables d'automatiser les tâches répétitives, de structurer l'information et d'accélérer les processus métier.
@@ -833,7 +866,7 @@ footer {
   <div class="inner-pad">
     <div class="snum reveal">
       <div class="snum-bar"></div>
-      <span class="snum-title">ARCHITECTURE</span>
+      <span class="snum-title">ARCHITECTURE ZARYA</span>
     </div>
     <h2 class="reveal" style="transition-delay:.05s;">un système qui se construit sous vos yeux.</h2>
     <p class="body-p reveal" style="transition-delay:.1s;">
@@ -853,7 +886,77 @@ footer {
   </div>
 </section>
 
-<!-- ══════════════════ 05 — CONTACT ══════════════════ -->
+<!-- ══════════════════ 05 — UNITY ══════════════════ -->
+<section id="unity" class="section s-unity">
+  <div class="inner">
+
+    <!-- Left column -->
+    <div class="zarya-left">
+      <div class="snum reveal">
+        <div class="snum-bar"></div>
+      </div>
+      <h2 class="unity-h reveal" style="transition-delay:.1s;">UNITY<span class="dot">.</span></h2>
+      <p class="zarya-sub reveal" style="transition-delay:.15s;">Le site web professionnel des PME suisses.</p>
+      <p class="zarya-body reveal" style="transition-delay:.2s;">
+        Unity crée et entretient des sites web professionnels pour les indépendant·es, PME, artisan·es et commerces qui veulent une présence en ligne claire, crédible et sans gestion technique.
+      </p>
+      <p class="zarya-body reveal" style="transition-delay:.25s; margin-top:-.75rem;">
+        Nous nous occupons de tout : structure, design, mise en ligne, hébergement, sécurité, sauvegardes et maintenance. Votre site reste propre, sécurisé et à jour, sans que vous ayez à gérer la technique.
+      </p>
+      <p class="zarya-body reveal" style="transition-delay:.28s; margin-top:-.75rem; font-style:italic; color:rgba(5,10,48,.58);">
+        Conçu pour les petites structures suisses. Hébergé et maintenu avec soin. Pensé pour inspirer confiance et générer des demandes.
+      </p>
+      <ul class="zbullets reveal" style="transition-delay:.3s;" aria-label="Fonctionnalités Unity">
+        <li>
+          <div class="zbullet-sq" style="background:#7C3AED;"></div>
+          <p><strong>Site professionnel clé en main</strong> — Structure, design, mise en ligne et responsive mobile.</p>
+        </li>
+        <li>
+          <div class="zbullet-sq" style="background:#7C3AED;"></div>
+          <p><strong>Maintenance incluse</strong> — Hébergement, sécurité, sauvegardes, mises à jour et petites modifications.</p>
+        </li>
+        <li>
+          <div class="zbullet-sq" style="background:#7C3AED;"></div>
+          <p><strong>Présence digitale qui inspire confiance</strong> — Une image claire, crédible et alignée avec votre activité.</p>
+        </li>
+      </ul>
+      <div class="zarya-ctas reveal" style="transition-delay:.35s;">
+        <a href="https://www.unity.condere.ch" class="btn-outline-violet" target="_blank" rel="noopener">Découvrir Unity →</a>
+        <a href="https://www.unity.condere.ch" class="unity-pilot" target="_blank" rel="noopener">Sites web dès 495 CHF + maintenance mensuelle</a>
+      </div>
+    </div>
+
+    <!-- Right column — tech card -->
+    <aside class="zarya-card reveal" style="transition-delay:.15s;" aria-label="Fiche technique Unity">
+      <pre><span style="color:#7C3AED;">&gt; UNITY / FICHE TECHNIQUE
+&gt; ──────────────────────────────</span>
+
+  CIBLE        PME, indép., artisan·es
+  RÉGION       Suisse (tout le pays)
+  STATUT       <span style="color:#7C3AED;">Disponible · Dès 495 CHF</span>
+
+  OFFRE
+  ├─ Site clé en main
+  ├─ Design responsive
+  ├─ Hébergement inclus
+  └─ Maintenance mensuelle
+
+  INCLUS
+  ├─ Sécurité    <span style="color:#7C3AED;">✓</span>
+  ├─ Sauvegardes <span style="color:#7C3AED;">✓</span>
+  ├─ Mises à jour<span style="color:#7C3AED;">✓</span>
+  └─ Support CH  <span style="color:#7C3AED;">✓</span>
+
+  LANGUES
+  [FR] [DE] [IT] [EN]
+
+  <span style="color:#7C3AED;">● DISPONIBLE MAINTENANT</span></pre>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 06 — CONTACT ══════════════════ -->
 <section id="contact" class="section s-contact">
   <div class="inner">
     <div class="snum reveal">
