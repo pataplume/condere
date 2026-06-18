@@ -5,9 +5,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Condere — Studio logiciel suisse · Genève</title>
 <meta name="description" content="Studio logiciel suisse basé à Genève. Logiciels métiers, agents IA sur-mesure, audit et accompagnement IA, sites web. Premier module : Zarya, l'ERP IA-native des fiduciaires suisses.">
+<link rel="canonical" href="https://condere.ch/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Condere">
+
+<!-- Open Graph -->
 <meta property="og:title" content="Condere — Modular AI Foundation">
 <meta property="og:description" content="Studio logiciel suisse. On édite des logiciels métiers et on construit des agents IA sur-mesure pour les PME.">
-<meta property="og:url" content="https://condere.ch">
+<meta property="og:url" content="https://condere.ch/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Condere">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:image" content="https://condere.ch/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Condere — Studio logiciel suisse spécialisé en IA, Genève">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Condere — Studio logiciel suisse spécialisé en IA">
+<meta name="twitter:description" content="Logiciels métiers, agents IA sur-mesure, audit IA et sites web. Genève, Suisse.">
+<meta name="twitter:image" content="https://condere.ch/og-image.png">
 <meta name="theme-color" content="#F4F6FC">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='15' y='46' width='70' height='8' fill='%231A2BD4'/%3E%3Crect x='15' y='10' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='27' y='10' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='15' y='62' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='27' y='62' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='65' y='10' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='77' y='10' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='65' y='62' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='77' y='62' width='8' height='28' fill='%231A2BD4'/%3E%3Crect x='42' y='38' width='16' height='24' rx='1' fill='%231A2BD4'/%3E%3C/svg%3E">
 
@@ -517,6 +535,16 @@ p { line-height: 1.65; }
   color: rgba(5,10,48,.42);
 }
 
+/* ─── FAQ ─── */
+.faq-list { max-width: 840px; margin-top: 2.75rem; }
+.faq-item { padding: 1.75rem 0; border-top: 1px solid rgba(5,10,48,.12); }
+.faq-item:last-child { border-bottom: 1px solid rgba(5,10,48,.12); }
+.faq-q {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem); font-weight: 700;
+  color: var(--void); letter-spacing: -0.01em; margin-bottom: .6rem;
+}
+.faq-a { font-size: .9375rem; line-height: 1.7; color: rgba(5,10,48,.72); max-width: 72ch; }
+
 /* ─── FOOTER ─── */
 footer {
   background: var(--void); color: var(--ice);
@@ -615,6 +643,63 @@ footer {
   .hero-word .dot { transform:none !important; }
 }
 </style>
+
+<!-- Données structurées (SEO + GEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://condere.ch/#organization",
+      "name": "Condere",
+      "alternateName": "Condere — Modular AI Foundation",
+      "url": "https://condere.ch/",
+      "logo": "https://condere.ch/og-image.png",
+      "image": "https://condere.ch/og-image.png",
+      "description": "Studio logiciel suisse basé à Genève, spécialisé dans les logiciels métiers et les agents IA sur-mesure pour les PME et indépendants de Suisse romande.",
+      "email": "contact@condere.ch",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Genève",
+        "addressRegion": "GE",
+        "addressCountry": "CH"
+      },
+      "areaServed": { "@type": "Country", "name": "Suisse" },
+      "knowsLanguage": ["fr", "en", "de", "it"],
+      "sameAs": ["https://www.linkedin.com/in/condere-ch"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://condere.ch/#website",
+      "url": "https://condere.ch/",
+      "name": "Condere",
+      "inLanguage": "fr-CH",
+      "publisher": { "@id": "https://condere.ch/#organization" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://condere.ch/#service",
+      "name": "Condere",
+      "url": "https://condere.ch/",
+      "image": "https://condere.ch/og-image.png",
+      "parentOrganization": { "@id": "https://condere.ch/#organization" },
+      "areaServed": ["Genève", "Suisse romande", "Suisse"],
+      "priceRange": "$$",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services Condere",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Logiciels métiers", "description": "Des outils pensés pour une profession entière, conçus secteur par secteur." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Agents IA sur-mesure", "description": "Des agents IA branchés à vos outils et entraînés sur vos cas réels." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Audit & accompagnement IA", "description": "Diagnostic des processus et mise en place de l'IA dans les équipes." } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sites web", "description": "Sites web professionnels clés en main pour les PME suisses." } }
+        ]
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -960,6 +1045,59 @@ footer {
 
   </div>
 </section>
+
+<!-- ══════════════════ FAQ ══════════════════ -->
+<section id="faq" class="section s-faq">
+  <div class="inner">
+    <div class="snum reveal">
+      <div class="snum-bar"></div>
+      <span class="snum-title">FAQ</span>
+    </div>
+    <h2 class="reveal" style="transition-delay:.05s; color:#050A30;">Questions fréquentes.</h2>
+    <div class="faq-list reveal" style="transition-delay:.1s;">
+      <div class="faq-item">
+        <h3 class="faq-q">Qu'est-ce que Condere ?</h3>
+        <p class="faq-a">Condere est un studio logiciel suisse basé à Genève. Nous éditons des logiciels métiers et concevons des agents IA sur-mesure pour les PME, les indépendants et les professions réglementées de Suisse romande.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Quels services propose Condere ?</h3>
+        <p class="faq-a">Quatre : des logiciels métiers pensés pour une profession entière, des agents IA sur-mesure branchés à vos outils et entraînés sur vos cas réels, de l'audit et de l'accompagnement IA, et des sites web professionnels.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Qu'est-ce que Zarya ?</h3>
+        <p class="faq-a">Zarya est le premier module de Condere : un ERP IA-native pour les fiduciaires suisses. Il orchestre emails, documents, factures, échéances et salaires, et garde une vision temps réel de l'état de chaque dossier client. Hébergé en Suisse, conforme à la nLPD.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Où Condere est-il basé et qui servez-vous ?</h3>
+        <p class="faq-a">À Genève, en Suisse. Nous accompagnons les entreprises de Suisse romande et de toute la Suisse. L'hébergement est suisse, dans le respect du secret professionnel et de la nLPD.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Dans quelles langues travaillez-vous ?</h3>
+        <p class="faq-a">En français, anglais, allemand et italien. Nous répondons sous 48 heures.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Comment démarrer un projet avec Condere ?</h3>
+        <p class="faq-a">Écrivez-nous à contact@condere.ch en décrivant votre besoin — un audit, un logiciel métier, un agent IA ou un site web. Réponse sous 48 heures, puis on cadre la suite ensemble.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://condere.ch/#faq",
+  "mainEntity": [
+    { "@type": "Question", "name": "Qu'est-ce que Condere ?", "acceptedAnswer": { "@type": "Answer", "text": "Condere est un studio logiciel suisse basé à Genève. Nous éditons des logiciels métiers et concevons des agents IA sur-mesure pour les PME, les indépendants et les professions réglementées de Suisse romande." } },
+    { "@type": "Question", "name": "Quels services propose Condere ?", "acceptedAnswer": { "@type": "Answer", "text": "Quatre : des logiciels métiers pensés pour une profession entière, des agents IA sur-mesure branchés à vos outils et entraînés sur vos cas réels, de l'audit et de l'accompagnement IA, et des sites web professionnels." } },
+    { "@type": "Question", "name": "Qu'est-ce que Zarya ?", "acceptedAnswer": { "@type": "Answer", "text": "Zarya est le premier module de Condere : un ERP IA-native pour les fiduciaires suisses. Il orchestre emails, documents, factures, échéances et salaires, et garde une vision temps réel de l'état de chaque dossier client. Hébergé en Suisse, conforme à la nLPD." } },
+    { "@type": "Question", "name": "Où Condere est-il basé et qui servez-vous ?", "acceptedAnswer": { "@type": "Answer", "text": "À Genève, en Suisse. Nous accompagnons les entreprises de Suisse romande et de toute la Suisse. L'hébergement est suisse, dans le respect du secret professionnel et de la nLPD." } },
+    { "@type": "Question", "name": "Dans quelles langues travaillez-vous ?", "acceptedAnswer": { "@type": "Answer", "text": "En français, anglais, allemand et italien. Nous répondons sous 48 heures." } },
+    { "@type": "Question", "name": "Comment démarrer un projet avec Condere ?", "acceptedAnswer": { "@type": "Answer", "text": "Écrivez-nous à contact@condere.ch en décrivant votre besoin — un audit, un logiciel métier, un agent IA ou un site web. Réponse sous 48 heures, puis on cadre la suite ensemble." } }
+  ]
+}
+</script>
 
 <!-- ══════════════════ 06 — CONTACT ══════════════════ -->
 <section id="contact" class="section s-contact">

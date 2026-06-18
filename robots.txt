@@ -1,0 +1,6 @@
+# Condere — https://condere.ch
+# Crawl libre, y compris pour les moteurs IA (GEO).
+User-agent: *
+Allow: /
+
+Sitemap: https://condere.ch/sitemap.xml

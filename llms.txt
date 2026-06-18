@@ -1,0 +1,21 @@
+# Condere
+
+> Studio logiciel suisse basé à Genève, spécialisé dans la création d'outils métiers et d'agents d'intelligence artificielle sur-mesure pour les PME, indépendants et professions réglementées de Suisse romande.
+
+Condere est un studio (« Modular AI Foundation ») qui édite des logiciels métiers, conçoit des agents IA sur-mesure, réalise des audits et de l'accompagnement IA, et développe des sites web professionnels. Tout est hébergé en Suisse, dans le respect de la nLPD et du secret professionnel. Réponse sous 48h. Langues : français, anglais, allemand, italien.
+
+## Services
+- Logiciels métiers : des outils pensés pour une profession entière (ex. fiduciaires), conçus secteur par secteur.
+- Agents IA sur-mesure : agents branchés aux outils de l'entreprise et entraînés sur ses cas réels pour automatiser des tâches précises.
+- Audit & accompagnement IA : diagnostic des processus et mise en place de l'IA dans les équipes.
+- Sites web : sites professionnels clairs et performants, gérés de bout en bout.
+
+## Produits
+- [Zarya](https://zarya.condere.ch) : ERP IA-native pour les fiduciaires suisses — orchestre emails, documents, factures, échéances et salaires, avec une vision temps réel de chaque dossier client. En production, MVP Q3 2026.
+- [Unity](https://www.unity.condere.ch) : sites web professionnels clés en main pour les indépendant·es, PME, artisan·es et commerces suisses.
+
+## Contact
+- Email : contact@condere.ch
+- Localisation : Genève, Suisse (zone desservie : Suisse romande / Suisse)
+- LinkedIn : https://www.linkedin.com/in/condere-ch
+- Site : https://condere.ch
