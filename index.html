@@ -46,7 +46,7 @@
   --mono:   ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   background: var(--ice);
   color: var(--void);
@@ -156,6 +156,7 @@ p { line-height: 1.65; }
   position: relative; height: 100vh; min-height: 620px;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding-top: 60px;
+  overflow: hidden;
 }
 .hero-bg {
   position: absolute; top: 50%; left: 50%;
@@ -634,6 +635,7 @@ footer {
   .footer-bottom { padding:1.5rem 0 2rem; flex-direction:column; align-items:flex-start; gap:.75rem; }
   .wf-wrap { height:400px; }
   .snum-title { font-size:1.5rem; }
+  .s-contact .contact-email-link { font-size: clamp(1rem, 4.5vw, 1.5rem); flex-wrap: wrap; overflow-wrap: anywhere; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -1618,7 +1620,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   wfObserver.observe(container);
 
   // Resize
-  window.addEventListener('resize', () => { if (ctx) { resetAll(ctx); runAnimation(); } });
+  let lastW = window.innerWidth, rT;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastW) return;   // iOS Safari : barre d'URL = changement de hauteur seul → ignorer
+    lastW = window.innerWidth;
+    clearTimeout(rT);
+    rT = setTimeout(() => { if (ctx) { resetAll(ctx); runAnimation(); } }, 200);
+  });
 })();
 </script>
 
