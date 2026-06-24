@@ -6,7 +6,15 @@
     <atom:link href="https://condere.ch/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <description>L'IA utile et souveraine pour les fiduciaires et PME de Suisse romande : automatisation, logiciels métiers, conformité nLPD et souveraineté des données.</description>
     <language>fr-CH</language>
-    <lastBuildDate>Wed, 24 Jun 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 14:00:00 +0200</lastBuildDate>
+    <item>
+      <title>Agent IA pour PME suisse : 5 tâches à automatiser en premier</title>
+      <link>https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/</link>
+      <guid isPermaLink="true">https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/</guid>
+      <pubDate>Wed, 24 Jun 2026 14:00:00 +0200</pubDate>
+      <category>PME</category>
+      <description>Les cinq chantiers au meilleur rapport gain / risque pour une PME qui démarre avec un agent IA : tri des e-mails, relance des factures impayées, qualification des demandes entrantes, saisie documentaire et rédaction assistée.</description>
+    </item>
     <item>
       <title>Automatiser sa fiduciaire avec l'IA : par où commencer</title>
       <link>https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/</link>

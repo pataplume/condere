@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agent IA pour PME suisse : 5 tâches à automatiser</title>
+<meta name="description" content="Agent IA pour PME suisse : les 5 tâches à automatiser en premier — tri des e-mails, relances de factures, leads, saisie documentaire et rédaction. Le guide concret.">
+<link rel="canonical" href="https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Condere">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Agent IA pour PME suisse : 5 tâches à automatiser en premier">
+<meta property="og:description" content="Les cinq chantiers les plus rentables pour une PME qui démarre avec un agent IA — sans risque et sur un périmètre mesurable.">
+<meta property="og:url" content="https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Condere">
+<meta property="og:locale" content="fr_CH">
+<meta property="article:published_time" content="2026-06-24">
+<meta property="article:modified_time" content="2026-06-24">
+<meta property="article:author" content="Condere">
+<meta property="article:section" content="PME">
+<meta property="og:image" content="https://condere.ch/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agent IA pour PME suisse — Condere">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agent IA pour PME suisse : 5 tâches à automatiser en premier">
+<meta name="twitter:description" content="Les cinq chantiers les plus rentables pour une PME qui démarre avec un agent IA.">
+<meta name="twitter:image" content="https://condere.ch/og-image.png">
+<meta name="theme-color" content="#F4F6FC">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ice:    #F4F6FC;
+  --blue:   #1A2BD4;
+  --void:   #050A30;
+  --orange: #FF5B00;
+  --mono:   ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  background: var(--ice); color: var(--void);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 400;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+::selection { background: var(--blue); color: var(--ice); }
+.micro { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 3rem;
+  background: rgba(244,246,252,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(5,10,48,.08);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--void); }
+.nav-logo-text { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+.nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
+.nav-links a { font-size: 14px; color: rgba(5,10,48,.6); text-decoration: none; padding: 0 1.25rem; transition: color 200ms; }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--void); }
+.nav-links .sep { color: rgba(5,10,48,.22); font-size: 11px; padding: 0; }
+.nav-cta {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--void); text-decoration: none; padding: 8px 18px;
+  border: 1px solid var(--void); transition: background 200ms, color 200ms, border-color 200ms; white-space: nowrap;
+}
+.nav-cta:hover { background: var(--blue); color: var(--ice); border-color: var(--blue); }
+.nav-burger { display: none; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: none; cursor: pointer; border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px; }
+.nav-overlay { display: none; position: fixed; inset: 0; z-index: 90; background: var(--ice); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.nav-overlay.open { display: flex; }
+.nav-overlay a { font-family: 'Syncopate', sans-serif; font-size: 1.75rem; text-decoration: none; color: var(--void); text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-overlay-close { position: absolute; top: 1.25rem; right: 1.5rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: none; cursor: pointer; border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px; }
+
+/* ─── ARTICLE SHELL ─── */
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 7.5rem 1.5rem 0; }
+
+.breadcrumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(5,10,48,.45); margin-bottom: 2.25rem; }
+.breadcrumb a { color: rgba(5,10,48,.6); text-decoration: none; }
+.breadcrumb a:hover { color: var(--orange); }
+.breadcrumb .sl { color: rgba(5,10,48,.3); padding: 0 .4rem; }
+
+.art-bar { width: 32px; height: 4px; background: var(--orange); margin-bottom: 18px; }
+.art-meta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.art-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(26,43,212,.35); padding: 3px 9px; }
+.art-date { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(5,10,48,.45); }
+
+h1.art-title {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -0.03em; line-height: 1.08;
+  color: var(--void); margin-bottom: 1.75rem;
+}
+
+.art-lede {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.6;
+  color: var(--void); font-weight: 400; padding: 1.25rem 0 1.25rem 1.5rem;
+  border-left: 3px solid var(--orange); margin-bottom: 2.75rem;
+}
+.art-lede strong { font-weight: 700; }
+
+/* ─── PROSE ─── */
+.prose { font-size: 1.0625rem; line-height: 1.75; color: rgba(5,10,48,.84); }
+.prose > p { margin-bottom: 1.5rem; }
+.prose h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; line-height: 1.15;
+  color: var(--void); margin: 3rem 0 1.1rem;
+}
+.prose h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: 1.2rem; letter-spacing: -0.01em; color: var(--blue); margin: 2rem 0 .75rem;
+}
+.prose a { color: var(--blue); text-decoration: none; background-image: linear-gradient(to right, var(--orange), var(--orange)); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 300ms ease; }
+.prose a:hover { background-size: 100% 1px; }
+.prose strong { font-weight: 700; color: var(--void); }
+.prose ul, .prose ol { margin: 0 0 1.5rem 1.25rem; }
+.prose li { margin-bottom: .6rem; padding-left: .35rem; }
+.prose ul li::marker { color: var(--orange); }
+.prose ol li::marker { color: var(--orange); font-family: var(--mono); font-weight: 700; }
+.prose blockquote {
+  border-left: 3px solid rgba(26,43,212,.4); padding: .25rem 0 .25rem 1.5rem;
+  margin: 0 0 1.5rem; font-style: italic; color: rgba(5,10,48,.7);
+}
+.takeaway {
+  background: #EEF0F8; border: 1px solid rgba(5,10,48,.12);
+  padding: 1.5rem 1.75rem; margin: 2.5rem 0;
+}
+.takeaway .micro { color: var(--orange); display: block; margin-bottom: .6rem; }
+.takeaway p { margin: 0; font-size: 1rem; color: rgba(5,10,48,.8); }
+
+/* ─── FAQ ─── */
+.art-faq { margin-top: 3.5rem; }
+.art-faq h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; color: var(--void); margin-bottom: 1.5rem;
+}
+.faq-item { padding: 1.5rem 0; border-top: 1px solid rgba(5,10,48,.12); }
+.faq-item:last-child { border-bottom: 1px solid rgba(5,10,48,.12); }
+.faq-q { font-size: 1.0625rem; font-weight: 700; color: var(--void); margin-bottom: .5rem; }
+.faq-a { font-size: 1rem; line-height: 1.7; color: rgba(5,10,48,.74); }
+
+/* ─── CTA ─── */
+.art-cta { margin: 3.5rem 0 1rem; padding: 2.5rem; background: var(--blue); color: var(--ice); }
+.art-cta h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ice); margin-bottom: .75rem; }
+.art-cta p { color: rgba(244,246,252,.82); margin-bottom: 1.5rem; line-height: 1.6; }
+.art-cta a { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ice); text-decoration: none; padding: 13px 26px; border: 1px solid var(--ice); display: inline-block; transition: background 200ms, color 200ms; }
+.art-cta a:hover { background: var(--ice); color: var(--blue); }
+
+.art-foot-nav { margin: 3rem 0 5rem; padding-top: 2rem; border-top: 1px solid rgba(5,10,48,.14); }
+.art-foot-nav a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); text-decoration: none; }
+.art-foot-nav a:hover { color: var(--void); }
+
+/* ─── FOOTER ─── */
+footer { background: var(--void); color: var(--ice); padding: 6rem 3rem 0; }
+.footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+.flabel { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); display: block; margin-bottom: 1.5rem; }
+.footer-etymo h3 { font-size: 1.25rem; font-style: italic; color: var(--ice); margin-bottom: 1rem; }
+.footer-etymo p { font-size: .9375rem; line-height: 1.7; color: rgba(244,246,252,.6); }
+.footer-nav a { display: block; font-size: 14px; color: rgba(244,246,252,.62); text-decoration: none; padding: .375rem 0; background-image: linear-gradient(to right,var(--orange),var(--orange)); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 300ms ease, color 300ms ease; }
+.footer-nav a:hover { color: var(--ice); background-size: 100% 1px; }
+.footer-bottom { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3rem; border-top: 1px solid rgba(244,246,252,.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom span, .footer-bottom a { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(244,246,252,.32); text-decoration: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .nav { padding: 0 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-burger { display: block; }
+  .article-wrap { padding: 6rem 1.25rem 0; }
+  .art-cta { padding: 2rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3rem; }
+  footer { padding: 4rem 1.5rem 0; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: .75rem; padding: 1.5rem 0 2rem; }
+}
+</style>
+
+<!-- Données structurées : BlogPosting + Breadcrumb + FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/#article",
+      "headline": "Agent IA pour PME suisse : 5 tâches à automatiser en premier",
+      "description": "Les cinq tâches les plus rentables à confier à un agent IA quand on est une PME suisse : tri des e-mails, relances de factures, qualification des demandes, saisie documentaire et rédaction assistée.",
+      "datePublished": "2026-06-24",
+      "dateModified": "2026-06-24",
+      "inLanguage": "fr-CH",
+      "author": {
+        "@type": "Organization",
+        "name": "Condere",
+        "url": "https://condere.ch/"
+      },
+      "publisher": { "@id": "https://condere.ch/#organization" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/" },
+      "image": "https://condere.ch/og-image.png",
+      "articleSection": "PME",
+      "keywords": ["agent IA PME suisse", "automatisation PME", "agent IA sur-mesure", "IA pour entreprise", "Condere"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://condere.ch/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://condere.ch/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Agent IA pour PME : 5 tâches à automatiser", "item": "https://condere.ch/blog/agent-ia-pme-5-taches-a-automatiser/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Qu'est-ce qu'un agent IA pour une PME ?", "acceptedAnswer": { "@type": "Answer", "text": "Un agent IA est un assistant logiciel qui exécute une tâche précise de bout en bout — lire un e-mail, qualifier une demande, relancer une facture — en se branchant à vos outils existants. Contrairement à un simple chatbot, il agit : il classe, rédige, met à jour, déclenche, sous votre supervision." } },
+        { "@type": "Question", "name": "Par quelle tâche commencer pour déployer un agent IA en PME ?", "acceptedAnswer": { "@type": "Answer", "text": "Par une tâche répétitive, à fort volume et facile à corriger : typiquement le tri des e-mails entrants ou la relance des factures impayées. On démarre sur un périmètre étroit et mesurable, on prouve le gain, puis on élargit." } },
+        { "@type": "Question", "name": "Combien coûte un agent IA pour une PME suisse ?", "acceptedAnswer": { "@type": "Answer", "text": "Le coût dépend du périmètre. Un premier agent sur une tâche unique reste un projet modeste face aux heures qu'il fait gagner chaque semaine. La bonne approche est de chiffrer d'abord le temps réellement passé sur la tâche, puis de comparer : le retour sur investissement se mesure souvent en semaines." } },
+        { "@type": "Question", "name": "Un agent IA est-il conforme à la protection des données en Suisse ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, à condition d'héberger les données en Suisse ou en Europe, de journaliser les traitements et de limiter l'accès de l'agent aux seules données nécessaires. La conformité nLPD se conçoit dès l'architecture, pas après coup." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" role="navigation" aria-label="Navigation principale">
+  <a href="/" class="nav-logo">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <rect x="15" y="46" width="70" height="8" fill="var(--blue)"/>
+      <rect x="15" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="15" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="var(--blue)"/>
+    </svg>
+    <span class="nav-logo-text">CONDERE</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="/#studio">Studio</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#zarya">Zarya</a></li>
+    <li class="sep">·</li>
+    <li><a href="/blog/" aria-current="page">Blog</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Contactez-nous →</a>
+  <button class="nav-burger" aria-label="Ouvrir le menu" onclick="document.getElementById('navOverlay').classList.add('open')">
+    [ MENU ]
+  </button>
+</nav>
+
+<div id="navOverlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu navigation">
+  <button class="nav-overlay-close" onclick="document.getElementById('navOverlay').classList.remove('open')" aria-label="Fermer le menu">[ FERMER ]</button>
+  <a href="/#studio"  onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
+  <a href="/#zarya"   onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="/blog/"    onclick="document.getElementById('navOverlay').classList.remove('open')">Blog</a>
+  <a href="/#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+</div>
+
+<!-- ══════════════════ ARTICLE ══════════════════ -->
+<div class="article-wrap">
+  <article>
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href="/">Accueil</a><span class="sl">›</span><a href="/blog/">Blog</a><span class="sl">›</span>Agent IA pour PME : 5 tâches à automatiser
+    </nav>
+
+    <div class="art-bar"></div>
+    <div class="art-meta">
+      <span class="art-tag">PME</span>
+      <time class="art-date" datetime="2026-06-24">24 juin 2026</time>
+    </div>
+
+    <h1 class="art-title">Agent IA pour PME suisse : 5 tâches à automatiser en premier</h1>
+
+    <p class="art-lede">
+      Un agent IA est un assistant logiciel qui exécute une tâche précise de bout en bout, branché à vos outils. Pour une PME, les cinq chantiers les plus rentables sont : <strong>le tri des e-mails, la relance des factures impayées, la qualification des demandes entrantes, la saisie documentaire et la rédaction assistée</strong>. On commence petit, sur une tâche mesurable.
+    </p>
+
+    <div class="prose">
+      <p>
+        « Passer à l'IA » sonne bien en réunion, beaucoup moins quand il faut décider <em>quoi</em> automatiser lundi matin. La bonne nouvelle, c'est qu'une PME n'a pas besoin d'un grand projet : elle a besoin d'<strong>un agent, sur une tâche, qui marche</strong>. Voici les cinq tâches qui offrent le meilleur rapport gain / risque pour démarrer — celles qui reviennent dans presque toutes les entreprises de Suisse romande, quel que soit le secteur.
+      </p>
+
+      <h2>Qu'est-ce qu'un agent IA, concrètement ?</h2>
+      <p>
+        Un agent IA n'est pas un simple chatbot qui répond à des questions. C'est un assistant logiciel qui <strong>agit</strong> : il lit, classe, rédige, met à jour une fiche, déclenche un envoi — branché à vos outils (boîte e-mail, CRM, comptabilité, stockage de fichiers). Vous lui confiez une mission cadrée, il l'exécute, et vous gardez la main sur les validations sensibles. La règle d'or pour une PME : commencer là où la tâche est <strong>répétitive, à fort volume et facile à corriger</strong>.
+      </p>
+
+      <h2>Par quelles tâches commencer ?</h2>
+
+      <h3>1. Le tri et la réponse de premier niveau aux e-mails</h3>
+      <p>
+        La boîte de réception est le premier goulot d'étranglement d'une PME. Un agent peut <strong>trier les messages entrants, les router vers la bonne personne et préparer un brouillon de réponse</strong> pour les demandes récurrentes (horaires, disponibilités, suivi de commande). Vos équipes relisent et envoient, au lieu de repartir de zéro à chaque fois.
+      </p>
+
+      <h3>2. La relance des factures impayées</h3>
+      <p>
+        Le suivi des paiements est essentiel pour la trésorerie — et personne n'aime le faire. Un agent <strong>surveille les échéances, repère les factures en retard et envoie les relances</strong> au bon moment, dans le bon ton, en escaladant si nécessaire. Résultat : des délais de paiement raccourcis sans temps administratif supplémentaire.
+      </p>
+
+      <h3>3. La qualification des demandes entrantes</h3>
+      <p>
+        Tous les formulaires de contact ne se valent pas. Un agent peut <strong>qualifier une demande dès son arrivée</strong> : extraire les informations clés, estimer le sérieux du besoin, créer la fiche dans votre CRM et alerter le bon commercial. Vous traitez les vraies opportunités plus vite, et plus rien ne se perd dans une boîte partagée.
+      </p>
+
+      <h3>4. La saisie et l'extraction de données documentaires</h3>
+      <p>
+        Factures fournisseurs, bons de livraison, contrats : une montagne de PDF dont il faut ressortir des chiffres à la main. Un agent combine <strong>OCR et lecture sémantique pour extraire les données et préremplir vos outils</strong> — comptabilité, tableur, ERP. L'humain contrôle et valide, au lieu de recopier. C'est le prolongement, côté PME, de ce que nous décrivons pour les cabinets dans <a href="/blog/automatiser-fiduciaire-ia-par-ou-commencer/">automatiser sa fiduciaire avec l'IA</a>.
+      </p>
+
+      <h3>5. La rédaction assistée</h3>
+      <p>
+        Devis, comptes-rendus de réunion, réponses types, descriptions de produits : un agent <strong>produit un premier jet à partir de vos modèles et de vos données</strong>, dans votre ton. Vous passez du temps à ajuster plutôt qu'à écrire la page blanche. Sur des volumes réguliers, le gain est considérable.
+      </p>
+
+      <div class="takeaway">
+        <span class="micro">À retenir</span>
+        <p>E-mails → relances → qualification → saisie → rédaction. Cinq tâches transversales, présentes dans presque toutes les PME. Choisissez-en <strong>une seule</strong> pour commencer : celle qui vous coûte le plus d'heures aujourd'hui.</p>
+      </div>
+
+      <h2>Comment déployer un agent IA sans risque ?</h2>
+      <p>
+        La méthode prime sur la technologie. Trois principes :
+      </p>
+      <ul>
+        <li><strong>Un périmètre étroit</strong> — une tâche, un objectif mesurable. On automatise parfaitement un cas avant d'en ajouter un deuxième.</li>
+        <li><strong>L'humain dans la boucle</strong> — l'agent propose, vos équipes valident les actions sensibles. La confiance se construit par l'usage.</li>
+        <li><strong>Une mesure avant / après</strong> — chiffrez le temps passé sur la tâche aujourd'hui, comparez après deux semaines. Sans mesure, pas de décision.</li>
+      </ul>
+      <p>
+        C'est exactement la démarche de nos <a href="/#studio">agents IA sur-mesure</a> : on part d'un cas réel, on branche l'agent à vos outils, on l'entraîne sur vos données. Si vous ne savez pas encore quelle tâche prioriser, c'est précisément l'objet d'un <a href="/#contact">audit</a>.
+      </p>
+
+      <h2>Combien ça coûte, et en combien de temps ?</h2>
+      <p>
+        Un premier agent sur une tâche unique reste un projet modeste comparé aux heures qu'il libère chaque semaine. La bonne façon de raisonner n'est pas « combien ça coûte » dans l'absolu, mais <strong>« combien d'heures cette tâche me coûte aujourd'hui »</strong> — puis de comparer. Sur un cas bien choisi, le retour sur investissement se mesure souvent en quelques semaines, pas en mois.
+      </p>
+
+      <h2>Et la conformité — données en Suisse, nLPD ?</h2>
+      <p>
+        Un agent IA bien architecturé respecte la nLPD par conception : <strong>données hébergées en Suisse (ou en Europe sous RGPD), traitements journalisés, accès minimal</strong>. L'agent ne voit que ce dont il a besoin pour sa tâche. Pour les secteurs réglementés, c'est non négociable — et c'est une force, pas une contrainte. Nous détaillons cet angle dans nos articles dédiés à la souveraineté des données.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <section class="art-cta">
+      <h2>Quelle tâche automatiser dans <em>votre</em> PME ?</h2>
+      <p>On identifie ensemble la première tâche à fort retour, on conçoit l'agent et on le branche à vos outils. Réponse sous 48 heures.</p>
+      <a href="/#contact">Parler de mon projet →</a>
+    </section>
+
+    <!-- FAQ -->
+    <section class="art-faq" aria-label="Questions fréquentes">
+      <h2>Questions fréquentes</h2>
+      <div class="faq-item">
+        <h3 class="faq-q">Qu'est-ce qu'un agent IA pour une PME ?</h3>
+        <p class="faq-a">Un agent IA est un assistant logiciel qui exécute une tâche précise de bout en bout — lire un e-mail, qualifier une demande, relancer une facture — en se branchant à vos outils existants. Contrairement à un simple chatbot, il agit : il classe, rédige, met à jour, déclenche, sous votre supervision.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Par quelle tâche commencer pour déployer un agent IA en PME ?</h3>
+        <p class="faq-a">Par une tâche répétitive, à fort volume et facile à corriger : typiquement le tri des e-mails entrants ou la relance des factures impayées. On démarre sur un périmètre étroit et mesurable, on prouve le gain, puis on élargit.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Combien coûte un agent IA pour une PME suisse ?</h3>
+        <p class="faq-a">Le coût dépend du périmètre. Un premier agent sur une tâche unique reste un projet modeste face aux heures qu'il fait gagner chaque semaine. La bonne approche est de chiffrer d'abord le temps réellement passé sur la tâche, puis de comparer : le retour sur investissement se mesure souvent en semaines.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Un agent IA est-il conforme à la protection des données en Suisse ?</h3>
+        <p class="faq-a">Oui, à condition d'héberger les données en Suisse ou en Europe, de journaliser les traitements et de limiter l'accès de l'agent aux seules données nécessaires. La conformité nLPD se conçoit dès l'architecture, pas après coup.</p>
+      </div>
+    </section>
+
+    <nav class="art-foot-nav" aria-label="Retour au blog">
+      <a href="/blog/">← Tous les articles</a>
+    </nav>
+  </article>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-etymo">
+      <span class="flabel">Condere</span>
+      <h3>Studio logiciel suisse · Genève</h3>
+      <p>On édite des logiciels métiers et on construit des agents IA sur-mesure pour les PME, les indépendants et les professions réglementées de Suisse romande.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Navigation footer">
+      <span class="flabel">Navigation</span>
+      <a href="/#studio">Studio</a>
+      <a href="/#zarya">Zarya</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/condere-ch" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>Condere · Studio logiciel IA · Genève, Suisse</span>
+    <a href="mailto:contact@condere.ch">contact@condere.ch</a>
+  </div>
+</footer>
+
+</body>
+</html>
