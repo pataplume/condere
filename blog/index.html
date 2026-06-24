@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Blog — Condere · IA pour fiduciaires et PME suisses</title>
+<meta name="description" content="Articles concrets sur l'IA appliquée aux fiduciaires et PME de Suisse romande : automatisation, logiciels métiers, nLPD et souveraineté des données.">
+<link rel="canonical" href="https://condere.ch/blog/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Condere">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Blog Condere — IA utile pour fiduciaires et PME suisses">
+<meta property="og:description" content="Automatisation, logiciels métiers, agents IA, nLPD et souveraineté des données. Des articles concrets pour la Suisse romande.">
+<meta property="og:url" content="https://condere.ch/blog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Condere">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:image" content="https://condere.ch/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Condere — Studio logiciel suisse spécialisé en IA, Genève">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog Condere — IA utile pour fiduciaires et PME suisses">
+<meta name="twitter:description" content="Automatisation, logiciels métiers, agents IA, nLPD et souveraineté des données. Pour la Suisse romande.">
+<meta name="twitter:image" content="https://condere.ch/og-image.png">
+<meta name="theme-color" content="#F4F6FC">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="Blog Condere" href="https://condere.ch/blog/feed.xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ice:    #F4F6FC;
+  --blue:   #1A2BD4;
+  --void:   #050A30;
+  --orange: #FF5B00;
+  --mono:   ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  background: var(--ice);
+  color: var(--void);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--blue); color: var(--ice); }
+h1 {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; line-height: 0.95;
+}
+h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+p { line-height: 1.65; }
+.micro { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 3rem;
+  background: rgba(244,246,252,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(5,10,48,.08);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--void); }
+.nav-logo-text { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+.nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
+.nav-links a { font-size: 14px; color: rgba(5,10,48,.6); text-decoration: none; padding: 0 1.25rem; transition: color 200ms; }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--void); }
+.nav-links .sep { color: rgba(5,10,48,.22); font-size: 11px; padding: 0; }
+.nav-cta {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--void); text-decoration: none; padding: 8px 18px;
+  border: 1px solid var(--void); transition: background 200ms, color 200ms, border-color 200ms; white-space: nowrap;
+}
+.nav-cta:hover { background: var(--blue); color: var(--ice); border-color: var(--blue); }
+.nav-burger {
+  display: none; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; background: none; cursor: pointer;
+  border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px;
+}
+.nav-overlay { display: none; position: fixed; inset: 0; z-index: 90; background: var(--ice); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.nav-overlay.open { display: flex; }
+.nav-overlay a { font-family: 'Syncopate', sans-serif; font-size: 1.75rem; text-decoration: none; color: var(--void); text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-overlay-close { position: absolute; top: 1.25rem; right: 1.5rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: none; cursor: pointer; border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px; }
+
+/* ─── BLOG HEADER ─── */
+.blog-hero { padding: 9rem 3rem 3.5rem; max-width: 1100px; margin: 0 auto; }
+.snum-bar { width: 32px; height: 4px; background: var(--orange); margin-bottom: 18px; }
+.blog-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.25rem; }
+.blog-title {
+  font-family: 'Syncopate', sans-serif; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; line-height: 1; color: var(--blue);
+  font-size: clamp(2.5rem, 8vw, 5.5rem); margin-bottom: 1.5rem;
+}
+.blog-title .dot { color: var(--orange); }
+.blog-lede { max-width: 60ch; font-size: clamp(1rem, 1.3vw, 1.25rem); color: rgba(5,10,48,.72); }
+
+/* ─── ARTICLE LIST ─── */
+.posts { max-width: 1100px; margin: 0 auto; padding: 0 3rem 7rem; }
+.post-card {
+  display: block; text-decoration: none; color: inherit;
+  border-top: 1px solid rgba(5,10,48,.14); padding: 2.5rem 0;
+  transition: padding-left 280ms cubic-bezier(.4,0,.2,1);
+}
+.posts .post-card:last-child { border-bottom: 1px solid rgba(5,10,48,.14); }
+.post-card:hover { padding-left: 12px; }
+.post-meta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+.post-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(26,43,212,.35); padding: 3px 9px; }
+.post-date { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(5,10,48,.45); }
+.post-h {
+  font-size: clamp(1.4rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em;
+  color: var(--void); margin-bottom: .75rem; max-width: 24ch; transition: color 240ms;
+}
+.post-card:hover .post-h { color: var(--blue); }
+.post-excerpt { max-width: 65ch; font-size: 1rem; color: rgba(5,10,48,.68); margin-bottom: 1.25rem; }
+.post-more { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); display: inline-flex; align-items: center; gap: 7px; }
+
+/* ─── FOOTER ─── */
+footer { background: var(--void); color: var(--ice); padding: 6rem 3rem 0; }
+.footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+.flabel { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); display: block; margin-bottom: 1.5rem; }
+.footer-etymo h3 { font-size: 1.25rem; font-style: italic; color: var(--ice); margin-bottom: 1rem; }
+.footer-etymo p { font-size: .9375rem; line-height: 1.7; color: rgba(244,246,252,.6); }
+.footer-nav a {
+  display: block; font-size: 14px; color: rgba(244,246,252,.62); text-decoration: none; padding: .375rem 0;
+  background-image: linear-gradient(to right,var(--orange),var(--orange));
+  background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size 300ms ease, color 300ms ease;
+}
+.footer-nav a:hover { color: var(--ice); background-size: 100% 1px; }
+.footer-bottom { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3rem; border-top: 1px solid rgba(244,246,252,.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom span, .footer-bottom a { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(244,246,252,.32); text-decoration: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .nav { padding: 0 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-burger { display: block; }
+  .blog-hero { padding: 7rem 1.5rem 2.5rem; }
+  .posts { padding: 0 1.5rem 4.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3rem; }
+  footer { padding: 4rem 1.5rem 0; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: .75rem; padding: 1.5rem 0 2rem; }
+}
+</style>
+
+<!-- Données structurées : Blog + fil d'Ariane -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://condere.ch/blog/#blog",
+      "url": "https://condere.ch/blog/",
+      "name": "Blog Condere",
+      "description": "Articles concrets sur l'IA appliquée aux fiduciaires et PME de Suisse romande : automatisation, logiciels métiers, nLPD et souveraineté des données.",
+      "inLanguage": "fr-CH",
+      "publisher": { "@id": "https://condere.ch/#organization" },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "Automatiser sa fiduciaire avec l'IA : par où commencer",
+          "url": "https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/",
+          "datePublished": "2026-06-24",
+          "author": { "@id": "https://condere.ch/#organization" }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://condere.ch/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://condere.ch/blog/" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" role="navigation" aria-label="Navigation principale">
+  <a href="/" class="nav-logo">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <rect x="15" y="46" width="70" height="8" fill="var(--blue)"/>
+      <rect x="15" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="15" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="var(--blue)"/>
+    </svg>
+    <span class="nav-logo-text">CONDERE</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="/#studio">Studio</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#zarya">Zarya</a></li>
+    <li class="sep">·</li>
+    <li><a href="/blog/" aria-current="page">Blog</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Contactez-nous →</a>
+  <button class="nav-burger" aria-label="Ouvrir le menu" onclick="document.getElementById('navOverlay').classList.add('open')">
+    [ MENU ]
+  </button>
+</nav>
+
+<div id="navOverlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu navigation">
+  <button class="nav-overlay-close" onclick="document.getElementById('navOverlay').classList.remove('open')" aria-label="Fermer le menu">[ FERMER ]</button>
+  <a href="/#studio"    onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
+  <a href="/#zarya"     onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="/blog/"      onclick="document.getElementById('navOverlay').classList.remove('open')">Blog</a>
+  <a href="/#contact"   onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+</div>
+
+<!-- ══════════════════ HERO BLOG ══════════════════ -->
+<header class="blog-hero">
+  <div class="snum-bar"></div>
+  <p class="blog-kicker">Journal · IA utile &amp; souveraine</p>
+  <h1 class="blog-title">Blog<span class="dot">.</span></h1>
+  <p class="blog-lede">
+    L'intelligence artificielle appliquée aux métiers réglementés et aux PME de Suisse romande. Automatisation, logiciels métiers, conformité nLPD et souveraineté des données — sans jargon, avec des exemples réels.
+  </p>
+</header>
+
+<!-- ══════════════════ LISTE ARTICLES ══════════════════ -->
+<main class="posts">
+
+  <a class="post-card" href="/blog/automatiser-fiduciaire-ia-par-ou-commencer/">
+    <div class="post-meta">
+      <span class="post-tag">Fiduciaires</span>
+      <span class="post-date">24 juin 2026</span>
+    </div>
+    <h2 class="post-h">Automatiser sa fiduciaire avec l'IA : par où commencer</h2>
+    <p class="post-excerpt">
+      Trois chantiers à fort impact et faible risque pour libérer des heures dès le premier mois — sans toucher au cœur réglementé du métier. Le guide concret pour les cabinets de Suisse romande.
+    </p>
+    <span class="post-more">Lire l'article →</span>
+  </a>
+
+</main>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-etymo">
+      <span class="flabel">Condere</span>
+      <h3>Studio logiciel suisse · Genève</h3>
+      <p>On édite des logiciels métiers et on construit des agents IA sur-mesure pour les PME, les indépendants et les professions réglementées de Suisse romande.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Navigation footer">
+      <span class="flabel">Navigation</span>
+      <a href="/#studio">Studio</a>
+      <a href="/#zarya">Zarya</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/condere-ch" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>Condere · Studio logiciel IA · Genève, Suisse</span>
+    <a href="mailto:contact@condere.ch">contact@condere.ch</a>
+  </div>
+</footer>
+
+</body>
+</html>

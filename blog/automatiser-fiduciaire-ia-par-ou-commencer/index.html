@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Automatiser sa fiduciaire avec l'IA : par où commencer</title>
+<meta name="description" content="Logiciel fiduciaire IA : par quelles tâches commencer pour automatiser un cabinet suisse sans risque. Tri documentaire, saisie assistée, relances — le guide concret.">
+<link rel="canonical" href="https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Condere">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Automatiser sa fiduciaire avec l'IA : par où commencer">
+<meta property="og:description" content="Trois chantiers à fort impact et faible risque pour libérer des heures dès le premier mois, sans toucher au cœur réglementé du métier.">
+<meta property="og:url" content="https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Condere">
+<meta property="og:locale" content="fr_CH">
+<meta property="article:published_time" content="2026-06-24">
+<meta property="article:modified_time" content="2026-06-24">
+<meta property="article:author" content="Condere">
+<meta property="article:section" content="Fiduciaires">
+<meta property="og:image" content="https://condere.ch/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Automatiser sa fiduciaire avec l'IA — Condere">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Automatiser sa fiduciaire avec l'IA : par où commencer">
+<meta name="twitter:description" content="Trois chantiers à fort impact et faible risque pour automatiser un cabinet fiduciaire suisse.">
+<meta name="twitter:image" content="https://condere.ch/og-image.png">
+<meta name="theme-color" content="#F4F6FC">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ice:    #F4F6FC;
+  --blue:   #1A2BD4;
+  --void:   #050A30;
+  --orange: #FF5B00;
+  --mono:   ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  background: var(--ice); color: var(--void);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 400;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+::selection { background: var(--blue); color: var(--ice); }
+.micro { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 3rem;
+  background: rgba(244,246,252,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(5,10,48,.08);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--void); }
+.nav-logo-text { font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; }
+.nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
+.nav-links a { font-size: 14px; color: rgba(5,10,48,.6); text-decoration: none; padding: 0 1.25rem; transition: color 200ms; }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--void); }
+.nav-links .sep { color: rgba(5,10,48,.22); font-size: 11px; padding: 0; }
+.nav-cta {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--void); text-decoration: none; padding: 8px 18px;
+  border: 1px solid var(--void); transition: background 200ms, color 200ms, border-color 200ms; white-space: nowrap;
+}
+.nav-cta:hover { background: var(--blue); color: var(--ice); border-color: var(--blue); }
+.nav-burger { display: none; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: none; cursor: pointer; border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px; }
+.nav-overlay { display: none; position: fixed; inset: 0; z-index: 90; background: var(--ice); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.nav-overlay.open { display: flex; }
+.nav-overlay a { font-family: 'Syncopate', sans-serif; font-size: 1.75rem; text-decoration: none; color: var(--void); text-transform: uppercase; letter-spacing: 0.05em; }
+.nav-overlay-close { position: absolute; top: 1.25rem; right: 1.5rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; background: none; cursor: pointer; border: 1px solid rgba(5,10,48,.3); color: var(--void); padding: 6px 12px; }
+
+/* ─── ARTICLE SHELL ─── */
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 7.5rem 1.5rem 0; }
+
+.breadcrumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(5,10,48,.45); margin-bottom: 2.25rem; }
+.breadcrumb a { color: rgba(5,10,48,.6); text-decoration: none; }
+.breadcrumb a:hover { color: var(--orange); }
+.breadcrumb .sl { color: rgba(5,10,48,.3); padding: 0 .4rem; }
+
+.art-bar { width: 32px; height: 4px; background: var(--orange); margin-bottom: 18px; }
+.art-meta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.art-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(26,43,212,.35); padding: 3px 9px; }
+.art-date { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(5,10,48,.45); }
+
+h1.art-title {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -0.03em; line-height: 1.08;
+  color: var(--void); margin-bottom: 1.75rem;
+}
+
+.art-lede {
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.6;
+  color: var(--void); font-weight: 400; padding: 1.25rem 0 1.25rem 1.5rem;
+  border-left: 3px solid var(--orange); margin-bottom: 2.75rem;
+}
+.art-lede strong { font-weight: 700; }
+
+/* ─── PROSE ─── */
+.prose { font-size: 1.0625rem; line-height: 1.75; color: rgba(5,10,48,.84); }
+.prose > p { margin-bottom: 1.5rem; }
+.prose h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; line-height: 1.15;
+  color: var(--void); margin: 3rem 0 1.1rem;
+}
+.prose h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: 1.2rem; letter-spacing: -0.01em; color: var(--blue); margin: 2rem 0 .75rem;
+}
+.prose a { color: var(--blue); text-decoration: none; background-image: linear-gradient(to right, var(--orange), var(--orange)); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 300ms ease; }
+.prose a:hover { background-size: 100% 1px; }
+.prose strong { font-weight: 700; color: var(--void); }
+.prose ul, .prose ol { margin: 0 0 1.5rem 1.25rem; }
+.prose li { margin-bottom: .6rem; padding-left: .35rem; }
+.prose ul li::marker { color: var(--orange); }
+.prose ol li::marker { color: var(--orange); font-family: var(--mono); font-weight: 700; }
+.prose blockquote {
+  border-left: 3px solid rgba(26,43,212,.4); padding: .25rem 0 .25rem 1.5rem;
+  margin: 0 0 1.5rem; font-style: italic; color: rgba(5,10,48,.7);
+}
+.takeaway {
+  background: #EEF0F8; border: 1px solid rgba(5,10,48,.12);
+  padding: 1.5rem 1.75rem; margin: 2.5rem 0;
+}
+.takeaway .micro { color: var(--orange); display: block; margin-bottom: .6rem; }
+.takeaway p { margin: 0; font-size: 1rem; color: rgba(5,10,48,.8); }
+
+/* ─── FAQ ─── */
+.art-faq { margin-top: 3.5rem; }
+.art-faq h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; color: var(--void); margin-bottom: 1.5rem;
+}
+.faq-item { padding: 1.5rem 0; border-top: 1px solid rgba(5,10,48,.12); }
+.faq-item:last-child { border-bottom: 1px solid rgba(5,10,48,.12); }
+.faq-q { font-size: 1.0625rem; font-weight: 700; color: var(--void); margin-bottom: .5rem; }
+.faq-a { font-size: 1rem; line-height: 1.7; color: rgba(5,10,48,.74); }
+
+/* ─── CTA ─── */
+.art-cta { margin: 3.5rem 0 1rem; padding: 2.5rem; background: var(--blue); color: var(--ice); }
+.art-cta h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ice); margin-bottom: .75rem; }
+.art-cta p { color: rgba(244,246,252,.82); margin-bottom: 1.5rem; line-height: 1.6; }
+.art-cta a { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ice); text-decoration: none; padding: 13px 26px; border: 1px solid var(--ice); display: inline-block; transition: background 200ms, color 200ms; }
+.art-cta a:hover { background: var(--ice); color: var(--blue); }
+
+.art-foot-nav { margin: 3rem 0 5rem; padding-top: 2rem; border-top: 1px solid rgba(5,10,48,.14); }
+.art-foot-nav a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); text-decoration: none; }
+.art-foot-nav a:hover { color: var(--void); }
+
+/* ─── FOOTER ─── */
+footer { background: var(--void); color: var(--ice); padding: 6rem 3rem 0; }
+.footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; padding-bottom: 4rem; }
+.flabel { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); display: block; margin-bottom: 1.5rem; }
+.footer-etymo h3 { font-size: 1.25rem; font-style: italic; color: var(--ice); margin-bottom: 1rem; }
+.footer-etymo p { font-size: .9375rem; line-height: 1.7; color: rgba(244,246,252,.6); }
+.footer-nav a { display: block; font-size: 14px; color: rgba(244,246,252,.62); text-decoration: none; padding: .375rem 0; background-image: linear-gradient(to right,var(--orange),var(--orange)); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 300ms ease, color 300ms ease; }
+.footer-nav a:hover { color: var(--ice); background-size: 100% 1px; }
+.footer-bottom { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3rem; border-top: 1px solid rgba(244,246,252,.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom span, .footer-bottom a { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(244,246,252,.32); text-decoration: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .nav { padding: 0 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-burger { display: block; }
+  .article-wrap { padding: 6rem 1.25rem 0; }
+  .art-cta { padding: 2rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3rem; }
+  footer { padding: 4rem 1.5rem 0; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: .75rem; padding: 1.5rem 0 2rem; }
+}
+</style>
+
+<!-- Données structurées : BlogPosting + Breadcrumb + FAQ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/#article",
+      "headline": "Automatiser sa fiduciaire avec l'IA : par où commencer",
+      "description": "Par quelles tâches commencer pour automatiser un cabinet fiduciaire suisse avec l'IA, sans risque : tri documentaire, saisie comptable assistée et relances.",
+      "datePublished": "2026-06-24",
+      "dateModified": "2026-06-24",
+      "inLanguage": "fr-CH",
+      "author": {
+        "@type": "Organization",
+        "name": "Condere",
+        "url": "https://condere.ch/"
+      },
+      "publisher": { "@id": "https://condere.ch/#organization" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/" },
+      "image": "https://condere.ch/og-image.png",
+      "articleSection": "Fiduciaires",
+      "keywords": ["logiciel fiduciaire IA", "automatisation fiduciaire", "ERP fiduciaire suisse", "IA nLPD", "Zarya"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://condere.ch/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://condere.ch/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Automatiser sa fiduciaire avec l'IA", "item": "https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Par quelle tâche commencer pour automatiser une fiduciaire avec l'IA ?", "acceptedAnswer": { "@type": "Answer", "text": "Par le tri et le classement des documents entrants. C'est la tâche la plus répétitive, la plus chronophage et la moins risquée : l'IA lit, identifie et range les pièces, et le collaborateur valide. Les gains sont visibles dès les premières semaines, sans toucher au travail comptable de fond." } },
+        { "@type": "Question", "name": "Un logiciel fiduciaire IA est-il conforme à la nLPD et au secret fiscal ?", "acceptedAnswer": { "@type": "Answer", "text": "Il peut l'être, à condition de choisir un hébergement en Suisse, un traitement des données documenté et un journal d'audit. C'est le critère de sélection numéro un pour une fiduciaire : la performance de l'IA ne vaut rien si elle expose des données clients hors du cadre légal suisse." } },
+        { "@type": "Question", "name": "Faut-il remplacer son logiciel comptable pour utiliser l'IA ?", "acceptedAnswer": { "@type": "Answer", "text": "Non. Les meilleures approches se branchent sur l'existant — Bexio, Crésus, Abacus, Microsoft 365 — et automatisent la couche autour de la comptabilité (réception, classement, relances, suivi des dossiers) plutôt que de remplacer le moteur comptable lui-même." } },
+        { "@type": "Question", "name": "Combien de temps avant de voir des résultats ?", "acceptedAnswer": { "@type": "Answer", "text": "Sur un premier chantier bien choisi, les premières heures gagnées apparaissent en deux à quatre semaines. L'erreur classique est de vouloir tout automatiser d'un coup : un périmètre étroit, mesuré, livre des résultats plus vite et installe la confiance des équipes." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" role="navigation" aria-label="Navigation principale">
+  <a href="/" class="nav-logo">
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <rect x="15" y="46" width="70" height="8" fill="var(--blue)"/>
+      <rect x="15" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="15" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="27" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="10" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="65" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="77" y="62" width="8"  height="28" fill="var(--blue)"/>
+      <rect x="42" y="38" width="16" height="24" rx="1" fill="var(--blue)"/>
+    </svg>
+    <span class="nav-logo-text">CONDERE</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="/#studio">Studio</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#zarya">Zarya</a></li>
+    <li class="sep">·</li>
+    <li><a href="/blog/" aria-current="page">Blog</a></li>
+    <li class="sep">·</li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Contactez-nous →</a>
+  <button class="nav-burger" aria-label="Ouvrir le menu" onclick="document.getElementById('navOverlay').classList.add('open')">
+    [ MENU ]
+  </button>
+</nav>
+
+<div id="navOverlay" class="nav-overlay" role="dialog" aria-modal="true" aria-label="Menu navigation">
+  <button class="nav-overlay-close" onclick="document.getElementById('navOverlay').classList.remove('open')" aria-label="Fermer le menu">[ FERMER ]</button>
+  <a href="/#studio"  onclick="document.getElementById('navOverlay').classList.remove('open')">Studio</a>
+  <a href="/#zarya"   onclick="document.getElementById('navOverlay').classList.remove('open')">Zarya</a>
+  <a href="/blog/"    onclick="document.getElementById('navOverlay').classList.remove('open')">Blog</a>
+  <a href="/#contact" onclick="document.getElementById('navOverlay').classList.remove('open')">Contact</a>
+</div>
+
+<!-- ══════════════════ ARTICLE ══════════════════ -->
+<div class="article-wrap">
+  <article>
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href="/">Accueil</a><span class="sl">›</span><a href="/blog/">Blog</a><span class="sl">›</span>Automatiser sa fiduciaire avec l'IA
+    </nav>
+
+    <div class="art-bar"></div>
+    <div class="art-meta">
+      <span class="art-tag">Fiduciaires</span>
+      <time class="art-date" datetime="2026-06-24">24 juin 2026</time>
+    </div>
+
+    <h1 class="art-title">Automatiser sa fiduciaire avec l'IA : par où commencer</h1>
+
+    <p class="art-lede">
+      Pour automatiser une fiduciaire avec l'IA, <strong>commencez par les tâches répétitives à fort volume et faible risque</strong> : le tri et le classement des documents entrants, la saisie comptable assistée, puis les relances clients. Ces trois chantiers libèrent des heures dès le premier mois, sans toucher au cœur réglementé du métier.
+    </p>
+
+    <div class="prose">
+      <p>
+        Dans un cabinet fiduciaire suisse, le temps facturable se dissout dans une foule de micro-tâches : ouvrir une pièce jointe, deviner de quel client elle vient, la renommer, la classer, vérifier qu'il ne manque rien, relancer celui qui n'a pas répondu. Prises une à une, elles paraissent anodines. Mises bout à bout, elles représentent souvent <strong>plusieurs heures par collaborateur et par jour</strong> — du temps soustrait au conseil, à la révision, à la relation client.
+      </p>
+      <p>
+        C'est exactement là que l'IA est la plus utile : non pas pour « remplacer le comptable », mais pour absorber la couche administrative qui l'entoure. Encore faut-il commencer au bon endroit. Voici comment hiérarchiser.
+      </p>
+
+      <h2>Pourquoi commencer maintenant — et pas par tout à la fois ?</h2>
+      <p>
+        L'erreur la plus fréquente est de vouloir « passer le cabinet à l'IA » d'un seul mouvement. C'est le meilleur moyen de s'enliser : projet trop large, adhésion incertaine des équipes, résultats invisibles pendant des mois. La bonne méthode est inverse — choisir <strong>un périmètre étroit, mesurable et peu risqué</strong>, le faire fonctionner, prouver le gain, puis élargir.
+      </p>
+      <p>
+        Pour trier les candidats, deux questions suffisent : <strong>est-ce répétitif et à fort volume ?</strong> et <strong>une erreur est-elle facilement rattrapable ?</strong> Les tâches qui cochent les deux cases sont vos premiers chantiers. Celles qui touchent au jugement professionnel ou à un risque fiscal direct viendront plus tard, avec un humain systématiquement dans la boucle.
+      </p>
+
+      <h2>Par quelles tâches commencer ?</h2>
+
+      <h3>1. Le tri et le classement des documents entrants</h3>
+      <p>
+        C'est le point de départ idéal. Chaque jour, un cabinet reçoit des dizaines de factures, relevés, contrats et courriers — par e-mail, par portail, par scan. Une IA documentaire <strong>lit la pièce, identifie le client et le type de document, le renomme selon votre nomenclature et le range au bon endroit</strong>. Le collaborateur ne fait plus que valider d'un clic.
+      </p>
+      <p>
+        Le risque est faible (un mauvais classement se corrige en deux secondes), le volume est énorme, et le gain est immédiat. C'est le chantier qui crée l'adhésion : les équipes voient l'IA leur enlever la tâche qu'elles détestent le plus.
+      </p>
+
+      <h3>2. La saisie comptable assistée</h3>
+      <p>
+        Une fois la pièce classée, l'IA peut en <strong>extraire les montants, la TVA, la date et le fournisseur</strong> (OCR + lecture sémantique) et préremplir l'écriture. Le comptable contrôle et valide au lieu de saisir caractère par caractère. Bien réglée, cette assistance fait fondre le temps de saisie tout en réduisant les fautes de frappe.
+      </p>
+      <p>
+        Important : on reste dans une logique de <strong>proposition validée par un humain</strong>. L'IA accélère, elle ne décide pas seule de l'imputation finale. C'est ce qui rend ce chantier sûr.
+      </p>
+
+      <h3>3. Les relances et le suivi des échéances</h3>
+      <p>
+        Le troisième gisement, c'est le suivi : qui n'a pas envoyé ses justificatifs, quelle échéance fiscale approche, quelle validation salariale attend une réponse. Un agent peut <strong>surveiller l'état de chaque dossier et déclencher les relances</strong> au bon moment, dans le bon ton, sans que personne ne tienne un tableur à la main.
+      </p>
+      <p>
+        Résultat : moins d'oublis, moins de retards clients, et une charge mentale en moins pour les responsables de dossier.
+      </p>
+
+      <div class="takeaway">
+        <span class="micro">À retenir</span>
+        <p>Tri documentaire → saisie assistée → relances. Trois chantiers dans cet ordre : chacun prépare le suivant, chacun est réversible, et le premier gain tombe en quelques semaines.</p>
+      </div>
+
+      <h2>Comment choisir un logiciel fiduciaire IA ?</h2>
+      <p>
+        Au-delà des fonctionnalités, trois critères font la différence pour un cabinet suisse :
+      </p>
+      <ul>
+        <li><strong>Hébergement et conformité</strong> — données hébergées en Suisse, respect de la nLPD et du secret fiscal, journal d'audit. Non négociable.</li>
+        <li><strong>Intégration à l'existant</strong> — l'outil doit se brancher sur ce que vous utilisez déjà (Bexio, Crésus, Abacus, Microsoft 365) plutôt que d'imposer un remplacement total.</li>
+        <li><strong>Humain dans la boucle</strong> — l'IA propose, le professionnel valide. Méfiez-vous de tout ce qui prétend décider seul à votre place sur des sujets réglementés.</li>
+      </ul>
+      <p>
+        C'est précisément la philosophie de <a href="/#zarya">Zarya</a>, l'ERP IA-native que nous construisons pour les fiduciaires de Suisse romande : orchestrer e-mails, documents, factures et échéances, avec un hébergement suisse et le secret professionnel au centre. Si vous voulez d'abord cadrer vos processus avant d'outiller, c'est l'objet de notre <a href="/#studio">audit et accompagnement IA</a>.
+      </p>
+
+      <h2>Et la conformité — nLPD, secret fiscal : comment concilier les deux ?</h2>
+      <p>
+        La crainte est légitime : confier des données clients à une IA ne doit jamais signifier les envoyer hors du cadre légal suisse. La réponse tient en trois principes. <strong>Localisation</strong> : les données restent hébergées en Suisse (ou, à défaut, en Europe sous RGPD). <strong>Traçabilité</strong> : chaque traitement automatisé est journalisé, vous savez qui a fait quoi et quand. <strong>Minimisation</strong> : l'IA n'accède qu'aux données strictement nécessaires à la tâche.
+      </p>
+      <p>
+        Une IA bien architecturée n'affaiblit pas le secret professionnel — elle peut même le <em>renforcer</em>, en remplaçant les pièces jointes baladeuses et les classements manuels approximatifs par un circuit documenté et contrôlé.
+      </p>
+
+      <h2>Combien de temps avant de voir des résultats ?</h2>
+      <p>
+        Sur un premier chantier bien délimité — le tri documentaire, typiquement — les premières heures gagnées apparaissent en <strong>deux à quatre semaines</strong>. Le secret n'est pas la puissance de l'outil, mais l'étroitesse du périmètre de départ : un cas d'usage clair, une mesure avant/après, puis on élargit. Mieux vaut automatiser parfaitement une tâche que médiocrement dix.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <section class="art-cta">
+      <h2>Envie de savoir par où commencer dans <em>votre</em> cabinet ?</h2>
+      <p>On cartographie vos processus, on identifie les deux ou trois tâches où l'IA crée le plus de valeur, et on vous remet un plan concret. Réponse sous 48 heures.</p>
+      <a href="/#contact">Demander un audit →</a>
+    </section>
+
+    <!-- FAQ -->
+    <section class="art-faq" aria-label="Questions fréquentes">
+      <h2>Questions fréquentes</h2>
+      <div class="faq-item">
+        <h3 class="faq-q">Par quelle tâche commencer pour automatiser une fiduciaire avec l'IA ?</h3>
+        <p class="faq-a">Par le tri et le classement des documents entrants. C'est la tâche la plus répétitive, la plus chronophage et la moins risquée : l'IA lit, identifie et range les pièces, et le collaborateur valide. Les gains sont visibles dès les premières semaines, sans toucher au travail comptable de fond.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Un logiciel fiduciaire IA est-il conforme à la nLPD et au secret fiscal ?</h3>
+        <p class="faq-a">Il peut l'être, à condition de choisir un hébergement en Suisse, un traitement des données documenté et un journal d'audit. C'est le critère de sélection numéro un pour une fiduciaire : la performance de l'IA ne vaut rien si elle expose des données clients hors du cadre légal suisse.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Faut-il remplacer son logiciel comptable pour utiliser l'IA ?</h3>
+        <p class="faq-a">Non. Les meilleures approches se branchent sur l'existant — Bexio, Crésus, Abacus, Microsoft 365 — et automatisent la couche autour de la comptabilité (réception, classement, relances, suivi des dossiers) plutôt que de remplacer le moteur comptable lui-même.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Combien de temps avant de voir des résultats ?</h3>
+        <p class="faq-a">Sur un premier chantier bien choisi, les premières heures gagnées apparaissent en deux à quatre semaines. L'erreur classique est de vouloir tout automatiser d'un coup : un périmètre étroit, mesuré, livre des résultats plus vite et installe la confiance des équipes.</p>
+      </div>
+    </section>
+
+    <nav class="art-foot-nav" aria-label="Retour au blog">
+      <a href="/blog/">← Tous les articles</a>
+    </nav>
+  </article>
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-etymo">
+      <span class="flabel">Condere</span>
+      <h3>Studio logiciel suisse · Genève</h3>
+      <p>On édite des logiciels métiers et on construit des agents IA sur-mesure pour les PME, les indépendants et les professions réglementées de Suisse romande.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Navigation footer">
+      <span class="flabel">Navigation</span>
+      <a href="/#studio">Studio</a>
+      <a href="/#zarya">Zarya</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/condere-ch" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>Condere · Studio logiciel IA · Genève, Suisse</span>
+    <a href="mailto:contact@condere.ch">contact@condere.ch</a>
+  </div>
+</footer>
+
+</body>
+</html>

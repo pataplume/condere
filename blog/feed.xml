@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog Condere</title>
+    <link>https://condere.ch/blog/</link>
+    <atom:link href="https://condere.ch/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>L'IA utile et souveraine pour les fiduciaires et PME de Suisse romande : automatisation, logiciels métiers, conformité nLPD et souveraineté des données.</description>
+    <language>fr-CH</language>
+    <lastBuildDate>Wed, 24 Jun 2026 09:00:00 +0200</lastBuildDate>
+    <item>
+      <title>Automatiser sa fiduciaire avec l'IA : par où commencer</title>
+      <link>https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/</link>
+      <guid isPermaLink="true">https://condere.ch/blog/automatiser-fiduciaire-ia-par-ou-commencer/</guid>
+      <pubDate>Wed, 24 Jun 2026 09:00:00 +0200</pubDate>
+      <category>Fiduciaires</category>
+      <description>Trois chantiers à fort impact et faible risque pour libérer des heures dès le premier mois, sans toucher au cœur réglementé du métier : tri documentaire, saisie comptable assistée et relances. Le guide concret pour les cabinets de Suisse romande.</description>
+    </item>
+  </channel>
+</rss>
